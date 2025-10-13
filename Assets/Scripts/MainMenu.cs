@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button playButton;
     [SerializeField] private Button optionsButton;
     [SerializeField] private Button exitButton;
-    [SerializeField] private GameObject optionsPanel;
+    [SerializeField] private Options options;
     
     [SerializeField] private string gameSceneName;
     
@@ -34,7 +34,7 @@ public class MainMenu : MonoBehaviour
 
     private void OpenOptions()
     {
-        optionsPanel.SetActive(true);
+        options.gameObject.SetActive(true);
     }
 
     private void ExitGame()
