@@ -9,9 +9,9 @@ using UnityEngine.SceneManagement;
 
 namespace Managers
 {
-    public class SceneManager : MonoBehaviour
+    public class LevelManager : MonoBehaviour
     {
-        public static SceneManager Instance { get; private set; }
+        public static LevelManager Instance { get; private set; }
         
         private AsyncOperationHandle<SceneInstance> currentScene;
 
@@ -23,13 +23,13 @@ namespace Managers
         private void Start()
         {
             currentScene = FindFirstObjectByType<Boot>().SceneToLoad;
-            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(0);
+            SceneManager.UnloadSceneAsync(0);
         }
 
         public void LoadSceneAsync(string sceneName)
         {
             AsyncOperationHandle<SceneInstance> sceneToLoad = Addressables.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-            Addressables.UnloadSceneAsync(currentScene);
+            UnloadScene();
             currentScene = sceneToLoad;
 
             currentScene.Completed += OnSceneLoaded;
@@ -42,7 +42,7 @@ namespace Managers
                 SceneInstance loadedScene = handle.Result;
                 Scene scene = loadedScene.Scene;
                 
-                UnityEngine.SceneManagement.SceneManager.SetActiveScene(scene);
+                SceneManager.SetActiveScene(scene);
                 Debug.Log($"Scene '{scene.name}' is now active.");
             }
             else
@@ -53,7 +53,7 @@ namespace Managers
             currentScene.Completed -= OnSceneLoaded;
         }
         
-        public void UnloadScene()
+        private void UnloadScene()
         {
             Addressables.UnloadSceneAsync(currentScene);
         }

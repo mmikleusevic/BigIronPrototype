@@ -1,8 +1,8 @@
 ﻿using System;
+using Managers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using SceneManager = Managers.SceneManager;
 
 public class MainMenu : MonoBehaviour
 {
@@ -29,7 +29,7 @@ public class MainMenu : MonoBehaviour
 
     private void PlayGame()
     {
-        SceneManager.Instance.LoadSceneAsync(gameSceneName);
+        LevelManager.Instance.LoadSceneAsync(gameSceneName);
     }
 
     private void OpenOptions()
