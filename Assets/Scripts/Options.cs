@@ -1,4 +1,5 @@
 ﻿using System;
+using Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,17 +35,26 @@ public class Options : MonoBehaviour
         sfxVolumeSlider.onValueChanged.RemoveListener(SfxVolumeChanged);
         backButton.onClick.RemoveListener(BackToMainMenu);
     }
+
+    private void Start()
+    {
+        float volume = SoundManager.Instance.GetVolume();
+        volumeSlider.value = volume;
+        
+        float sfxVolume = SoundManager.Instance.GetSfxVolume();
+        sfxVolumeSlider.value = sfxVolume;
+    }
     
-    //TODO change volume 
     private void VolumeChanged(float value)
     {
+        SoundManager.Instance.SetVolume(value);
         string text = GetVolumeText(value);
         volumeValueText.text = text;
     }
     
-    //TODO change sfx volume 
     private void SfxVolumeChanged(float value)
     {
+        SoundManager.Instance.SetSfxVolume(value);
         string text = GetVolumeText(value);
         sfxVolumeValueText.text = text;
     }

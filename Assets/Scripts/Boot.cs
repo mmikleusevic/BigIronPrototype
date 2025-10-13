@@ -11,6 +11,8 @@ public class Boot : MonoBehaviour
     [SerializeField] private string loaderSceneAddress = "LoaderScene";
     [SerializeField] private string mainMenuSceneAddress = "MainMenuScene";
 
+    public AsyncOperationHandle<SceneInstance> SceneToLoad;
+    
     private void Start()
     {
         LoadScene();
@@ -18,12 +20,7 @@ public class Boot : MonoBehaviour
 
     private void LoadScene()
     {
+        SceneToLoad = Addressables.LoadSceneAsync(mainMenuSceneAddress, LoadSceneMode.Additive);
         Addressables.LoadSceneAsync(loaderSceneAddress, LoadSceneMode.Additive);
-        Addressables.LoadSceneAsync(mainMenuSceneAddress);
-    }
-
-    public void UnloadScene(AsyncOperationHandle<SceneInstance> sceneToUnload)
-    {
-        Addressables.UnloadSceneAsync(sceneToUnload);
     }
 }

@@ -8,20 +8,45 @@ namespace Managers
     {
         public static SoundManager Instance { get; private set; }
         
-        public float SfxVolume { get; set; }
-        
         [SerializeField] private AudioSource musicSource;
         [SerializeField] private float transitionTime;
+        
+        private float sfxVolume;
         
         private void Awake()
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+        }
+
+        private void Start()
+        {
+            float volume = PlayerPrefs.GetFloat(GameEvents.VOLUME);
+            SetVolume(volume);
+            
+            float sfxVolume = PlayerPrefs.GetFloat(GameEvents.SFX_VOLUME);
+            this.sfxVolume = sfxVolume;
         }
 
         public void SetVolume(float volume)
         {
             musicSource.volume = volume;   
+            PlayerPrefs.SetFloat(GameEvents.VOLUME, musicSource.volume);
+        }
+
+        public float GetVolume()
+        {
+            return musicSource.volume;
+        }
+        
+        public void SetSfxVolume(float sfxVolume)
+        {
+            this.sfxVolume = sfxVolume;   
+            PlayerPrefs.SetFloat(GameEvents.SFX_VOLUME, this.sfxVolume);
+        }
+
+        public float GetSfxVolume()
+        {
+            return sfxVolume;
         }
 
         public IEnumerator SmoothChangeTrack(AudioClip clip)

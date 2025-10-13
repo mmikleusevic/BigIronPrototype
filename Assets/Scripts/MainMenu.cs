@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using SceneManager = Managers.SceneManager;
 
 public class MainMenu : MonoBehaviour
 {
@@ -8,6 +10,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button optionsButton;
     [SerializeField] private Button exitButton;
     [SerializeField] private GameObject optionsPanel;
+    
+    [SerializeField] private string gameSceneName;
     
     private void OnEnable()
     {
@@ -25,7 +29,7 @@ public class MainMenu : MonoBehaviour
 
     private void PlayGame()
     {
-        
+        SceneManager.Instance.LoadSceneAsync(gameSceneName);
     }
 
     private void OpenOptions()

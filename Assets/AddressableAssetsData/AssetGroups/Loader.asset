@@ -15,11 +15,23 @@ MonoBehaviour:
   m_GroupName: Loader
   m_GUID: 13cac8d10c7b56c4aa40ff30efebdc47
   m_SerializeEntries:
+  - m_GUID: 0a64b82745e5ce549b159e5493e0d415
+    m_Address: Assets/Prefabs/MainMenu.unity
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - MainMenuScene
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e1a76236a02a84f4db72ce05f9e31e0d
     m_Address: Assets/Prefabs/Loader.unity
     m_ReadOnly: 0
     m_SerializedLabels:
     - LoaderScene
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eddf679106729c44fad510c8224dccbc
+    m_Address: Assets/Scenes/Game.unity
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - GameScene
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 381a784ed649a4d45b62631edf58174a, type: 2}
