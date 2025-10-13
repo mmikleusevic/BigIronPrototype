@@ -1,0 +1,44 @@
+﻿using System;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class MainMenu : MonoBehaviour
+{
+    [SerializeField] private Button playButton;
+    [SerializeField] private Button optionsButton;
+    [SerializeField] private Button exitButton;
+    [SerializeField] private GameObject optionsPanel;
+    
+    private void OnEnable()
+    {
+        playButton.onClick.AddListener(PlayGame);
+        optionsButton.onClick.AddListener(OpenOptions);
+        exitButton.onClick.AddListener(ExitGame);
+    }
+
+    private void OnDisable()
+    {
+        playButton.onClick.RemoveListener(PlayGame);
+        optionsButton.onClick.RemoveListener(OpenOptions);
+        exitButton.onClick.RemoveListener(ExitGame);
+    }
+
+    private void PlayGame()
+    {
+        
+    }
+
+    private void OpenOptions()
+    {
+        optionsPanel.SetActive(true);
+    }
+
+    private void ExitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+}
