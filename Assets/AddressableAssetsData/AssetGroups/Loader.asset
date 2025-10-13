@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Loader
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Loader
+  m_GUID: 13cac8d10c7b56c4aa40ff30efebdc47
+  m_SerializeEntries:
+  - m_GUID: e1a76236a02a84f4db72ce05f9e31e0d
+    m_Address: Assets/Prefabs/Loader.unity
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LoaderScene
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 381a784ed649a4d45b62631edf58174a, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 1b35f1404af0ded45a2622f6fb049015, type: 2}
+    - {fileID: 11400000, guid: f564edd72d2038f4d8ddebd32c5ed3b8, type: 2}
