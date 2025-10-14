@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class LevelNodeGenerator : MonoBehaviour
 {
-    public static event Action OnLevelNodesGenerated;
+    public event Action OnLevelNodesGenerated;
     
     [SerializeField] private int floors;
     [SerializeField] private int nodesPerFloor;
@@ -14,7 +14,8 @@ public class LevelNodeGenerator : MonoBehaviour
     [SerializeField] private float xSpacing;
     [SerializeField] private float ySpacing;
 
-    private readonly List<List<LevelNode>> graph = new List<List<LevelNode>>();
+    public LevelNode StartingLevelNode { get; private set; }
+    private readonly List<List<LevelNode>> levelNodeGraph = new List<List<LevelNode>>();
 
     private void Start()
     {
@@ -40,14 +41,16 @@ public class LevelNodeGenerator : MonoBehaviour
             {
                 Vector2 position = new Vector2(i * xSpacing - ((nodeCount - 1) * xSpacing / 2f), floor * ySpacing);
                 LevelNodeType levelNodeType = ChooseLevelNodeType(floor);
-                
-                LevelNode levelNode = new LevelNode(floor, position, levelNodeType);
 
+                LevelNode levelNode = new LevelNode(floor, position, levelNodeType);
+                
                 floorNodes.Add(levelNode);
             }
             
-            graph.Add(floorNodes);
+            levelNodeGraph.Add(floorNodes);
         }
+
+        StartingLevelNode = levelNodeGraph[0][0];
     }
 
     private LevelNodeType ChooseLevelNodeType(int floor)
@@ -61,8 +64,8 @@ public class LevelNodeGenerator : MonoBehaviour
     {
         for (int floor = 0; floor < floors - 1; floor++)
         {
-            List<LevelNode> currentFloorNodes = graph[floor];
-            List<LevelNode> nextFloorNodes = graph[floor + 1];
+            List<LevelNode> currentFloorNodes = levelNodeGraph[floor];
+            List<LevelNode> nextFloorNodes = levelNodeGraph[floor + 1];
             
             for (int i = 0; i < currentFloorNodes.Count; i++)
             {
@@ -93,7 +96,7 @@ public class LevelNodeGenerator : MonoBehaviour
                 }
                 else
                 {
-                    connections = Random.Range(1, Mathf.Min(maxConnections, possibleTargets.Count) + 1);
+                    connections = Random.Range(2, Mathf.Min(maxConnections, possibleTargets.Count) + 1);
                 }
                 
                 IEnumerable<LevelNode> chosenTargets = possibleTargets.Take(connections);
@@ -105,4 +108,39 @@ public class LevelNodeGenerator : MonoBehaviour
             }
         }
     }
+    
+    // private void OnDrawGizmos()
+    // {
+    //     if (nodeGraph == null || nodeGraph.Count == 0)
+    //         return;
+    //
+    //     foreach (var floorNodes in nodeGraph)
+    //     {
+    //         foreach (var node in floorNodes)
+    //         {
+    //             switch (node.LevelNodeType)
+    //             {
+    //                 case LevelNodeType.Start:
+    //                     Gizmos.color = Color.green;
+    //                     break;
+    //                 case LevelNodeType.Boss:
+    //                     Gizmos.color = Color.red;
+    //                     break;
+    //                 default:
+    //                     Gizmos.color = Color.yellow;
+    //                     break;
+    //             }
+    //             
+    //             Gizmos.DrawSphere(transform.position + (Vector3)node.Position, 0.3f);
+    //
+    //             Gizmos.color = Color.white;
+    //             if (node.Connections == null) continue;
+    //             foreach (var connection in node.Connections)
+    //             {
+    //                 Gizmos.DrawLine(transform.position + (Vector3)node.Position,
+    //                     transform.position + (Vector3)connection.Position);
+    //             }
+    //         }
+    //     }
+    //}
 }
