@@ -14,7 +14,8 @@ public class LevelNodeGenerator : MonoBehaviour
     [SerializeField] private float xSpacing;
     [SerializeField] private float ySpacing;
 
-    public LevelNode StartingLevelNode { get; private set; }
+    public IReadOnlyList<IReadOnlyList<LevelNode>> LevelNodeGraph => levelNodeGraph;
+
     private readonly List<List<LevelNode>> levelNodeGraph = new List<List<LevelNode>>();
 
     private void Start()
@@ -49,8 +50,6 @@ public class LevelNodeGenerator : MonoBehaviour
             
             levelNodeGraph.Add(floorNodes);
         }
-
-        StartingLevelNode = levelNodeGraph[0][0];
     }
 
     private LevelNodeType ChooseLevelNodeType(int floor)
