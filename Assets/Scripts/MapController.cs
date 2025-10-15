@@ -2,15 +2,20 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 
 public class MapController : MonoBehaviour
 {
     [SerializeField] private LevelNodeGenerator levelNodeGenerator;
     [SerializeField] private LevelNodeSpriteSet levelNodeSpriteSet;
+    [SerializeField] private MapLevelNodeDrawer mapLevelNodeDrawer;
+    
+    [Header("Map nodes")]
     [SerializeField] private MapLevelNode mapLevelNodePrefab;
     [SerializeField] private RectTransform mapLevelNodeParent;
+    [SerializeField] private GameObject mapLevelNodeGroupPrefab;
     
-    private readonly List<MapLevelNode> activeNodes = new List<MapLevelNode>();
+    private readonly MapLevelNodes activeNodes = new MapLevelNodes();
     private MapLevelNode currentLevelNode;
 
     private void OnEnable()
@@ -25,18 +30,25 @@ public class MapController : MonoBehaviour
 
     private void OnNodesGenerated()
     {
-        foreach (IReadOnlyList<LevelNode> floor in levelNodeGenerator.LevelNodeGraph)
+        for (int i = levelNodeGenerator.LevelNodeGraph.Count- 1; i >= 0; i--)
         {
+            GameObject mapLevelNodeGroup = Instantiate(mapLevelNodeGroupPrefab, mapLevelNodeParent);
+            
+            IReadOnlyList<LevelNode> floor = levelNodeGenerator.LevelNodeGraph[i];
+            
             foreach (LevelNode nodeData in floor)
             {
-                MapLevelNode nodeUI = Instantiate(mapLevelNodePrefab, mapLevelNodeParent);
-                nodeUI.Initialize(levelNodeSpriteSet.GetSprite(nodeData.LevelNodeType), nodeData, HandleNodeClicked);
+                MapLevelNode nodeUI = Instantiate(mapLevelNodePrefab, mapLevelNodeGroup.transform);
                 
-                activeNodes.Add(nodeUI);
+                activeNodes.AddNode(nodeUI);
+                
+                nodeUI.Initialize(levelNodeSpriteSet.GetSprite(nodeData.LevelNodeType), nodeData, HandleNodeClicked);
             }
         }
+        
+        DrawConnections();
 
-        currentLevelNode = activeNodes.FirstOrDefault(a => a.LevelNode.LevelNodeType == LevelNodeType.Start);
+        currentLevelNode = activeNodes.GetNodeByLevelType(LevelNodeType.Start);
         currentLevelNode?.SetInteractable(true);
         currentLevelNode?.Highlight(true);
     }
@@ -50,7 +62,7 @@ public class MapController : MonoBehaviour
         currentLevelNode = clickedNode;
         currentLevelNode.Highlight(true);
         
-        foreach (MapLevelNode node in activeNodes)
+        foreach (MapLevelNode node in activeNodes.LevelNodeGraph)
         {
             bool canReach = currentLevelNode.LevelNode.Connections.Contains(node.LevelNode);
             node.SetInteractable(canReach);
@@ -58,5 +70,10 @@ public class MapController : MonoBehaviour
 
         // TODO: load actual level
         Debug.Log($"Loading level: {clickedNode.LevelNode.LevelNodeType}");
+    }
+    
+    private void DrawConnections()
+    {
+        mapLevelNodeDrawer.DrawConnections(activeNodes);
     }
 }

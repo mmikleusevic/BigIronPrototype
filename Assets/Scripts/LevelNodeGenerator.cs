@@ -40,10 +40,9 @@ public class LevelNodeGenerator : MonoBehaviour
 
             for (int i = 0; i < nodeCount; i++)
             {
-                Vector2 position = new Vector2(i * xSpacing - ((nodeCount - 1) * xSpacing / 2f), floor * ySpacing);
                 LevelNodeType levelNodeType = ChooseLevelNodeType(floor);
 
-                LevelNode levelNode = new LevelNode(floor, position, levelNodeType);
+                LevelNode levelNode = new LevelNode(floor, levelNodeType);
                 
                 floorNodes.Add(levelNode);
             }

@@ -7,7 +7,8 @@ public class MapLevelNode : MonoBehaviour
 {
     [SerializeField] private Button nodeButton;
     [SerializeField] private Image nodeImage;
-
+    [SerializeField] private RectTransform rectTransform;
+    
     public LevelNode LevelNode { get; private set; }
     
     private Action<MapLevelNode> onClickCallback;
@@ -22,8 +23,8 @@ public class MapLevelNode : MonoBehaviour
         SetInteractable(false);
         AddListener(callback);
         nodeImage.sprite = nodeSprite;
+        nodeImage.preserveAspect = true;
         LevelNode = levelNode;
-        transform.localPosition = levelNode.Position;
     }
     
     private void AddListener(Action<MapLevelNode> callback)
