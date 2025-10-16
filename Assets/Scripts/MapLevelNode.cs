@@ -29,8 +29,6 @@ public class MapLevelNode : MonoBehaviour
     
     private void AddListener(Action<MapLevelNode> callback)
     {
-        RemoveListener();
-        
         onClickCallback = callback;
         nodeButton.onClick.AddListener(OnButtonClicked);
     }

@@ -46,34 +46,45 @@ public class MapController : MonoBehaviour
             }
         }
         
-        DrawConnections();
-
+        mapLevelNodeDrawer.DrawConnections(activeNodes);
+        
         currentLevelNode = activeNodes.GetNodeByLevelType(LevelNodeType.Start);
-        currentLevelNode?.SetInteractable(true);
+        SetInteractableButtons();
         currentLevelNode?.Highlight(true);
     }
 
     private void HandleNodeClicked(MapLevelNode clickedNode)
     {
-        if (!currentLevelNode.LevelNode.Connections.Contains(clickedNode.LevelNode)) return;
+        if (!currentLevelNode) return;
         
         currentLevelNode.Highlight(false);
         currentLevelNode.SetInteractable(false);
         currentLevelNode = clickedNode;
         currentLevelNode.Highlight(true);
-        
-        foreach (MapLevelNode node in activeNodes.LevelNodeGraph)
-        {
-            bool canReach = currentLevelNode.LevelNode.Connections.Contains(node.LevelNode);
-            node.SetInteractable(canReach);
-        }
+
+        DisableOtherButtons();
+        SetInteractableButtons();
 
         // TODO: load actual level
         Debug.Log($"Loading level: {clickedNode.LevelNode.LevelNodeType}");
     }
-    
-    private void DrawConnections()
+
+    private void DisableOtherButtons()
     {
-        mapLevelNodeDrawer.DrawConnections(activeNodes);
+        foreach (MapLevelNode mapLevelNode in activeNodes.LevelNodeGraph)
+        {
+            mapLevelNode.SetInteractable(false);
+        }
+    }
+    
+    private void SetInteractableButtons()
+    {
+        if (!currentLevelNode) return;
+        
+        foreach (LevelNode levelNode in currentLevelNode.LevelNode.Connections)
+        {
+            MapLevelNode mapLevelNode = activeNodes.GetNodeByLevelNode(levelNode);
+            mapLevelNode.SetInteractable(true);
+        }
     }
 }
