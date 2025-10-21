@@ -8,8 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class Boot : MonoBehaviour
 {
-    [SerializeField] private string loaderSceneAddress = "LoaderScene";
-    [SerializeField] private string mainMenuSceneAddress = "MainMenuScene";
+    [SerializeField] private AssetReference loaderScene;
+    [SerializeField] private AssetReference mainMenuScene;
 
     public AsyncOperationHandle<SceneInstance> SceneToLoad;
     
@@ -20,7 +20,7 @@ public class Boot : MonoBehaviour
 
     private void LoadScene()
     {
-        SceneToLoad = Addressables.LoadSceneAsync(mainMenuSceneAddress, LoadSceneMode.Additive);
-        Addressables.LoadSceneAsync(loaderSceneAddress, LoadSceneMode.Additive);
+        SceneToLoad = Addressables.LoadSceneAsync(mainMenuScene, LoadSceneMode.Additive);
+        Addressables.LoadSceneAsync(loaderScene, LoadSceneMode.Additive);
     }
 }

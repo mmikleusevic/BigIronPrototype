@@ -1,5 +1,10 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using MapRoom;
+using TreeEditor;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -13,7 +18,12 @@ namespace Managers
     {
         public static LevelManager Instance { get; private set; }
         
-        private AsyncOperationHandle<SceneInstance> currentScene;
+        [SerializeField] private List<MapNodeLoaderSO> nodeLoaders;
+        
+        [Tooltip("Scenes that should never be unloaded, referenced by AssetReference but stored by name.")]
+        [SerializeField] private List<string> persistentScenes;
+        
+        private AsyncOperationHandle<SceneInstance>? currentScene;
 
         private void Awake()
         {
@@ -26,36 +36,37 @@ namespace Managers
             SceneManager.UnloadSceneAsync(0);
         }
 
-        public void LoadSceneAsync(string sceneName)
+        public async Task LoadSceneAsync(AssetReference sceneReference)
         {
-            AsyncOperationHandle<SceneInstance> sceneToLoad = Addressables.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-            UnloadScene();
+            AsyncOperationHandle<SceneInstance> sceneToLoad = Addressables.LoadSceneAsync(sceneReference, LoadSceneMode.Additive);
+            
+            bool isPersistent = false;
+
+            if (currentScene.HasValue) isPersistent = persistentScenes.Contains(currentScene.Value.Result.Scene.name);
+            if (!isPersistent && currentScene.HasValue) Addressables.UnloadSceneAsync(currentScene.Value);
+
             currentScene = sceneToLoad;
 
-            currentScene.Completed += OnSceneLoaded;
-        }
-        
-        private void OnSceneLoaded(AsyncOperationHandle<SceneInstance> handle)
-        {
-            if (handle.Status == AsyncOperationStatus.Succeeded)
-            {
-                SceneInstance loadedScene = handle.Result;
-                Scene scene = loadedScene.Scene;
+            SceneInstance sceneInstance = await sceneToLoad.Task;
+            Scene scene = sceneInstance.Scene;
                 
-                SceneManager.SetActiveScene(scene);
-                Debug.Log($"Scene '{scene.name}' is now active.");
+            SceneManager.SetActiveScene(scene);
+            Debug.Log($"Scene '{scene.name}' is now active.");
+        }
+
+        
+        public async Task LoadNode(LevelNode node)
+        {
+            MapNodeLoaderSO mapNodeLoaderSO = nodeLoaders.FirstOrDefault(a => a.LevelNodeType == node.LevelNodeType);
+            
+            if (mapNodeLoaderSO)
+            {
+                await mapNodeLoaderSO.LoadAsync(node, this);
             }
             else
             {
-                Debug.LogError($"Failed to load scene '{handle.Result.Scene.name}'.");
+                Debug.LogError($"No loader registered for node type: {node.LevelNodeType}");
             }
-            
-            currentScene.Completed -= OnSceneLoaded;
-        }
-        
-        private void UnloadScene()
-        {
-            Addressables.UnloadSceneAsync(currentScene);
         }
     }
 }

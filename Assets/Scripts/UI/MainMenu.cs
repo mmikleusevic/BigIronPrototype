@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Managers;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -11,25 +13,43 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button exitButton;
     [SerializeField] private Options options;
     
-    [SerializeField] private string gameSceneName;
+    [SerializeField] private AssetReference gameScene;
     
     private void OnEnable()
     {
-        playButton.onClick.AddListener(PlayGame);
+        playButton.onClick.AddListener(OnPlayGameClicked);
         optionsButton.onClick.AddListener(OpenOptions);
         exitButton.onClick.AddListener(ExitGame);
     }
 
     private void OnDisable()
     {
-        playButton.onClick.RemoveListener(PlayGame);
+        playButton.onClick.RemoveListener(OnPlayGameClicked);
         optionsButton.onClick.RemoveListener(OpenOptions);
         exitButton.onClick.RemoveListener(ExitGame);
     }
 
-    private void PlayGame()
+    private async void OnPlayGameClicked()
     {
-        LevelManager.Instance.LoadSceneAsync(gameSceneName);
+        try
+        {
+            playButton.interactable = false;
+            
+            await PlayGame();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to start playing game: {ex}");
+        }
+        finally
+        {
+            playButton.interactable = true;
+        }
+    }
+    
+    private async Task PlayGame()
+    {
+        await LevelManager.Instance.LoadSceneAsync(gameScene);
     }
 
     private void OpenOptions()
