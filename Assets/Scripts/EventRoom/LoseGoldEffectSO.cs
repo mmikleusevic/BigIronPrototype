@@ -1,0 +1,16 @@
+﻿using UnityEngine;
+
+namespace EventRoom
+{
+    [CreateAssetMenu(menuName = "Event Effects/LoseGold")]
+    public class LoseGoldEffectSO : EventEffectSO
+    {
+        public int Amount;
+        public override string Apply(PlayerContext context)
+        {
+            context.LoseGoldAmount(Amount);
+
+            return $"You lost {Amount} gold.";
+        }
+    }
+}

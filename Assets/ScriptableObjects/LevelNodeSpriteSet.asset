@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: LevelNodeSpriteSet
   m_EditorClassIdentifier: Assembly-CSharp::LevelNodeSpriteSet
   nodeSprites:
-  - LevelNodeType: 0
-    Sprite: {fileID: 7482667652216324306, guid: cbfaa8f6dd754f14bab28bf7dd979c58, type: 3}
-  - LevelNodeType: 1
-    Sprite: {fileID: 7482667652216324306, guid: cbfaa8f6dd754f14bab28bf7dd979c58, type: 3}
-  - LevelNodeType: 2
-    Sprite: {fileID: 7482667652216324306, guid: cbfaa8f6dd754f14bab28bf7dd979c58, type: 3}
-  - LevelNodeType: 3
+  - LevelNodeType: 5
     Sprite: {fileID: 7482667652216324306, guid: cbfaa8f6dd754f14bab28bf7dd979c58, type: 3}
   - LevelNodeType: 4
     Sprite: {fileID: 7482667652216324306, guid: cbfaa8f6dd754f14bab28bf7dd979c58, type: 3}
-  - LevelNodeType: 5
+  - LevelNodeType: 3
+    Sprite: {fileID: 7482667652216324306, guid: cbfaa8f6dd754f14bab28bf7dd979c58, type: 3}
+  - LevelNodeType: 2
+    Sprite: {fileID: 7482667652216324306, guid: cbfaa8f6dd754f14bab28bf7dd979c58, type: 3}
+  - LevelNodeType: 1
+    Sprite: {fileID: 7482667652216324306, guid: cbfaa8f6dd754f14bab28bf7dd979c58, type: 3}
+  - LevelNodeType: 0
     Sprite: {fileID: 7482667652216324306, guid: cbfaa8f6dd754f14bab28bf7dd979c58, type: 3}

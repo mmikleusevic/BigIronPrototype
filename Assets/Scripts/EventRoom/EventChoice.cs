@@ -8,7 +8,11 @@ namespace EventRoom
     {
         public string ChoiceText;
         public EventConditionSO[] Conditions;
-        public EventEffect[] Effects;
+        public EventEffectSO[] Effects;
         public EventDataSO NextEvent;
+        
+        [NonSerialized] public string GeneratedResultDescription;
+        [TextArea] public string SuccessDescription;
+        [NonSerialized] public string FailDescription;
     }
 }

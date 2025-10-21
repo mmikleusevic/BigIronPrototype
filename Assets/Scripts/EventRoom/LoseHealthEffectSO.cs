@@ -3,12 +3,14 @@ using UnityEngine;
 namespace EventRoom
 {
     [CreateAssetMenu(menuName = "Event Effects/LoseHP")]
-    public class LoseHpEffectSO : EventEffect
+    public class LoseHealthEffectSO : EventEffectSO
     {
         public int Amount;
-        public override void Apply(PlayerContext context)
+        public override string Apply(PlayerContext context)
         {
             context.LoseHealth(Amount);
+            
+            return $"You lost {Amount} HP.";
         }
     }
 }
