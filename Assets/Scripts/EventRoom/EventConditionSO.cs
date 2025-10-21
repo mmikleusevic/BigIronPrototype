@@ -6,5 +6,6 @@ namespace EventRoom
     public abstract class EventConditionSO : ScriptableObject
     {
         public abstract bool IsSatisfied(PlayerContext context);
+        public virtual string GetFailReason() => "Condition not met.";
     }
 }

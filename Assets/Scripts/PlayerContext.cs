@@ -17,9 +17,15 @@ public class PlayerContext : MonoBehaviour
         Gold = 0;
     }
     
-    public void ChangeGoldAmount(int amount)
+    public void GainGoldAmount(int amount)
     {
         Gold += amount;
+        OnGoldChanged?.Invoke(Gold);
+    }
+
+    public void LoseGoldAmount(int amount)
+    {
+        Gold -= amount;
         OnGoldChanged?.Invoke(Gold);
     }
 
