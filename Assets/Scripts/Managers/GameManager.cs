@@ -1,4 +1,6 @@
 ﻿using System;
+using Extensions;
+using Player;
 using UnityEngine;
 
 namespace Managers
@@ -18,7 +20,7 @@ namespace Managers
 
         public void InitializeGame()
         {
-            PlayerContext = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+            PlayerContext = playerPrefab.GetPooledObject<PlayerContext>();
             DontDestroyOnLoad(PlayerContext.gameObject);
         }
     }

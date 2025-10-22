@@ -1,4 +1,5 @@
 using System;
+using Extensions;
 using Managers;
 using TMPro;
 using UnityEngine;
@@ -48,7 +49,7 @@ namespace EventRoom
 
             foreach (EventChoice eventChoice in eventDataSo.Choices)
             {
-                Button choiceButton = Instantiate(choicePrefab, choiceParent);
+                Button choiceButton = choicePrefab.GetPooledObject<Button>(choiceParent);
                 choiceButton.GetComponentInChildren<TextMeshProUGUI>().text = eventChoice.ChoiceText;
                 choiceButton.onClick.AddListener(() =>
                 {
@@ -106,7 +107,7 @@ namespace EventRoom
                 Button button = child.GetComponent<Button>();
                 
                 if (button) button.onClick.RemoveAllListeners();
-                Destroy(child.gameObject);
+                child.ReturnToPool(choicePrefab);
             }
         }
     }

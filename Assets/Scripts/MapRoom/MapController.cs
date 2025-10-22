@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Extensions;
 using UnityEngine;
 
 namespace MapRoom
@@ -31,13 +32,13 @@ namespace MapRoom
         {
             for (int i = levelNodeGenerator.LevelNodeGraph.Count- 1; i >= 0; i--)
             {
-                GameObject mapLevelNodeGroup = Instantiate(mapLevelNodeGroupPrefab, mapLevelNodeParent);
+                GameObject mapLevelNodeGroup = mapLevelNodeGroupPrefab.GetPooledObject(mapLevelNodeParent);
             
                 IReadOnlyList<LevelNode> floor = levelNodeGenerator.LevelNodeGraph[i];
 
                 for (int j = floor.Count - 1; j >= 0; j--)
                 {
-                    MapLevelNode nodeUI = Instantiate(mapLevelNodePrefab, mapLevelNodeGroup.transform);
+                    MapLevelNode nodeUI = mapLevelNodePrefab.GetPooledObject<MapLevelNode>(mapLevelNodeGroup.transform);
                 
                     activeNodes.AddNode(nodeUI);
 
