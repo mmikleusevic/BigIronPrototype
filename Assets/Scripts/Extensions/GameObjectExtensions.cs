@@ -50,9 +50,9 @@ namespace Extensions
             pool.Enqueue(gameObject);
         }
         
-        public static void ReturnToPool(this Component obj, Component prefab)
+        public static void ReturnToPool(this Component gameObject, Component prefab)
         {
-            obj.gameObject.ReturnToPool(prefab.gameObject);
+            gameObject.gameObject.ReturnToPool(prefab.gameObject);
         }
         
         public static void ClearAllPools()
