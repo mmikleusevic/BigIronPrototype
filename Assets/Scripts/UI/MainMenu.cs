@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Extensions;
 using Managers;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -17,34 +18,16 @@ public class MainMenu : MonoBehaviour
     
     private void OnEnable()
     {
-        playButton.onClick.AddListener(OnPlayGameClicked);
+        playButton.AddClickAsync(PlayGame);
         optionsButton.onClick.AddListener(OpenOptions);
         exitButton.onClick.AddListener(ExitGame);
     }
 
     private void OnDisable()
     {
-        playButton.onClick.RemoveListener(OnPlayGameClicked);
+        playButton.onClick.RemoveAllListeners();
         optionsButton.onClick.RemoveListener(OpenOptions);
         exitButton.onClick.RemoveListener(ExitGame);
-    }
-
-    private async void OnPlayGameClicked()
-    {
-        try
-        {
-            playButton.interactable = false;
-            
-            await PlayGame();
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError($"Failed to start playing game: {ex}");
-        }
-        finally
-        {
-            playButton.interactable = true;
-        }
     }
     
     private async Task PlayGame()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Extensions;
 using Managers;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -35,7 +36,7 @@ namespace UI
             pauseButton.onClick.AddListener(TogglePause);
             resumeButton.onClick.AddListener(TogglePause);
             optionsButton.onClick.AddListener(OpenOptions);
-            backToMainMenuButton.onClick.AddListener(OnBackToMainMenuClicked);
+            backToMainMenuButton.AddClickAsync(BackToMainMenu);
         }
 
         private void OnDisable()
@@ -43,7 +44,7 @@ namespace UI
             pauseButton.onClick.RemoveListener(TogglePause);
             resumeButton.onClick.RemoveListener(TogglePause);
             optionsButton.onClick.RemoveListener(OpenOptions);
-            backToMainMenuButton.onClick.RemoveListener(OnBackToMainMenuClicked);
+            backToMainMenuButton.onClick.RemoveAllListeners();
         }
 
         private void TogglePause()
@@ -56,24 +57,6 @@ namespace UI
         private void OpenOptions()
         {
             options.gameObject.SetActive(true);
-        }
-        
-        private async void OnBackToMainMenuClicked()
-        {
-            try
-            {
-                backToMainMenuButton.interactable = false;
-            
-                await BackToMainMenu();
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"Failed to go back to main menu: {ex}");
-            }
-            finally
-            {
-                backToMainMenuButton.interactable = true;
-            }
         }
 
         private async Task BackToMainMenu()
