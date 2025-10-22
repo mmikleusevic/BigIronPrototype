@@ -1,3 +1,4 @@
+using Extensions;
 using UnityEngine;
 using UnityEngine.UI.Extensions;
 
@@ -21,8 +22,8 @@ namespace MapRoom
                 {
                     MapLevelNode endNode = mapLevelNodes.GetNodeByLevelNode(connection);
                     RectTransform endRect = endNode.GetComponent<RectTransform>();
-                
-                    UILineRenderer lineRenderer = Instantiate(uiLineRendererPrefab, parent);
+
+                    UILineRenderer lineRenderer = uiLineRendererPrefab.GetPooledObject<UILineRenderer>(parent);
                     
                     Vector2 startPos = WorldToLocal(startRect.position, parent);
                     Vector2 endPos = WorldToLocal(endRect.position, parent);

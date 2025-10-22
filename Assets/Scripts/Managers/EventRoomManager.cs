@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using EventRoom;
+using Player;
 using UnityEngine;
 
 namespace Managers
