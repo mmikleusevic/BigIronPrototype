@@ -14,8 +14,6 @@ namespace Managers
         public static EventRoomManager Instance { get; private set; }
     
         private EventDataSO currentEventDataSO; 
-
-        [SerializeField] private GameObject eventRoomPanel;
         
         private void Awake()
         {
@@ -24,7 +22,7 @@ namespace Managers
 
         public void OnChoiceSelected(EventChoice choice)
         {
-            PlayerContext player = GameManager.Instance.PlayerContext;
+            PlayerContext player = GameManager.Instance?.PlayerContext;
 
             bool conditionsMet = CheckConditions(choice, player);
             TriggerEffects(choice, player,conditionsMet);

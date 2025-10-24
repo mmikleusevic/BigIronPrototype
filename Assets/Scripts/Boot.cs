@@ -1,4 +1,6 @@
 using System;
+using System.Threading.Tasks;
+using Managers;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -10,17 +12,16 @@ public class Boot : MonoBehaviour
 {
     [SerializeField] private AssetReference loaderScene;
     [SerializeField] private AssetReference mainMenuScene;
-
-    public AsyncOperationHandle<SceneInstance> SceneToLoad;
     
     private void Start()
-    {
-        LoadScene();
+    { 
+        _ = LoadScene();
     }
 
-    private void LoadScene()
+    private async Task LoadScene()
     {
-        SceneToLoad = Addressables.LoadSceneAsync(mainMenuScene, LoadSceneMode.Additive);
-        Addressables.LoadSceneAsync(loaderScene, LoadSceneMode.Additive);
+        await LevelManager.Instance.LoadSceneAsync(loaderScene, false);
+        await LevelManager.Instance.LoadSceneAsync(mainMenuScene);
+        _ = SceneManager.UnloadSceneAsync(0);
     }
 }

@@ -13,12 +13,12 @@ namespace Player
         public int CurrentHealth { get; private set; }
         public int Gold { get; private set; }
 
-        private void Start()
+        private void OnEnable()
         {
             CurrentHealth = MaxHealth;
             Gold = 0;
         }
-    
+
         public void GainGoldAmount(int amount)
         {
             Gold += amount;

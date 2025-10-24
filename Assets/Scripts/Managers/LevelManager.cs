@@ -17,56 +17,70 @@ namespace Managers
     public class LevelManager : MonoBehaviour
     {
         public static LevelManager Instance { get; private set; }
+        public event Action<string, bool> OnSceneLoaded;
         
+        [SerializeField] private List<SceneReferenceSO> persistentScenes;
         [SerializeField] private List<MapNodeLoaderSO> nodeLoaders;
         
-        [Tooltip("Scenes that should never be unloaded, referenced by AssetReference but stored by name.")]
-        [SerializeField] private List<string> persistentScenes;
-        
-        private AsyncOperationHandle<SceneInstance>? currentScene;
+        private readonly Dictionary<string, AsyncOperationHandle<SceneInstance>> loadedScenes = new Dictionary<string, AsyncOperationHandle<SceneInstance>>();
 
         private void Awake()
         {
             Instance = this;
+            DontDestroyOnLoad(this);
         }
 
-        private void Start()
+        public async Task LoadSceneAsync(AssetReference sceneReferenceSO,  bool setActive = true)
         {
-            currentScene = FindFirstObjectByType<Boot>().SceneToLoad;
-            SceneManager.UnloadSceneAsync(0);
-        }
+            if (IsSceneLoaded(sceneReferenceSO.AssetGUID)) return;
 
-        public async Task LoadSceneAsync(AssetReference sceneReference)
-        {
-            AsyncOperationHandle<SceneInstance> sceneToLoad = Addressables.LoadSceneAsync(sceneReference, LoadSceneMode.Additive);
+            AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(sceneReferenceSO, LoadSceneMode.Additive);
+            SceneInstance sceneInstance = await handle.Task;
+
+            loadedScenes[sceneReferenceSO.AssetGUID] = handle;
+
+            if (setActive) SceneManager.SetActiveScene(sceneInstance.Scene);
             
-            bool isPersistent = false;
-
-            if (currentScene.HasValue) isPersistent = persistentScenes.Contains(currentScene.Value.Result.Scene.name);
-            if (!isPersistent && currentScene.HasValue) Addressables.UnloadSceneAsync(currentScene.Value);
-
-            currentScene = sceneToLoad;
-
-            SceneInstance sceneInstance = await sceneToLoad.Task;
-            Scene scene = sceneInstance.Scene;
-                
-            SceneManager.SetActiveScene(scene);
-            Debug.Log($"Scene '{scene.name}' is now active.");
+            OnSceneLoaded?.Invoke(sceneReferenceSO.AssetGUID, true);
+        }
+        
+        public async Task UnloadSceneAsync(string sceneGUID)
+        {
+            if (!loadedScenes.TryGetValue(sceneGUID, out AsyncOperationHandle<SceneInstance> handle)) return;
+            
+            AsyncOperationHandle<SceneInstance> sceneToUnload = Addressables.UnloadSceneAsync(handle);
+            await sceneToUnload.Task;
+            
+            loadedScenes.Remove(sceneGUID);
         }
 
+        public async Task UnloadAllButPersistentScenesAsync()
+        {
+            List<Task> unloadTasks = new List<Task>();
+    
+            foreach (KeyValuePair<string, AsyncOperationHandle<SceneInstance>> loadedScenePair in loadedScenes)
+            {
+                if (!IsPersistentScene(loadedScenePair.Key)) unloadTasks.Add(UnloadSceneAsync(loadedScenePair.Key));
+            }
+    
+            await Task.WhenAll(unloadTasks);
+        }
+        
+        private bool IsSceneLoaded(string assetGUID)
+        {
+            return loadedScenes.ContainsKey(assetGUID);
+        }
+
+        private bool IsPersistentScene(string sceneGUID)
+        {
+            return persistentScenes.Any(s => s.AssetGUID == sceneGUID);
+        }
         
         public async Task LoadNode(LevelNode node)
         {
             MapNodeLoaderSO mapNodeLoaderSO = nodeLoaders.FirstOrDefault(a => a.LevelNodeType == node.LevelNodeType);
             
-            if (mapNodeLoaderSO)
-            {
-                await mapNodeLoaderSO.LoadAsync(node, this);
-            }
-            else
-            {
-                Debug.LogError($"No loader registered for node type: {node.LevelNodeType}");
-            }
+            if (mapNodeLoaderSO) await mapNodeLoaderSO.LoadAsync(node, this);
         }
     }
 }

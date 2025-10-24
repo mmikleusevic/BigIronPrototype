@@ -1,51 +1,54 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Extensions;
 using Managers;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenu : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private Button playButton;
-    [SerializeField] private Button optionsButton;
-    [SerializeField] private Button exitButton;
-    [SerializeField] private Options options;
-    
-    [SerializeField] private AssetReference gameScene;
-    
-    private void OnEnable()
+    public class MainMenu : MonoBehaviour
     {
-        playButton.AddClickAsync(PlayGame);
-        optionsButton.onClick.AddListener(OpenOptions);
-        exitButton.onClick.AddListener(ExitGame);
-    }
+        [SerializeField] private Button playButton;
+        [SerializeField] private Button optionsButton;
+        [SerializeField] private Button exitButton;
+        [SerializeField] private Options options;
 
-    private void OnDisable()
-    {
-        playButton.onClick.RemoveAllListeners();
-        optionsButton.onClick.RemoveListener(OpenOptions);
-        exitButton.onClick.RemoveListener(ExitGame);
-    }
+        [SerializeField] private AssetReference mainMenuAssetReference;
+        [SerializeField] private AssetReference gameAssetReference;
     
-    private async Task PlayGame()
-    {
-        await LevelManager.Instance.LoadSceneAsync(gameScene);
-    }
+        private void OnEnable()
+        {
+            playButton.AddClickAsync(PlayGame);
+            optionsButton.onClick.AddListener(OpenOptions);
+            exitButton.onClick.AddListener(ExitGame);
+        }
 
-    private void OpenOptions()
-    {
-        options.gameObject.SetActive(true);
-    }
+        private void OnDisable()
+        {
+            playButton.onClick.RemoveAllListeners();
+            optionsButton.onClick.RemoveListener(OpenOptions);
+            exitButton.onClick.RemoveListener(ExitGame);
+        }
+    
+        private async Task PlayGame()
+        {
+            _ = LevelManager.Instance.UnloadSceneAsync(mainMenuAssetReference.AssetGUID);
+            await LevelManager.Instance.LoadSceneAsync(gameAssetReference);
+        }
 
-    private void ExitGame()
-    {
+        private void OpenOptions()
+        {
+            options.gameObject.SetActive(true);
+        }
+
+        private void ExitGame()
+        {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+            UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
 #endif
+        }
     }
 }

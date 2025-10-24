@@ -459,7 +459,7 @@ GameObject:
   - component: {fileID: 1873867775}
   - component: {fileID: 1873867779}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: MainMenuCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -568,7 +568,13 @@ MonoBehaviour:
   optionsButton: {fileID: 702230523}
   exitButton: {fileID: 647811734}
   options: {fileID: 3270497186353358641}
-  gameScene:
+  mainMenuAssetReference:
+    m_AssetGUID: 0a64b82745e5ce549b159e5493e0d415
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  gameAssetReference:
     m_AssetGUID: eddf679106729c44fad510c8224dccbc
     m_SubObjectName: 
     m_SubObjectType: 

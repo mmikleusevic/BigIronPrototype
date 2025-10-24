@@ -78,7 +78,7 @@ namespace EventRoom
             continueButton.onClick.AddListener(() =>
             {
                 continueButton.gameObject.SetActive(false);
-                EventRoomManager.Instance.ContinueAfterResult(choice);
+                EventRoomManager.Instance?.ContinueAfterResult(choice);
             });
 
             continueButton.gameObject.SetActive(true);

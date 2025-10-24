@@ -2,6 +2,8 @@
 using Extensions;
 using Player;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 
 namespace Managers
 {
@@ -12,6 +14,9 @@ namespace Managers
         public PlayerContext PlayerContext { get; private set; }
 
         [SerializeField] private PlayerContext playerPrefab;
+        [SerializeField] private SceneReferenceSO gameSceneReferenceSO;
+        
+        private bool isPaused;
         
         private void Awake()
         {
@@ -21,7 +26,20 @@ namespace Managers
         public void InitializeGame()
         {
             PlayerContext = playerPrefab.GetPooledObject<PlayerContext>();
-            DontDestroyOnLoad(PlayerContext.gameObject);
+        }
+        
+        public void DisposeGame()
+        {
+            PlayerContext.ReturnToPool(playerPrefab);
+            PlayerContext = null;
+        }
+
+        public bool TogglePause()
+        {
+            isPaused = !isPaused;
+            Time.timeScale = isPaused ? 0 : 1;
+            
+            return isPaused;
         }
     }
 }

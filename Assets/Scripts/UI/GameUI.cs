@@ -1,67 +1,35 @@
-﻿using System;
-using System.Threading.Tasks;
-using Extensions;
+using System;
 using Managers;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace UI
 {
     public class GameUI : MonoBehaviour
     {
-        [SerializeField] private Button pauseButton;
-    
-        [Space(20)]
-        [SerializeField] private GameObject pausePanel;
-        [SerializeField] private Button resumeButton;
-    
-        [Header("Options")]
-        [SerializeField] private Button optionsButton;
-        [SerializeField] private Options options;
-    
-        [Space(20)]
-        [SerializeField] private Button backToMainMenuButton;
-        [SerializeField] private AssetReference mainMenuScene;
-    
-        private bool isPaused;
-
-        private void Awake()
-        {
-            pausePanel.SetActive(false);
-        }
-
+        [SerializeField] private AssetReference gameSceneReference;
+        
         private void OnEnable()
         {
-            pauseButton.onClick.AddListener(TogglePause);
-            resumeButton.onClick.AddListener(TogglePause);
-            optionsButton.onClick.AddListener(OpenOptions);
-            backToMainMenuButton.AddClickAsync(BackToMainMenu);
+            if (!LevelManager.Instance) return;
+            
+            LevelManager.Instance.OnSceneLoaded += SceneLoaded;
         }
 
         private void OnDisable()
         {
-            pauseButton.onClick.RemoveListener(TogglePause);
-            resumeButton.onClick.RemoveListener(TogglePause);
-            optionsButton.onClick.RemoveListener(OpenOptions);
-            backToMainMenuButton.onClick.RemoveAllListeners();
+            if (!LevelManager.Instance) return;
+            
+            LevelManager.Instance.OnSceneLoaded -= SceneLoaded;
         }
 
-        private void TogglePause()
+        private void SceneLoaded(string sceneGUID, bool visible)
         {
-            isPaused = !isPaused;
-            Time.timeScale = isPaused ? 0 : 1;
-            pausePanel.SetActive(isPaused);
-        }
-
-        private void OpenOptions()
-        {
-            options.gameObject.SetActive(true);
-        }
-
-        private async Task BackToMainMenu()
-        {
-            await LevelManager.Instance.LoadSceneAsync(mainMenuScene);
+            bool isThisScene = sceneGUID == gameSceneReference.AssetGUID;
+            
+            if (!visible && isThisScene) return;
+            gameObject.SetActive(isThisScene);
         }
     }
 }

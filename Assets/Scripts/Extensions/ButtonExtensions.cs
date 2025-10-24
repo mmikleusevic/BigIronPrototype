@@ -15,7 +15,7 @@ namespace Extensions
             });
         }
         
-        public static async Task SafeClickAsync(this Button button, Func<Task> action)
+        private static async Task SafeClickAsync(this Button button, Func<Task> action)
         {
             if (!button || action == null)
                 return;

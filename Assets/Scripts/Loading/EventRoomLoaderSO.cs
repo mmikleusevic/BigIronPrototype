@@ -18,7 +18,7 @@ namespace Loading
             int index = Random.Range(0, possibleEvents.Length);
             EventDataSO chosenEvent = possibleEvents[index];
 
-            EventRoomManager.Instance.DisplayCurrentEvent(chosenEvent);
+            EventRoomManager.Instance?.DisplayCurrentEvent(chosenEvent);
 
             await Task.CompletedTask;
         }
