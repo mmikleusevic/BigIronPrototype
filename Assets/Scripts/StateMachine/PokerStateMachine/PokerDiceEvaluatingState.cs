@@ -8,6 +8,7 @@ namespace StateMachine.PokerStateMachine
 {
     public class PokerDiceEvaluatingState : IPokerDiceState
     {
+        public static event Action OnDiceEvaluationStarted;
         public static event Action<PokerDiceHandResult> OnHandEvaluated;
         
         private readonly PokerDiceGameManager pokerDiceGameManager;
@@ -24,6 +25,8 @@ namespace StateMachine.PokerStateMachine
     
         public void OnEnter()
         {
+            OnDiceEvaluationStarted?.Invoke();
+            
             Debug.Log("=== Evaluating Hand ===");
 
             foreach (KeyValuePair<string, List<int>> playerRoll in pokerGame.PlayerRolls)

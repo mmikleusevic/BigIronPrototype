@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace PokerDiceRoom
 {
-    public class PokerInputHandler : MonoBehaviour, IPokerInputSource
+    public class PokerInputs : MonoBehaviour, IPokerInputSource
     {
         public event Action OnRoll;
         public event Action OnHold;
@@ -16,9 +16,8 @@ namespace PokerDiceRoom
         [SerializeField] private InputActionReference select;
         [SerializeField] private InputActionReference roll;
         [SerializeField] private InputActionReference holdTurn;
-    
         [SerializeField] private PokerDiceGameManager gameManager;
-        private PokerInputRules Rules => gameManager.InputRules;
+        private PokerInputRules Rules => gameManager.PokerInputRules;
         
         private InputActionReference[] actions;
     
@@ -56,7 +55,7 @@ namespace PokerDiceRoom
                 else inputActionReference.action.Disable();
             }
         }
-
+        
         private void OnMovePerformed(InputAction.CallbackContext ctx)
         {
             Vector2 value = ctx.ReadValue<Vector2>();
@@ -65,19 +64,38 @@ namespace PokerDiceRoom
 
         private void DiceSelected(InputAction.CallbackContext ctx)
         {
-            OnSelect?.Invoke();
+            TriggerSelect();
         }
 
         private void OnRollPerformed(InputAction.CallbackContext ctx)
         {
-            if (!Rules.CanRoll) return;
-            OnRoll?.Invoke();
+            TriggerRoll();
         }
 
         private void OnHoldPerformed(InputAction.CallbackContext ctx)
         {
+            TriggerHold();
+        }
+        
+        public void TriggerRoll()
+        {
+            if (!Rules.CanRoll) return;
+            
+            OnRoll?.Invoke();
+        }
+
+        public void TriggerHold()
+        {
             if (!Rules.CanHold) return;
+            
             OnHold?.Invoke();
+        }
+
+        private void TriggerSelect()
+        {
+            if (!Rules.CanSelect) return;
+            
+            OnSelect?.Invoke();
         }
     }
 }

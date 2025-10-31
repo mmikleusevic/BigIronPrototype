@@ -12,10 +12,10 @@ namespace PokerDiceRoom
     public class PokerDiceGameManager : MonoBehaviour
     {
         [Header("References")] 
-        public PokerInputRules InputRules { get; } = new PokerInputRules();
+        [field: SerializeField] public PokerInputRules PokerInputRules { get; private set; }
         [field: SerializeField] public PokerDiceStateMachine StateMachine { get; private set; }
         [field: SerializeField] public DiceRoller DiceRoller { get; private set; }
-        [field: SerializeField] public PokerInputHandler PokerInputHandler { get; private set; }
+        [field: SerializeField] public PokerInputs PokerInputs { get; private set; }
         [field: SerializeField] public PokerGame PokerGame { get; private set; }
         
         private void Start()

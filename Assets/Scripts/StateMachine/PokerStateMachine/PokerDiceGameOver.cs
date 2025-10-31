@@ -7,6 +7,7 @@ namespace StateMachine.PokerStateMachine
 {
     public class PokerDiceGameOverState : IPokerDiceState
     {
+        public static event Action OnGameOverStarted;
         public static event Action<string> OnGameOver;
 
         private readonly PokerGame pokerGame;
@@ -18,6 +19,8 @@ namespace StateMachine.PokerStateMachine
     
         public void OnEnter()
         {
+            OnGameOverStarted?.Invoke();
+                
             Debug.Log("=== GAME OVER ===");
             
             string winner = DetermineWinner();

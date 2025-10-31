@@ -9,13 +9,8 @@ using UnityEngine.UI;
 
 namespace PokerDiceRoom
 {
-    public class PokerUI : MonoBehaviour, IPokerInputSource
+    public class PokerUI : MonoBehaviour
     {
-        public event Action OnRoll;
-        public event Action OnHold;
-        public event Action<Vector2> OnMove;
-        public event Action OnSelect;
-
         [SerializeField] private TextMeshProUGUI playerNameText;
         [SerializeField] private TextMeshProUGUI numberOfRoles;
         [SerializeField] private TextMeshProUGUI handResult;
@@ -24,6 +19,9 @@ namespace PokerDiceRoom
         [SerializeField] private Button continueButton;
         [SerializeField] private AssetReference gameAssetReference;
         [SerializeField] private AssetReference pokerAssetReference;
+        [SerializeField] private PokerDiceGameManager pokerDiceGameManager;
+        private PokerInputs PokerInputs => pokerDiceGameManager.PokerInputs;
+        private PokerInputRules InputRules => pokerDiceGameManager.PokerInputRules;
         
         private void Awake()
         {
@@ -39,9 +37,11 @@ namespace PokerDiceRoom
         {
             PokerDiceTurnStartState.OnTurnStart += SetCurrentPlayerText;
             PokerDiceRollingState.OnDiceRollingStarted += OnDiceRollStarted;
+            PokerDiceEvaluatingState.OnDiceEvaluationStarted += OnDiceEvaluationStarted;
             PokerDiceEvaluatingState.OnHandEvaluated += SetHandResult;
             PokerDiceTurnEndState.OnTurnEndStarted += OnTurnEnded;
             PokerDiceGameOverState.OnGameOver += OnGameOver;
+            InputRules.OnRulesChanged += OnRulesChanged;
             rollButton.onClick.AddListener(OnRollPressed);
             holdButton.onClick.AddListener(OnHoldPressed);
             continueButton.onClick.AddListener(OnContinuePressed);
@@ -51,9 +51,11 @@ namespace PokerDiceRoom
         {
             PokerDiceTurnStartState.OnTurnStart -= SetCurrentPlayerText;
             PokerDiceRollingState.OnDiceRollingStarted -= OnDiceRollStarted;
+            PokerDiceEvaluatingState.OnDiceEvaluationStarted -= OnDiceEvaluationStarted;
             PokerDiceEvaluatingState.OnHandEvaluated -= SetHandResult;
             PokerDiceTurnEndState.OnTurnEndStarted -= OnTurnEnded;
             PokerDiceGameOverState.OnGameOver -= OnGameOver;
+            InputRules.OnRulesChanged -= OnRulesChanged;
             rollButton.onClick.RemoveListener(OnRollPressed);
             holdButton.onClick.RemoveListener(OnHoldPressed);
             continueButton.onClick.RemoveListener(OnContinuePressed);
@@ -93,11 +95,15 @@ namespace PokerDiceRoom
                 $"got: {pokerDiceHandResult.Description} " +
                 $"(Score: {pokerDiceHandResult.Score})\n";
         }
-        
-        private void OnGameOver(string playerName)
+
+        private void OnDiceEvaluationStarted()
         {
             playerNameText.gameObject.SetActive(false);
             numberOfRoles.gameObject.SetActive(false);
+        }
+        
+        private void OnGameOver(string playerName)
+        {
             continueButton.gameObject.SetActive(true);
         }
         
@@ -111,20 +117,29 @@ namespace PokerDiceRoom
         {
             rollButton.gameObject.SetActive(false);
             holdButton.gameObject.SetActive(false);
-            OnRoll?.Invoke();
+
+            PokerInputs.TriggerRoll();
         }
         
         private void OnHoldPressed()
         {
             rollButton.gameObject.SetActive(false);
             holdButton.gameObject.SetActive(false);
-            OnHold?.Invoke();
+            
+            PokerInputs.TriggerHold();
         }
         
         private void OnContinuePressed()
         {
             _ = LevelManager.Instance.LoadSceneAsync(gameAssetReference);
             _ = LevelManager.Instance.UnloadSceneAsync(pokerAssetReference.AssetGUID);
+        }
+        
+        private void OnRulesChanged()
+        {
+            rollButton.gameObject.SetActive(InputRules.CanRoll);
+            holdButton.gameObject.SetActive(InputRules.CanHold);
+            continueButton.gameObject.SetActive(InputRules.CanContinue);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace StateMachine.PokerStateMachine
     public class PokerDiceRollingState : IPokerDiceState
     {
         public static event Action<int, int> OnDiceRollingStarted;
+        public static event Action OnDiceRollingEnded;
         
         private readonly PokerDiceGameManager pokerDiceGameManager;
         private readonly IPokerInputSource pokerInputSource;
@@ -21,7 +22,7 @@ namespace StateMachine.PokerStateMachine
         public PokerDiceRollingState(PokerDiceGameManager manager)
         {
             pokerDiceGameManager = manager;
-            pokerInputSource = pokerDiceGameManager.PokerInputHandler;
+            pokerInputSource = pokerDiceGameManager.PokerInputs;
             diceRoller = pokerDiceGameManager.DiceRoller;
             pokerGame = pokerDiceGameManager.PokerGame;
         }
@@ -34,10 +35,10 @@ namespace StateMachine.PokerStateMachine
             pokerInputSource.OnSelect += OnSelect;
             
             string pokerPlayer = pokerGame.CurrentPlayer;
-            
             diceRoller.SetPlayerRolls(pokerPlayer);
+            int playerRolls = diceRoller.GetPlayerRolls(pokerPlayer);
             
-            OnDiceRollingStarted?.Invoke(diceRoller.GetPlayerRolls(pokerPlayer), diceRoller.MaxRolls);
+            OnDiceRollingStarted?.Invoke(playerRolls, diceRoller.MaxRolls);
         }
 
         public void OnUpdate() { }
@@ -65,8 +66,6 @@ namespace StateMachine.PokerStateMachine
         
         private void OnSelect()
         {
-            if (diceRoller.CurrentRollNumber == 0) return;
-            
             diceRoller.Dice[selectedDieIndex].ToggleDie();
         }
         
@@ -91,6 +90,8 @@ namespace StateMachine.PokerStateMachine
         
         public void OnExit()
         {
+            OnDiceRollingEnded?.Invoke();
+            
             pokerInputSource.OnRoll -= OnRoll;
             pokerInputSource.OnHold -= OnHoldTurn;
             pokerInputSource.OnMove -= OnMoveSelection;
