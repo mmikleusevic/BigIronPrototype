@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Extensions;
 using Managers;
 using UnityEngine;
@@ -56,9 +57,9 @@ namespace UI
             options.gameObject.SetActive(true);
         }
 
-        private async Task BackToMainMenu()
+        private async UniTask BackToMainMenu()
         {
-            GameManager.Instance.DisposeGame();
+            await GameManager.Instance.DisposeGame();
             
             _ = LevelManager.Instance.UnloadAllButPersistentScenesAsync();
             await LevelManager.Instance.LoadSceneAsync(mainMenuSceneReference);

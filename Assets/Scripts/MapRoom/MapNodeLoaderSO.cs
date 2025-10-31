@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Managers;
 using UnityEngine;
 
@@ -10,6 +11,6 @@ namespace MapRoom
         [SerializeField] private LevelNodeType levelNodeType;
 
         public LevelNodeType LevelNodeType => levelNodeType;
-        public abstract Task LoadAsync(LevelNode node, LevelManager context);
+        public abstract UniTask LoadAsync(LevelNode node, LevelManager context);
     }
 }

@@ -8,12 +8,12 @@ namespace Managers
 {
     public class EventRoomManager : MonoBehaviour
     {
-        public event Action<EventDataSO> OnEventLoaded;
+        public event Action<EventSO> OnEventLoaded;
         public event Action<EventChoice, bool> OnChoiceResult;
         public event Action OnEventEnded;
         public static EventRoomManager Instance { get; private set; }
     
-        private EventDataSO currentEventDataSO; 
+        private EventSO currentEventSo; 
         
         private void Awake()
         {
@@ -73,10 +73,10 @@ namespace Managers
             choice.GeneratedResultDescription = combinedResult;
         }
         
-        public void DisplayCurrentEvent(EventDataSO eventDataSo)
+        public void DisplayCurrentEvent(EventSO eventSo)
         {
-            currentEventDataSO = eventDataSo;
-            OnEventLoaded?.Invoke(currentEventDataSO);
+            currentEventSo = eventSo;
+            OnEventLoaded?.Invoke(currentEventSo);
         }
     
         private void EndEventSequence()

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace EventRoom
 {
-    [CreateAssetMenu(menuName = "Event Effects/GainGold")]
+    [CreateAssetMenu(menuName = "Event Effects/GainGoldSO")]
     public class GainGoldEffectSO : EventEffectSO
     {
         public int Amount;

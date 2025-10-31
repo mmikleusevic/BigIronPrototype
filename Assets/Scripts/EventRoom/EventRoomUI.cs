@@ -7,19 +7,20 @@ using UnityEngine.UI;
 
 namespace EventRoom
 {
-    public class EventRoomUI : MonoBehaviour
+    public class EventRoomUI : MonoBehaviour, IClearable
     {
         [SerializeField] private GameObject eventRoomPanel;
         [SerializeField] private TextMeshProUGUI titleText;
         [SerializeField] private TextMeshProUGUI descriptionText;
-        [SerializeField] private Button choicePrefab;
-        [SerializeField] private Button continueButton;
+        [SerializeField] private ChoiceButton choicePrefab;
+        [SerializeField] private ContinueButton continueButton;
         [SerializeField] private Transform choiceParent;
         
         private void Awake()
         {
             eventRoomPanel.SetActive(false);
             continueButton.gameObject.SetActive(false);
+            GameManager.Instance.Clearables.Add(this);
         }
 
         private void OnEnable()
@@ -40,22 +41,15 @@ namespace EventRoom
             EventRoomManager.Instance.OnEventEnded -= Hide;
         }
         
-        private void Initialize(EventDataSO eventDataSo)
+        private void Initialize(EventSO eventSo)
         {
-            RemoveButtons();
-            
-            titleText.text = eventDataSo.Title;
-            descriptionText.text = eventDataSo.Description;
+            titleText.text = eventSo.Title;
+            descriptionText.text = eventSo.Description;
 
-            foreach (EventChoice eventChoice in eventDataSo.Choices)
+            foreach (EventChoice eventChoice in eventSo.Choices)
             {
-                Button choiceButton = choicePrefab.GetPooledObject<Button>(choiceParent);
-                choiceButton.GetComponentInChildren<TextMeshProUGUI>().text = eventChoice.ChoiceText;
-                choiceButton.onClick.AddListener(() =>
-                {
-                    EventRoomManager.Instance.OnChoiceSelected(eventChoice);
-                });
-                choiceButton.gameObject.SetActive(true);
+                ChoiceButton choiceButton = choicePrefab.GetPooledObject<ChoiceButton>(choiceParent);
+                choiceButton.Initialize(eventChoice);
             }
             
             eventRoomPanel.SetActive(true);
@@ -63,25 +57,21 @@ namespace EventRoom
         
         private void Hide()
         {
-            RemoveButtons();
+            ReturnToPool();
             continueButton.gameObject.SetActive(false);
             eventRoomPanel.SetActive(false);
         }
         
         private void ShowChoiceResult(EventChoice choice, bool conditionsMet)
         {
-            RemoveButtons();
-
+            ReturnToPool();
             SetDescriptionText(choice, conditionsMet);
+            RegisterContinueButton(choice);
+        }
 
-            continueButton.onClick.RemoveAllListeners();
-            continueButton.onClick.AddListener(() =>
-            {
-                continueButton.gameObject.SetActive(false);
-                EventRoomManager.Instance?.ContinueAfterResult(choice);
-            });
-
-            continueButton.gameObject.SetActive(true);
+        private void RegisterContinueButton(EventChoice eventChoice)
+        {
+            continueButton.Initialize(eventChoice);
         }
 
         private void SetDescriptionText(EventChoice choice, bool conditionsMet)
@@ -97,18 +87,10 @@ namespace EventRoom
                 descriptionText.text = choice.FailDescription;
             }
         }
-        
-        private void RemoveButtons()
+
+        public void ReturnToPool()
         {
-            foreach (Transform child in choiceParent)
-            {
-                if (child == continueButton.transform || child == choicePrefab.transform) continue;
-                
-                Button button = child.GetComponent<Button>();
-                
-                if (button) button.onClick.RemoveAllListeners();
-                child.ReturnToPool(choicePrefab);
-            }
+            choiceParent.ReturnAllToPool(new Transform[] { continueButton.transform, choicePrefab.transform });
         }
     }
 }

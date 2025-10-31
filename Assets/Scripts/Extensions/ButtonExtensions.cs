@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,18 +8,17 @@ namespace Extensions
 {
     public static class ButtonExtensions
     {
-        public static void AddClickAsync(this Button button, Func<Task> asyncAction)
+        public static void AddClickAsync(this Button button, Func<UniTask> asyncAction)
         {
             button.onClick.AddListener(() =>
             {
-                _ = button.SafeClickAsync(asyncAction);
+                _ = SafeClickAsync(button, asyncAction);
             });
         }
         
-        private static async Task SafeClickAsync(this Button button, Func<Task> action)
+        private static async UniTaskVoid SafeClickAsync(this Button button, Func<UniTask> action)
         {
-            if (!button || action == null)
-                return;
+            if (!button || action == null) return;
 
             try
             {
@@ -31,7 +31,7 @@ namespace Extensions
             }
             finally
             {
-                button.interactable = true;
+                if (button) button.interactable = true;
             }
         }
     }

@@ -1,9 +1,8 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Extensions;
 using Player;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.SceneManagement;
 
 namespace Managers
 {
@@ -15,6 +14,8 @@ namespace Managers
 
         [SerializeField] private PlayerContext playerPrefab;
         [SerializeField] private SceneReferenceSO gameSceneReferenceSO;
+        
+        public List<IClearable> Clearables { get; set; } = new List<IClearable>();
         
         private bool isPaused;
         
@@ -28,10 +29,19 @@ namespace Managers
             PlayerContext = playerPrefab.GetPooledObject<PlayerContext>();
         }
         
-        public void DisposeGame()
+        public async UniTask DisposeGame()
         {
-            PlayerContext.ReturnToPool(playerPrefab);
+            PlayerContext.ReturnToPool();
             PlayerContext = null;
+
+            foreach (IClearable clearable in Clearables)
+            {
+                clearable.ReturnToPool();
+            }
+            
+            Clearables.Clear();
+            
+            await UniTask.CompletedTask;
         }
 
         public bool TogglePause()

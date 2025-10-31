@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Extensions;
 using Managers;
 using UnityEngine;
@@ -31,7 +33,7 @@ namespace UI
             exitButton.onClick.RemoveListener(ExitGame);
         }
     
-        private async Task PlayGame()
+        private async UniTask PlayGame()
         {
             _ = LevelManager.Instance.UnloadSceneAsync(mainMenuAssetReference.AssetGUID);
             await LevelManager.Instance.LoadSceneAsync(gameAssetReference);

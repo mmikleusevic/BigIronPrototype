@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace EventRoom
 {
-    [CreateAssetMenu(menuName = "Event Conditions/HPGreaterThan")]
+    [CreateAssetMenu(menuName = "Event Conditions/HPGreaterThanSO")]
     public class HealthGreaterThanConditionSO : EventConditionSO
     {
         public int Threshold;

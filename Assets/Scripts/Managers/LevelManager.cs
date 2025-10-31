@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using MapRoom;
 using TreeEditor;
 using UnityEditor.AddressableAssets.Settings;
@@ -30,21 +31,31 @@ namespace Managers
             DontDestroyOnLoad(this);
         }
 
-        public async Task LoadSceneAsync(AssetReference sceneReferenceSO,  bool setActive = true)
+        public async UniTask LoadSceneAsync(AssetReference sceneReferenceSO,  bool setActive = true)
         {
-            if (IsSceneLoaded(sceneReferenceSO.AssetGUID)) return;
-
-            AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(sceneReferenceSO, LoadSceneMode.Additive);
-            SceneInstance sceneInstance = await handle.Task;
-
-            loadedScenes[sceneReferenceSO.AssetGUID] = handle;
-
+            SceneInstance sceneInstance;
+            AsyncOperationHandle<SceneInstance> handle;
+            
+            if (IsSceneLoaded(sceneReferenceSO.AssetGUID))
+            {
+                if (!setActive) return;
+                handle = loadedScenes[sceneReferenceSO.AssetGUID];
+                sceneInstance = await handle.Task;
+                SceneManager.SetActiveScene(sceneInstance.Scene);
+            }
+            else
+            {
+                handle = Addressables.LoadSceneAsync(sceneReferenceSO, LoadSceneMode.Additive);
+                sceneInstance = await handle.Task;
+                loadedScenes[sceneReferenceSO.AssetGUID] = handle;
+            }
+            
             if (setActive) SceneManager.SetActiveScene(sceneInstance.Scene);
             
             OnSceneLoaded?.Invoke(sceneReferenceSO.AssetGUID, true);
         }
         
-        public async Task UnloadSceneAsync(string sceneGUID)
+        public async UniTask UnloadSceneAsync(string sceneGUID)
         {
             if (!loadedScenes.TryGetValue(sceneGUID, out AsyncOperationHandle<SceneInstance> handle)) return;
             
@@ -54,16 +65,16 @@ namespace Managers
             loadedScenes.Remove(sceneGUID);
         }
 
-        public async Task UnloadAllButPersistentScenesAsync()
+        public async UniTask UnloadAllButPersistentScenesAsync()
         {
-            List<Task> unloadTasks = new List<Task>();
+            List<UniTask> unloadTasks = new List<UniTask>();
     
             foreach (KeyValuePair<string, AsyncOperationHandle<SceneInstance>> loadedScenePair in loadedScenes)
             {
                 if (!IsPersistentScene(loadedScenePair.Key)) unloadTasks.Add(UnloadSceneAsync(loadedScenePair.Key));
             }
     
-            await Task.WhenAll(unloadTasks);
+            await UniTask.WhenAll(unloadTasks);
         }
         
         private bool IsSceneLoaded(string assetGUID)
@@ -76,7 +87,7 @@ namespace Managers
             return persistentScenes.Any(s => s.AssetGUID == sceneGUID);
         }
         
-        public async Task LoadNode(LevelNode node)
+        public async UniTask LoadNode(LevelNode node)
         {
             MapNodeLoaderSO mapNodeLoaderSO = nodeLoaders.FirstOrDefault(a => a.LevelNodeType == node.LevelNodeType);
             

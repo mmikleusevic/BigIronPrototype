@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace EventRoom
 {
-    [CreateAssetMenu(fileName = "EventEffect", menuName = "Scriptable Objects/EventEffect")]
+    [CreateAssetMenu(fileName = "EventEffectSO", menuName = "Scriptable Objects/EventEffectSO")]
     public abstract class EventEffectSO : ScriptableObject
     {
         public abstract string Apply(PlayerContext context);

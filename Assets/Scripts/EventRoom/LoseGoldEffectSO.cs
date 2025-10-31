@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace EventRoom
 {
-    [CreateAssetMenu(menuName = "Event Effects/LoseGold")]
+    [CreateAssetMenu(menuName = "Event Effects/LoseGoldSO")]
     public class LoseGoldEffectSO : EventEffectSO
     {
         public int Amount;

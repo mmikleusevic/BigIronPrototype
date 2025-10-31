@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MapRoom
 {
-    [CreateAssetMenu(fileName = "LevelNodeSpriteSet", menuName = "Scriptable Objects/LevelNodeSpriteSet")]
+    [CreateAssetMenu(fileName = "LevelNodeSpriteSetSO", menuName = "Scriptable Objects/LevelNodeSpriteSetSO")]
     public class LevelNodeSpriteSetSO : ScriptableObject
     {
         [SerializeField] private List<LevelNodeSprite> nodeSprites = new List<LevelNodeSprite>();

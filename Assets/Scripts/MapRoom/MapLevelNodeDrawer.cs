@@ -1,14 +1,21 @@
+using System;
 using Extensions;
+using Managers;
 using UnityEngine;
 using UnityEngine.UI.Extensions;
 
 namespace MapRoom
 {
-    public class MapLevelNodeDrawer : MonoBehaviour
+    public class MapLevelNodeDrawer : MonoBehaviour, IClearable
     {
         [SerializeField] private UILineRenderer uiLineRendererPrefab;
         [SerializeField] private RectTransform parent;
-    
+
+        private void Awake()
+        {
+            GameManager.Instance.Clearables.Add(this);
+        }
+
         public void DrawConnections(MapLevelNodes mapLevelNodes)
         {
             Canvas.ForceUpdateCanvases();
@@ -43,6 +50,11 @@ namespace MapRoom
                 out Vector2 localPoint
             );
             return localPoint;
+        }
+
+        public void ReturnToPool()
+        {
+            parent.ReturnToPool();
         }
     }
 }

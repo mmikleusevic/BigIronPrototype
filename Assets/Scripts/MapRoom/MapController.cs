@@ -1,22 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Extensions;
+using Managers;
 using UnityEngine;
 
 namespace MapRoom
 {
-    public class MapController : MonoBehaviour
+    public class MapController : MonoBehaviour, IClearable
     {
         [SerializeField] private LevelNodeGenerator levelNodeGenerator;
-        [SerializeField] private LevelNodeSpriteSetSO levelNodeSpriteSetSo;
         [SerializeField] private MapLevelNodeDrawer mapLevelNodeDrawer;
-    
+        [SerializeField] private LevelNodeSpriteSetSO levelNodeSpriteSetSO;
+        
         [Header("Map nodes")]
         [SerializeField] private MapLevelNode mapLevelNodePrefab;
-        [SerializeField] private RectTransform mapLevelNodeParent;
         [SerializeField] private GameObject mapLevelNodeGroupPrefab;
-    
-        private readonly MapLevelNodes activeNodes = new MapLevelNodes();
+        [SerializeField] private RectTransform mapLevelNodeParent;
+        
+        private readonly MapLevelNodes mapLevelNodes = new MapLevelNodes();
         private MapLevelNode currentLevelNode;
+
+        private void Awake()
+        {
+            GameManager.Instance.Clearables.Add(this);
+        }
 
         private void OnEnable()
         {
@@ -40,17 +47,17 @@ namespace MapRoom
                 {
                     MapLevelNode nodeUI = mapLevelNodePrefab.GetPooledObject<MapLevelNode>(mapLevelNodeGroup.transform);
                 
-                    activeNodes.AddNode(nodeUI);
+                    mapLevelNodes.AddNode(nodeUI);
 
                     LevelNode nodeData = floor[j];
                     
-                    nodeUI.Initialize(levelNodeSpriteSetSo.GetSprite(nodeData.LevelNodeType), nodeData, HandleNodeClicked);
+                    nodeUI.Initialize(levelNodeSpriteSetSO.GetSprite(nodeData.LevelNodeType), nodeData, HandleNodeClicked);
                 }
             }
         
-            mapLevelNodeDrawer.DrawConnections(activeNodes);
+            mapLevelNodeDrawer.DrawConnections(mapLevelNodes);
         
-            currentLevelNode = activeNodes.GetNodeByLevelType(LevelNodeType.Start);
+            currentLevelNode = mapLevelNodes.GetNodeByLevelType(LevelNodeType.Start);
             SetInteractableButtons();
             currentLevelNode?.Highlight(true);
         }
@@ -66,15 +73,13 @@ namespace MapRoom
 
             DisableOtherButtons();
             SetInteractableButtons();
-
-            Debug.Log(currentLevelNode.LevelNode.Connections.Count);
-            // TODO: load actual level
+            
             Debug.Log($"Loading level: {clickedNode.LevelNode.LevelNodeType}");
         }
 
         private void DisableOtherButtons()
         {
-            foreach (MapLevelNode mapLevelNode in activeNodes.LevelNodeGraph)
+            foreach (MapLevelNode mapLevelNode in mapLevelNodes.LevelNodeGraph)
             {
                 mapLevelNode.SetInteractable(false);
             }
@@ -86,9 +91,15 @@ namespace MapRoom
         
             foreach (LevelNode levelNode in currentLevelNode.LevelNode.Connections)
             {
-                MapLevelNode mapLevelNode = activeNodes.GetNodeByLevelNode(levelNode);
+                MapLevelNode mapLevelNode = mapLevelNodes.GetNodeByLevelNode(levelNode);
                 mapLevelNode.SetInteractable(true);
             }
+        }
+
+        public void ReturnToPool()
+        {
+            mapLevelNodes.LevelNodeGraph.ReturnAllToPool();
+            mapLevelNodeParent.ReturnToPool();
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Managers;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
@@ -18,7 +19,7 @@ public class Boot : MonoBehaviour
         _ = LoadScene();
     }
 
-    private async Task LoadScene()
+    private async UniTask LoadScene()
     {
         await LevelManager.Instance.LoadSceneAsync(loaderScene, false);
         await LevelManager.Instance.LoadSceneAsync(mainMenuScene);

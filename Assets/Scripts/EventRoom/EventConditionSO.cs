@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace EventRoom
 {
-    [CreateAssetMenu(fileName = "EventCondition", menuName = "Scriptable Objects/EventCondition")]
+    [CreateAssetMenu(fileName = "EventConditionSO", menuName = "Scriptable Objects/EventConditionSO")]
     public abstract class EventConditionSO : ScriptableObject
     {
         public abstract bool IsSatisfied(PlayerContext context);

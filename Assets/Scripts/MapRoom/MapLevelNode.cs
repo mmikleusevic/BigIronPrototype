@@ -17,6 +17,8 @@ namespace MapRoom
 
         private void OnDisable()
         {
+            SetInteractable(false);
+            Highlight(false);
             RemoveListener();
         }
 
@@ -57,10 +59,6 @@ namespace MapRoom
         }
     
         public void SetInteractable(bool value) => nodeButton.interactable = value;
-    
-        public void Highlight(bool value)
-        {
-            nodeImage.color = value ? Color.yellow : Color.white;
-        }
+        public void Highlight(bool value) => nodeImage.color = value ? Color.yellow : Color.white;
     }
 }
