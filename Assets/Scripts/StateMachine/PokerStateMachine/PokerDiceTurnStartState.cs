@@ -26,7 +26,7 @@ namespace StateMachine.PokerStateMachine
         {
             Debug.Log($"=== {pokerGame.CurrentPlayer}'s Turn ===");
             
-            diceRoller.ResetDiceHolds();
+            diceRoller.ResetDiceHolds(pokerGame.CurrentPlayer);
             
             OnTurnStart?.Invoke(pokerGame.CurrentPlayer);
         

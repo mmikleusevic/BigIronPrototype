@@ -38,6 +38,8 @@ namespace StateMachine.PokerStateMachine
             diceRoller.SetPlayerRolls(pokerPlayer);
             int playerRolls = diceRoller.GetPlayerRolls(pokerPlayer);
             
+            diceRoller.PlayerDice[pokerGame.CurrentPlayer][selectedDieIndex].DieVisual.ToggleHighlight();
+            
             OnDiceRollingStarted?.Invoke(playerRolls, diceRoller.MaxRolls);
         }
 
@@ -45,10 +47,13 @@ namespace StateMachine.PokerStateMachine
 
         private void OnRoll()
         {
-            List<int> rolls = diceRoller.RollDice();
-            pokerGame.SetPlayerRolls(rolls);
+            diceRoller.PlayerDice[pokerGame.CurrentPlayer][selectedDieIndex].DieVisual.ToggleHighlight();
             
-            OnRollComplete();
+            diceRoller.RollDice(pokerGame.CurrentPlayer,rolls => 
+            {
+                pokerGame.SetPlayerRolls(rolls);
+                OnRollComplete();
+            });
         }
 
         private void OnHoldTurn()
@@ -58,21 +63,25 @@ namespace StateMachine.PokerStateMachine
         
         private void OnMoveSelection(Vector2 move)
         {
+            diceRoller.PlayerDice[pokerGame.CurrentPlayer][selectedDieIndex].DieVisual.ToggleHighlight();
+            
             if (move.x > 0.5f) selectedDieIndex++;
             else if (move.x < -0.5f) selectedDieIndex--;
-
-            selectedDieIndex %= diceRoller.Dice.Count;
+            
+            int diceCount = diceRoller.PlayerDice[pokerGame.CurrentPlayer].Count;
+            selectedDieIndex = (selectedDieIndex + diceCount) % diceCount;
+            
+            diceRoller.PlayerDice[pokerGame.CurrentPlayer][selectedDieIndex].DieVisual.ToggleHighlight();
         }
         
         private void OnSelect()
-        {
-            diceRoller.Dice[selectedDieIndex].ToggleDie();
+        { 
+            diceRoller.PlayerDice[pokerGame.CurrentPlayer][selectedDieIndex].ToggleDie();
         }
         
         private void OnRollComplete()
         {
-            Debug.Log($"Dice: {string.Join(", ", diceRoller.Dice.Select(d => d.Value))}");
-
+            Debug.Log($"Dice: {string.Join(", ", diceRoller.PlayerDice.Where(a => a.Key == pokerGame.CurrentPlayer).SelectMany(d => d.Value.Select(c => c.Value)))}");
             DetermineNextState();
         }
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using Cysharp.Threading.Tasks.Triggers;
 using Extensions;
 using NUnit.Framework;
 using UnityEngine;
@@ -10,25 +12,28 @@ namespace PokerDiceRoom
     public class Die : MonoBehaviour
     {
         [field: SerializeField] public DieVisual DieVisual { get; private set; }
-        
         public int Value { get; private set; }
-        private bool IsHeld { get; set; }
+        public bool IsHeld { get; private set; }
         
         public void OnEnable()
         {
-            ResetDie();
+            ResetDie(true);
+        }
+
+        public void Initialize(RectTransform uiContainer)
+        {
+            DieVisual.Initialize(uiContainer);
         }
         
-        public void ResetDie()
+        public void ResetDie(bool isFirstRoll)
         {
-            Value = 1;
-            IsHeld = false;
+            IsHeld = !isFirstRoll;
             DieVisual.SetVisual(IsHeld);
         }
 
         public int Roll()
         {
-            if (!IsHeld) Value = Random.Range(1, 7);
+            Value = Random.Range(1, 7);
             return Value;
         }
 

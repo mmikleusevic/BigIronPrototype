@@ -13,7 +13,6 @@ namespace PokerDiceRoom
     {
         [SerializeField] private TextMeshProUGUI playerNameText;
         [SerializeField] private TextMeshProUGUI numberOfRoles;
-        [SerializeField] private TextMeshProUGUI handResult;
         [SerializeField] private Button rollButton;
         [SerializeField] private Button holdButton;
         [SerializeField] private Button continueButton;
@@ -27,7 +26,6 @@ namespace PokerDiceRoom
         {
             playerNameText.gameObject.SetActive(false);
             numberOfRoles.gameObject.SetActive(false);
-            handResult.gameObject.SetActive(false);
             rollButton.gameObject.SetActive(false);
             holdButton.gameObject.SetActive(false);
             continueButton.gameObject.SetActive(false);
@@ -38,7 +36,6 @@ namespace PokerDiceRoom
             PokerDiceTurnStartState.OnTurnStart += SetCurrentPlayerText;
             PokerDiceRollingState.OnDiceRollingStarted += OnDiceRollStarted;
             PokerDiceEvaluatingState.OnDiceEvaluationStarted += OnDiceEvaluationStarted;
-            PokerDiceEvaluatingState.OnHandEvaluated += SetHandResult;
             PokerDiceTurnEndState.OnTurnEndStarted += OnTurnEnded;
             PokerDiceGameOverState.OnGameOver += OnGameOver;
             InputRules.OnRulesChanged += OnRulesChanged;
@@ -52,7 +49,6 @@ namespace PokerDiceRoom
             PokerDiceTurnStartState.OnTurnStart -= SetCurrentPlayerText;
             PokerDiceRollingState.OnDiceRollingStarted -= OnDiceRollStarted;
             PokerDiceEvaluatingState.OnDiceEvaluationStarted -= OnDiceEvaluationStarted;
-            PokerDiceEvaluatingState.OnHandEvaluated -= SetHandResult;
             PokerDiceTurnEndState.OnTurnEndStarted -= OnTurnEnded;
             PokerDiceGameOverState.OnGameOver -= OnGameOver;
             InputRules.OnRulesChanged -= OnRulesChanged;
@@ -85,15 +81,6 @@ namespace PokerDiceRoom
         {
             numberOfRoles.gameObject.SetActive(true);
             numberOfRoles.text = "Rolls: " + currentNumberOfRolls + "/" + maxNumberOfRolls;
-        }
-        
-        private void SetHandResult(PokerDiceHandResult pokerDiceHandResult)
-        {
-            handResult.gameObject.SetActive(true);
-            handResult.text +=
-                $"{pokerDiceHandResult.PlayerName} " +
-                $"got: {pokerDiceHandResult.Description} " +
-                $"(Score: {pokerDiceHandResult.Score})\n";
         }
 
         private void OnDiceEvaluationStarted()

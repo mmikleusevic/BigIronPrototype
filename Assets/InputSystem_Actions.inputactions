@@ -688,7 +688,7 @@
                 {
                     "name": "",
                     "id": "8d0742c8-d62a-456d-b4ab-90958ecfb80f",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -809,7 +809,7 @@
                 {
                     "name": "",
                     "id": "92cba049-e9fc-4fc8-bcca-5df442d9209f",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -831,7 +831,7 @@
                 {
                     "name": "",
                     "id": "dd2642fa-4216-4752-aaa1-5dec9b14d427",
-                    "path": "<Keyboard>/enter",
+                    "path": "<Keyboard>/h",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

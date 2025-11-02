@@ -1,22 +1,58 @@
-﻿using UnityEngine;
+using System;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace PokerDiceRoom
 {
     public class DieVisual : MonoBehaviour
     {
-        public void ResetVisual()
+        [SerializeField] private Camera dieCamera;
+        [SerializeField] private RectTransform dieUI;
+        [SerializeField] private RawImage dieImage;
+        [SerializeField] private Outline dieOutline;
+        [SerializeField] private GameObject highlightDie;
+        [SerializeField] private int textureSize;
+        
+        private bool isHighlighted;
+        
+        public void Initialize(RectTransform uiContainer)
         {
+            RenderTexture renderTexture = new RenderTexture(textureSize, textureSize, 16, RenderTextureFormat.ARGB32);
+            renderTexture.Create();
             
+            dieUI.sizeDelta = new Vector2(textureSize, textureSize);
+            dieUI.transform.SetParent(uiContainer, false);
+            
+            dieImage.texture = renderTexture;
+            
+            dieCamera.targetTexture = renderTexture;
+            dieCamera.Render();
+            
+            ResetVisual();
         }
 
-        public void Highlight()
+        private void ResetVisual()
         {
-            
+            dieOutline.enabled = true;
         }
 
         public void SetVisual(bool isHeld)
         {
+            dieOutline.enabled = !isHeld;
+        }
+
+        public void ToggleHighlight()
+        {
+            isHighlighted = !isHighlighted;
+
+            highlightDie.gameObject.SetActive(isHighlighted);
             
+            dieCamera.Render();
+        }
+
+        public void SetCamera(bool value)
+        {
+            dieCamera.gameObject.SetActive(value);
         }
     }
 }
