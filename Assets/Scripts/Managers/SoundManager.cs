@@ -57,6 +57,7 @@ namespace Managers
             yield return StartCoroutine(SmoothChangeVolume(startingVolume, endingVolume));
             
             musicSource.clip = clip;
+            musicSource.Play();
             
             float tempVolume = startingVolume;
             startingVolume = musicSource.volume;
