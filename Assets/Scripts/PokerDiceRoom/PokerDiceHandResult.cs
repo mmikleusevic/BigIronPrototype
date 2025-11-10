@@ -12,11 +12,13 @@
             PlayerName = playerName;    
         }
 
-        public void CreateResult(PokerDiceHandRank rank, int score, string description)
+        public PokerDiceHandResult CreateResult(PokerDiceHandRank rank, int score, string description)
         {
             Rank = rank;
             Score = score;
             Description = description;
+
+            return this;
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using Extensions;
 using Managers;
 using StateMachine.PokerStateMachine;
 using TMPro;
@@ -15,7 +17,7 @@ namespace PokerDiceRoom
         [SerializeField] private TextMeshProUGUI numberOfRoles;
         [SerializeField] private Button rollButton;
         [SerializeField] private Button holdButton;
-        [SerializeField] private Button continueButton;
+        [SerializeField] private Button endButton;
         [SerializeField] private AssetReference gameAssetReference;
         [SerializeField] private AssetReference pokerAssetReference;
         [SerializeField] private PokerDiceGameManager pokerDiceGameManager;
@@ -28,7 +30,7 @@ namespace PokerDiceRoom
             numberOfRoles.gameObject.SetActive(false);
             rollButton.gameObject.SetActive(false);
             holdButton.gameObject.SetActive(false);
-            continueButton.gameObject.SetActive(false);
+            endButton.gameObject.SetActive(false);
         }
 
         private void OnEnable()
@@ -41,7 +43,7 @@ namespace PokerDiceRoom
             InputRules.OnRulesChanged += OnRulesChanged;
             rollButton.onClick.AddListener(OnRollPressed);
             holdButton.onClick.AddListener(OnHoldPressed);
-            continueButton.onClick.AddListener(OnContinuePressed);
+            endButton.AddClickAsync(OnEndPressed);
         }
 
         private void OnDisable()
@@ -54,7 +56,7 @@ namespace PokerDiceRoom
             InputRules.OnRulesChanged -= OnRulesChanged;
             rollButton.onClick.RemoveListener(OnRollPressed);
             holdButton.onClick.RemoveListener(OnHoldPressed);
-            continueButton.onClick.RemoveListener(OnContinuePressed);
+            endButton.onClick.RemoveAllListeners();
         }
 
         private void OnDiceRollStarted(int numberOfRolls, int maxNumberOfRolls)
@@ -91,7 +93,7 @@ namespace PokerDiceRoom
         
         private void OnGameOver(string playerName)
         {
-            continueButton.gameObject.SetActive(true);
+            endButton.gameObject.SetActive(true);
         }
         
         private void OnTurnEnded()
@@ -116,17 +118,18 @@ namespace PokerDiceRoom
             PokerInputs.TriggerHold();
         }
         
-        private void OnContinuePressed()
+        private async UniTask OnEndPressed()
         {
-            _ = LevelManager.Instance.LoadSceneAsync(gameAssetReference);
+            //TODO test this more
             _ = LevelManager.Instance.UnloadSceneAsync(pokerAssetReference.AssetGUID);
+            await LevelManager.Instance.LoadSceneAsync(gameAssetReference);
         }
         
         private void OnRulesChanged()
         {
             rollButton.gameObject.SetActive(InputRules.CanRoll);
             holdButton.gameObject.SetActive(InputRules.CanHold);
-            continueButton.gameObject.SetActive(InputRules.CanContinue);
+            endButton.gameObject.SetActive(InputRules.CanEnd);
         }
     }
 }

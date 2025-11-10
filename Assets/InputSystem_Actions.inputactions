@@ -675,6 +675,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "End",
+                    "type": "Button",
+                    "id": "78d66eeb-589d-49fe-b13c-3aa3c4d7de33",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Hold",
                     "type": "Button",
                     "id": "9b23078f-e6e6-4aab-9af2-2d27254382ee",
@@ -825,6 +834,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d05c1e8e-ae8a-4f46-9ea4-37696c1b8c26",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "End",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "32c4e810-b26a-4e67-a367-e7e00d083186",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "End",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

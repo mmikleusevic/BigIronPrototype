@@ -123,7 +123,12 @@ namespace PokerDiceRoom
             
             foreach (Die die in playerDice)
             {
-                if (die.IsHeld) continue;
+                if (die.IsHeld)
+                {
+                    rolls.Add(die.Value);
+                    continue;
+                }
+                
                 Coroutine coroutine = StartCoroutine(RollCoroutine(die, rolls));
                 runningCoroutines.Add(coroutine);
             }
@@ -197,6 +202,11 @@ namespace PokerDiceRoom
         public int GetPlayerRolls(string playerName)
         {
             return PlayerNumberOfRolls[playerName];
+        }
+
+        public int ReturnNumberOfDice(string playerName)
+        {
+            return PlayerDice[playerName].Count;
         }
     }
 }

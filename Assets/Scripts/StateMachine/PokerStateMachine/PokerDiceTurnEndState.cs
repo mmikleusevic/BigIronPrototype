@@ -19,13 +19,13 @@ namespace StateMachine.PokerStateMachine
     
         public void OnEnter()
         {
+            OnTurnEndStarted?.Invoke();
+            
             Debug.Log($"=== End of {pokerGame.CurrentPlayer}'s Turn ===");
             
             pokerGame.NextPlayer();
             
             pokerDiceGameManager.StateMachine.ChangeState(new PokerDiceTurnStartState(pokerDiceGameManager));
-            
-            OnTurnEndStarted?.Invoke();
         }
     
         public void OnUpdate() { }

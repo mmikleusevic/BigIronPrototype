@@ -10,8 +10,9 @@ namespace PokerDiceRoom
         
         public bool CanRoll { get; private set; }
         public bool CanHold { get; private set; }
-        public bool CanContinue { get; private set; }
+        public bool CanEnd { get; private set; }
         public bool CanSelect { get; private set; }
+        public bool CanMove { get; private set; }
 
         private void OnEnable()
         {
@@ -31,19 +32,21 @@ namespace PokerDiceRoom
 
         private void SetRollingPhase(int currentRoll, int maxRolls)
         {
+            CanMove = currentRoll > 1;
             CanRoll = currentRoll <= maxRolls;
             CanHold = currentRoll > 1 && currentRoll <= maxRolls;
             CanSelect = currentRoll > 1 && currentRoll <= maxRolls;
-            CanContinue = false;
+            CanEnd = false;
             
             OnRulesChanged?.Invoke();
         }
 
         private void SetEvaluationPhase()
         {
+            CanMove = false;
             CanRoll = false;
             CanHold = false;
-            CanContinue = false;
+            CanEnd = false;
             CanSelect = false;
             
             OnRulesChanged?.Invoke();
@@ -51,16 +54,17 @@ namespace PokerDiceRoom
 
         private void SetGameOverPhase()
         {
-            CanContinue = true;
+            CanEnd = true;
             
             OnRulesChanged?.Invoke();
         }
 
         private void Reset()
         {
+            CanMove = false;
             CanRoll = false;
             CanHold = false;
-            CanContinue = false;
+            CanEnd = false;
             CanSelect = false;
             
             OnRulesChanged?.Invoke();

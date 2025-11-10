@@ -25,21 +25,24 @@ namespace StateMachine.PokerStateMachine
     
         public void OnEnter()
         {
-            OnDiceEvaluationStarted?.Invoke();
+            //TODO test more 
             
-            Debug.Log("=== Evaluating Hand ===");
+            OnDiceEvaluationStarted?.Invoke();
+            Debug.Log("=== Evaluating Hands ===");
 
-            foreach (KeyValuePair<string, List<int>> playerRoll in pokerGame.PlayerRolls)
+            Dictionary<string, PokerDiceHandResult> results = new();
+
+            foreach (var (playerName, rolls) in pokerGame.PlayerRolls)
             {
-                string playerName = playerRoll.Key;
-                
-                PokerDiceHandResult result = EvaluateHand(playerName, playerRoll.Value);
-
+                PokerDiceHandResult result = EvaluateHand(playerName, rolls);
                 pokerGame.SetPlayerHand(playerName, result);
-                
+                results[playerName] = result;
                 OnHandEvaluated?.Invoke(result);
             }
-            
+
+            PokerDiceHandResult winner = DetermineWinner(results);
+            DisplayEvaluationReport(results, winner);
+
             displayTimer = 0f;
         }
     
@@ -60,81 +63,45 @@ namespace StateMachine.PokerStateMachine
         // Poker hand evaluation logic
         private PokerDiceHandResult EvaluateHand(string playerName, List<int> rolls)
         {
-            // Count occurrences of each die value
-            Dictionary<int, int> counts = new Dictionary<int, int>();
-            foreach (int roll in rolls)
-            {
-                counts.TryAdd(roll, 0);
-                counts[roll]++;
-            }
-        
-            List<int> values = rolls.Select(d => d).OrderBy(v => v).ToList();
-            List<int> countValues = counts.Values.OrderByDescending(v => v).ToList();
-        
-            int totalSum = values.Sum();
+            Dictionary<int, int> counts = rolls.GroupBy(v => v).ToDictionary(g => g.Key, g => g.Count());
+            List<int> sorted = rolls.OrderBy(v => v).ToList();
+            List<int> frequencies = counts.Values.OrderByDescending(v => v).ToList();
+            int sum = sorted.Sum();
 
-            PokerDiceHandResult pokerDiceHandResult = new PokerDiceHandResult(playerName);
-            
-            // Check for Five of a Kind
-            if (countValues[0] == 5)
+            var result = new PokerDiceHandResult(playerName);
+
+            if (frequencies[0] == 5)
+                return result.CreateResult(PokerDiceHandRank.FiveOfAKind, 100, "Five of a Kind!");
+
+            if (frequencies[0] == 4)
+                return result.CreateResult(PokerDiceHandRank.FourOfAKind, sum + 20, "Four of a Kind!");
+
+            if (frequencies[0] == 3 && frequencies[1] == 2)
+                return result.CreateResult(PokerDiceHandRank.FullHouse, sum + 50, "Full House!");
+
+            if (IsStraight(sorted))
+                return result.CreateResult(PokerDiceHandRank.Straight, 95, "Straight");
+
+            if (frequencies[0] == 3)
             {
-                pokerDiceHandResult.CreateResult(PokerDiceHandRank.FiveOfAKind, 100, "Five of a Kind!");
-                return pokerDiceHandResult;
+                int value = counts.First(kvp => kvp.Value == 3).Key;
+                return result.CreateResult(PokerDiceHandRank.ThreeOfAKind, value * 3 + 10, "Three of a Kind");
             }
-        
-            // Check for Four of a Kind
-            if (countValues[0] == 4)
-            {
-                pokerDiceHandResult.CreateResult(PokerDiceHandRank.FourOfAKind, totalSum + 20, "Four of a Kind!");
-                return pokerDiceHandResult;
-            }
-        
-            // Check for Full House (3 of one + 2 of another)
-            if (countValues[0] == 3 && countValues[1] == 2)
-            {
-                pokerDiceHandResult.CreateResult(PokerDiceHandRank.FullHouse, 50 + totalSum, "Full House");
-                return pokerDiceHandResult;
-            }
-        
-            // Check for Straight
-            bool isStraight = IsStraight(values);
-            if (isStraight)
-            {
-                // Large straight (all 5 consecutive)
-                if (values.Count == 5)
-                {
-                    pokerDiceHandResult.CreateResult(PokerDiceHandRank.Straight, 95, "Straight (Large)");
-                    return pokerDiceHandResult;
-                }
-            }
-        
-            // Check for Three of a Kind
-            if (countValues[0] == 3)
-            {
-                int threeValue = counts.First(kvp => kvp.Value == 3).Key;
-                pokerDiceHandResult.CreateResult(PokerDiceHandRank.ThreeOfAKind, (threeValue * 3) + 10, "Three of a Kind");
-                return pokerDiceHandResult;
-            }
-        
-            // Check for Two Pair
-            if (countValues[0] == 2 && countValues[1] == 2)
+
+            if (frequencies.Count(f => f == 2) == 2)
             {
                 int pairSum = counts.Where(kvp => kvp.Value == 2).Sum(kvp => kvp.Key * 2);
-                pokerDiceHandResult.CreateResult(PokerDiceHandRank.TwoPair, pairSum, "Two Pair");
-                return pokerDiceHandResult;
+                return result.CreateResult(PokerDiceHandRank.TwoPair, pairSum, "Two Pair");
             }
-        
-            // Check for One Pair
-            if (countValues[0] == 2)
+
+            if (frequencies[0] == 2)
             {
-                int pairValue = counts.First(kvp => kvp.Value == 2).Key;
-                pokerDiceHandResult.CreateResult(PokerDiceHandRank.OnePair, pairValue * 2, "One Pair");
-                return pokerDiceHandResult;
+                int value = counts.First(kvp => kvp.Value == 2).Key;
+                return result.CreateResult(PokerDiceHandRank.OnePair, value * 2, "One Pair");
             }
-        
-            // High Card (no hand)
-            pokerDiceHandResult.CreateResult(PokerDiceHandRank.HighCard, values.Max(), $"High Card ({values.Max()})");
-            return pokerDiceHandResult;
+
+            int highCard = sorted.Max();
+            return result.CreateResult(PokerDiceHandRank.HighCard, highCard, $"High Card ({highCard})");
         }
     
         private bool IsStraight(List<int> sortedValues)
@@ -148,6 +115,28 @@ namespace StateMachine.PokerStateMachine
             }
         
             return true;
+        }
+        
+        private void DisplayEvaluationReport(Dictionary<string, PokerDiceHandResult> results, PokerDiceHandResult winner)
+        {
+            Debug.Log("=== Hand Evaluation Results ===");
+
+            foreach (var (player, result) in results)
+            {
+                Debug.Log($"{player}: {result.Description} (Score: {result.Score})");
+            }
+
+            Debug.Log($"🏆 Winner: {winner.PlayerName} with {winner.Description}!");
+        }
+        
+        private PokerDiceHandResult DetermineWinner(Dictionary<string, PokerDiceHandResult> results)
+        {
+            // Order by hand rank first, then by score (for tie-breaker)
+            return results
+                .Values
+                .OrderByDescending(r => r.Rank)
+                .ThenByDescending(r => r.Score)
+                .First();
         }
     }
 }

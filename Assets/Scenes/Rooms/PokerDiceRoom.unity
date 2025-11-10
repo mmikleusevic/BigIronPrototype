@@ -129,7 +129,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 808169259464332973, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
       propertyPath: m_Name
-      value: ContinueButton
+      value: EndButton
       objectReference: {fileID: 0}
     - target: {fileID: 808169259464332973, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
       propertyPath: m_IsActive
@@ -217,7 +217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7040449232361538722, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
       propertyPath: m_text
-      value: Continue
+      value: End
       objectReference: {fileID: 0}
     - target: {fileID: 7040449232361538722, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
       propertyPath: m_fontSize
@@ -977,6 +977,7 @@ MonoBehaviour:
   select: {fileID: 2678822054610358520, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   roll: {fileID: 2939768696439308868, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   holdTurn: {fileID: -5223695621977746684, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  end: {fileID: 0}
   gameManager: {fileID: 587232039}
 --- !u!4 &825595838
 Transform:
