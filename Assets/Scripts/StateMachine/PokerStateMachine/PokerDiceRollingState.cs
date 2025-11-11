@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using EventRoom;
 using PokerDiceRoom;
 using UnityEngine;
@@ -10,6 +11,8 @@ namespace StateMachine.PokerStateMachine
     public class PokerDiceRollingState : IPokerDiceState
     {
         public static event Action<int, int> OnDiceRollingStarted;
+        public static event Action OnRoll;
+        public static event Action OnHold;
         public static event Action OnDiceRollingEnded;
         
         private readonly PokerDiceGameManager pokerDiceGameManager;
@@ -19,6 +22,7 @@ namespace StateMachine.PokerStateMachine
         private readonly PokerGame pokerGame;
         
         private int selectedDieIndex;
+        private bool hasDoneAction;
         
         public PokerDiceRollingState(PokerDiceGameManager manager)
         {
@@ -31,15 +35,15 @@ namespace StateMachine.PokerStateMachine
         
         public void OnEnter()
         {
-            pokerInputSource.OnRoll += OnRoll;
-            pokerInputSource.OnHold += OnHoldTurn;
-            pokerInputSource.OnMove += OnMoveSelection;
-            pokerInputSource.OnSelect += OnSelect;
+            pokerInputSource.OnRoll += Roll;
+            pokerInputSource.OnHold += HoldTurn;
+            pokerInputSource.OnMove += MoveSelection;
+            pokerInputSource.OnSelect += Select;
+         
+            PokerPlayer player = pokerGame.CurrentPlayer;
+            diceRoller.SetPlayerRolls(player);
+            int playerRolls = diceRoller.GetNumberOfPlayerRolls(player);
             
-            string pokerPlayer = pokerGame.CurrentPlayer;
-            diceRoller.SetPlayerRolls(pokerPlayer);
-            int playerRolls = diceRoller.GetPlayerRolls(pokerPlayer);
-
             OnDiceRollingStarted?.Invoke(playerRolls, diceRoller.MaxRolls);
             
             ToggleHighlight();
@@ -47,25 +51,39 @@ namespace StateMachine.PokerStateMachine
 
         public void OnUpdate() { }
 
-        private void OnRoll()
+        private void Roll()
         {
+            if (hasDoneAction) return;
+
+            hasDoneAction = true;
+            
+            OnRoll?.Invoke();
+            
             ToggleHighlight();
             
             diceRoller.RollDice(pokerGame.CurrentPlayer,rolls => 
             {
                 pokerGame.SetPlayerRolls(rolls);
-                OnRollComplete();
+                RollComplete();
             });
         }
 
-        private void OnHoldTurn()
+        private void HoldTurn()
         {
+            if (hasDoneAction) return;
+
+            hasDoneAction = true;
+            
+            OnHold?.Invoke();
+            
             ToggleHighlight();
-            DetermineNextState();
+            EndTurn();
         }
         
-        private void OnMoveSelection(Vector2 move)
+        private void MoveSelection(Vector2 move)
         {
+            if (hasDoneAction) return;
+            
             ToggleHighlight();
             
             if (move.x > 0.5f) selectedDieIndex++;
@@ -77,29 +95,22 @@ namespace StateMachine.PokerStateMachine
             ToggleHighlight();
         }
         
-        private void OnSelect()
+        private void Select()
         {
+            if (hasDoneAction) return;
+            
             CurrentDie?.ToggleDie();
         }
         
-        private void OnRollComplete()
+        private void RollComplete()
         {
             Debug.Log($"Dice: {string.Join(", ", diceRoller.PlayerDice.Where(a => a.Key == pokerGame.CurrentPlayer).SelectMany(d => d.Value.Select(c => c.Value)))}");
-            DetermineNextState();
+            EndTurn();
         }
 
-        private void DetermineNextState()
+        private void EndTurn()
         {
-            diceRoller.ResetDiceHolds(pokerGame.CurrentPlayer);
-            
-            if (diceRoller.AllPlayersRolled() && diceRoller.CurrentRollNumber >= diceRoller.MaxRolls)
-            {
-                pokerDiceGameManager.StateMachine.ChangeState(new PokerDiceEvaluatingState(pokerDiceGameManager));
-            }
-            else
-            {
-                pokerDiceGameManager.StateMachine.ChangeState(new PokerDiceTurnEndState(pokerDiceGameManager));
-            }
+            pokerDiceGameManager.StateMachine.ChangeState(new PokerDiceTurnEndState(pokerDiceGameManager));
         }
         
         private Die CurrentDie => diceRoller.PlayerDice[pokerGame.CurrentPlayer][selectedDieIndex];
@@ -107,16 +118,16 @@ namespace StateMachine.PokerStateMachine
         private void ToggleHighlight()
         {
             if (pokerInputRules.CanMove) CurrentDie?.DieVisual.ToggleHighlight();
-        } 
+        }
         
         public void OnExit()
         {
             OnDiceRollingEnded?.Invoke();
             
-            pokerInputSource.OnRoll -= OnRoll;
-            pokerInputSource.OnHold -= OnHoldTurn;
-            pokerInputSource.OnMove -= OnMoveSelection;
-            pokerInputSource.OnSelect -= OnSelect;
+            pokerInputSource.OnRoll -= Roll;
+            pokerInputSource.OnHold -= HoldTurn;
+            pokerInputSource.OnMove -= MoveSelection;
+            pokerInputSource.OnSelect -= Select;
         }
     }
 }

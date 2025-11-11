@@ -5,10 +5,10 @@ namespace PokerDiceRoom
 {
     public class PokerGame : MonoBehaviour
     {
-        [field: SerializeField] public string[] Players { get; private set; }
-        public Dictionary<string, PokerDiceHandResult> PlayerHands { get; } = new Dictionary<string, PokerDiceHandResult>();
-        public Dictionary<string, List<int>> PlayerRolls { get; } = new Dictionary<string, List<int>>();
-        public string CurrentPlayer { get; private set; }
+        [field: SerializeField] public PokerPlayer[] Players { get; private set; }
+        public Dictionary<PokerPlayer, PokerDiceHandResult> PlayerHands { get; } = new Dictionary<PokerPlayer, PokerDiceHandResult>();
+        public Dictionary<PokerPlayer, List<int>> PlayerRolls { get; } = new Dictionary<PokerPlayer, List<int>>();
+        public PokerPlayer CurrentPlayer { get; private set; }
         
         private int currentPlayerIndex;
 
@@ -20,14 +20,13 @@ namespace PokerDiceRoom
         
         public void NextPlayer()
         {
-            //TODO Check currentPlayer
             currentPlayerIndex = (currentPlayerIndex + 1) % Players.Length;
             CurrentPlayer = Players[currentPlayerIndex];
         }
 
-        public void SetPlayerHand(string playerName, PokerDiceHandResult result)
+        public void SetPlayerHand(PokerPlayer player, PokerDiceHandResult result)
         {
-            PlayerHands[playerName] = result;
+            PlayerHands[player] = result;
         }
 
         public void SetPlayerRolls(List<int> rolls)

@@ -6,7 +6,7 @@ namespace StateMachine.PokerStateMachine
 {
     public class PokerDiceTurnStartState : IPokerDiceState
     {
-        public static event Action<string> OnTurnStart;
+        public static event Action<PokerPlayer> OnTurnStart;
         
         private readonly PokerDiceGameManager pokerDiceGameManager;
         private readonly DiceRoller diceRoller;
@@ -39,7 +39,14 @@ namespace StateMachine.PokerStateMachine
 
             if (delayTimer < delayDuration) return;
             
-            pokerDiceGameManager.StateMachine.ChangeState(new PokerDiceRollingState(pokerDiceGameManager));
+            if (pokerGame.CurrentPlayer.IsAI)
+            {
+                pokerDiceGameManager.StateMachine.ChangeState(new PokerDiceAIRollingState(pokerDiceGameManager));    
+            }
+            else
+            {
+                pokerDiceGameManager.StateMachine.ChangeState(new PokerDiceRollingState(pokerDiceGameManager));
+            }
         }
     
         public void OnExit() { }

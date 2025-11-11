@@ -35,8 +35,11 @@ namespace PokerDiceRoom
 
         private void OnEnable()
         {
+            DiceRoller.OnNumberOfRollsChanged += SetNumberOfRolls;
             PokerDiceTurnStartState.OnTurnStart += SetCurrentPlayerText;
             PokerDiceRollingState.OnDiceRollingStarted += OnDiceRollStarted;
+            PokerDiceRollingState.OnRoll += DisableGameButtons;
+            PokerDiceRollingState.OnHold += DisableGameButtons;
             PokerDiceEvaluatingState.OnDiceEvaluationStarted += OnDiceEvaluationStarted;
             PokerDiceTurnEndState.OnTurnEndStarted += OnTurnEnded;
             PokerDiceGameOverState.OnGameOver += OnGameOver;
@@ -48,8 +51,11 @@ namespace PokerDiceRoom
 
         private void OnDisable()
         {
+            DiceRoller.OnNumberOfRollsChanged -= SetNumberOfRolls;
             PokerDiceTurnStartState.OnTurnStart -= SetCurrentPlayerText;
             PokerDiceRollingState.OnDiceRollingStarted -= OnDiceRollStarted;
+            PokerDiceRollingState.OnRoll -= DisableGameButtons;
+            PokerDiceRollingState.OnHold -= DisableGameButtons;
             PokerDiceEvaluatingState.OnDiceEvaluationStarted -= OnDiceEvaluationStarted;
             PokerDiceTurnEndState.OnTurnEndStarted -= OnTurnEnded;
             PokerDiceGameOverState.OnGameOver -= OnGameOver;
@@ -61,8 +67,6 @@ namespace PokerDiceRoom
 
         private void OnDiceRollStarted(int numberOfRolls, int maxNumberOfRolls)
         {
-            SetNumberOfRolls(numberOfRolls, maxNumberOfRolls);
-            
             if (numberOfRolls <= 1)
             {
                 rollButton.gameObject.SetActive(true);
@@ -73,10 +77,10 @@ namespace PokerDiceRoom
             rollButton.gameObject.SetActive(true);
         }
 
-        private void SetCurrentPlayerText(string playerName)
+        private void SetCurrentPlayerText(PokerPlayer player)
         {
             playerNameText.gameObject.SetActive(true);
-            playerNameText.text = "Current player: " + playerName;
+            playerNameText.text = "Currently playing: " + player.PlayerName;
         }
 
         private void SetNumberOfRolls(int currentNumberOfRolls, int maxNumberOfRolls)
@@ -116,6 +120,12 @@ namespace PokerDiceRoom
             holdButton.gameObject.SetActive(false);
             
             PokerInputs.TriggerHold();
+        }
+
+        private void DisableGameButtons()
+        {
+            rollButton.gameObject.SetActive(false);
+            holdButton.gameObject.SetActive(false);
         }
         
         private async UniTask OnEndPressed()

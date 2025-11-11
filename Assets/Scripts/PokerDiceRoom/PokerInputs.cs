@@ -23,6 +23,7 @@ namespace PokerDiceRoom
         private PokerInputRules Rules => gameManager.PokerInputRules;
         
         private InputActionReference[] actions;
+        private bool InputEnabled => !gameManager.PokerGame.CurrentPlayer.IsAI;
     
         private void Awake()
         {
@@ -63,7 +64,7 @@ namespace PokerDiceRoom
         
         private void OnMovePerformed(InputAction.CallbackContext ctx)
         {
-            if (!Rules.CanMove) return;
+            if (!InputEnabled || !Rules.CanMove) return;
             
             Vector2 value = ctx.ReadValue<Vector2>();
             OnMove?.Invoke(value);
@@ -91,28 +92,28 @@ namespace PokerDiceRoom
         
         public void TriggerRoll()
         {
-            if (!Rules.CanRoll) return;
+            if (!InputEnabled || !Rules.CanRoll) return;
             
             OnRoll?.Invoke();
         }
 
         public void TriggerHold()
         {
-            if (!Rules.CanHold) return;
+            if (!InputEnabled || !Rules.CanHold) return;
             
             OnHold?.Invoke();
         }
 
         private void TriggerSelect()
         {
-            if (!Rules.CanSelect) return;
+            if (!InputEnabled || !Rules.CanSelect) return;
             
             OnSelect?.Invoke();
         }
 
         private void TriggerEnd()
         {
-            if (!Rules.CanEnd) return;
+            if (!InputEnabled || !Rules.CanEnd) return;
             
             OnEnd?.Invoke();
         }

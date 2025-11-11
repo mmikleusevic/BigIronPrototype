@@ -808,7 +808,7 @@ MonoBehaviour:
   numberOfRoles: {fileID: 497972691}
   rollButton: {fileID: 1592893395}
   holdButton: {fileID: 1607147595}
-  continueButton: {fileID: 126142645}
+  endButton: {fileID: 126142645}
   gameAssetReference:
     m_AssetGUID: eddf679106729c44fad510c8224dccbc
     m_SubObjectName: 
@@ -1265,8 +1265,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PokerDiceRoom.PokerGame
   <Players>k__BackingField:
-  - Player
-  - Enemy
+  - <PlayerName>k__BackingField: Player
+    <IsAI>k__BackingField: 0
+  - <PlayerName>k__BackingField: Enemy
+    <IsAI>k__BackingField: 1
 --- !u!4 &1300653158
 Transform:
   m_ObjectHideFlags: 0

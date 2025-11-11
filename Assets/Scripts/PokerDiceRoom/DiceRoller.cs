@@ -11,6 +11,8 @@ namespace PokerDiceRoom
 {
     public class DiceRoller : MonoBehaviour, IClearable
     {
+        public static event Action<int, int> OnNumberOfRollsChanged;
+        
         [Header("Game Settings")]
         [SerializeField] private Die diePrefab;
 
@@ -22,9 +24,9 @@ namespace PokerDiceRoom
         
         public int CurrentRollNumber { get; set; }
         
-        public Dictionary<string, List<Die>> PlayerDice { get; } = new Dictionary<string, List<Die>>();
+        public Dictionary<PokerPlayer, List<Die>> PlayerDice { get; } = new Dictionary<PokerPlayer, List<Die>>();
 
-        private Dictionary<string, int> PlayerNumberOfRolls { get; } = new Dictionary<string, int>();
+        private Dictionary<PokerPlayer, int> PlayerNumberOfRolls { get; } = new Dictionary<PokerPlayer, int>();
 
         private readonly Quaternion[] sideRotations = new Quaternion[6]
         {
@@ -41,31 +43,31 @@ namespace PokerDiceRoom
             //TODO remove comment GameManager.Instance.Clearables.Add(this);
         }
 
-        public void Initialize(string[] players)
+        public void Initialize(PokerPlayer[] players)
         {
             InitializePlayerRolls(players);
             InitializeDice(players);
         }
 
-        private void InitializePlayerRolls(string[] players)
+        private void InitializePlayerRolls(PokerPlayer[] pokerPlayers)
         {
-            foreach (string player in players)
+            foreach (PokerPlayer pokerPlayer in pokerPlayers)
             {
-                PlayerNumberOfRolls.Add(player, 0);
+                PlayerNumberOfRolls.Add(pokerPlayer, 0);
             }
         }
 
-        private void InitializeDice(string[] players)
+        private void InitializeDice(PokerPlayer[] pokerPlayers)
         {
             int xPosition = 0;
-            foreach (string player in players)
+            foreach (PokerPlayer pokerPlayer in pokerPlayers)
             {
                 RectTransform container = uiDiceContainerPrefab.GetPooledObject<RectTransform>(uiDiceContainerPrefab.parent);
                 
                 container.gameObject.SetActive(true);
-                container.name = player;
+                container.name = pokerPlayer.PlayerName;
                 
-                if (player == "Player")
+                if (pokerPlayer.PlayerName == "Player")
                 {
                     container.transform.SetAsLastSibling();
                 }
@@ -85,15 +87,15 @@ namespace PokerDiceRoom
                     xPosition += 10;
                 }
                 
-                PlayerDice.Add(player, dice);
+                PlayerDice.Add(pokerPlayer, dice);
             }
         }
         
-        public void ResetDiceHolds(string playerName)
+        public void ResetDiceHolds(PokerPlayer player)
         {
-            List<Die> playerDice = PlayerDice[playerName];
+            List<Die> playerDice = PlayerDice[player];
 
-            bool isFirstRoll = CurrentRollNumber == 0;
+            bool isFirstRoll = GetNumberOfPlayerRolls(player) == 0;
             
             foreach (Die die in playerDice)
             {
@@ -109,17 +111,17 @@ namespace PokerDiceRoom
             }
         }
 
-        public void RollDice(string playerName, Action<List<int>> onComplete)
+        public void RollDice(PokerPlayer player, Action<List<int>> onComplete)
         {
-            StartCoroutine(RollDiceCoroutine(playerName, onComplete));
+            StartCoroutine(RollDiceCoroutine(player, onComplete));
         }
 
-        private IEnumerator RollDiceCoroutine(string playerName, Action<List<int>> onComplete)
+        private IEnumerator RollDiceCoroutine(PokerPlayer player, Action<List<int>> onComplete)
         {
             List<int> rolls = new List<int>();
             List<Coroutine> runningCoroutines = new List<Coroutine>();
     
-            List<Die> playerDice = PlayerDice[playerName];
+            List<Die> playerDice = PlayerDice[player];
             
             foreach (Die die in playerDice)
             {
@@ -180,33 +182,35 @@ namespace PokerDiceRoom
             die.DieVisual.SetCamera(false);
         }
 
-        public void SetPlayerRolls(string playerName)
+        public void SetPlayerRolls(PokerPlayer player)
         {
-            if (!PlayerNumberOfRolls.TryAdd(playerName, 0))
+            if (!PlayerNumberOfRolls.TryAdd(player, 0))
             {
-                PlayerNumberOfRolls[playerName]++;
+                PlayerNumberOfRolls[player]++;
             }
+
+            int numberOfPlayerRolls = GetNumberOfPlayerRolls(player);
             
-            Debug.Log($"Player {playerName} has rolled, number of rolls is: {PlayerNumberOfRolls[playerName]}");
+            OnNumberOfRollsChanged?.Invoke(numberOfPlayerRolls, MaxRolls);
+            
+            Debug.Log($"Player {player} has rolled, number of rolls is: {PlayerNumberOfRolls[player]}");
         }
         
-        public bool AllPlayersRolled()
-        {
-            bool haveAllRolled = PlayerNumberOfRolls.Values.Min() == PlayerNumberOfRolls.Values.Max();
+        public bool HaveAllPlayersRolled() => PlayerNumberOfRolls.Values.Min() == PlayerNumberOfRolls.Values.Max();
 
-            if (haveAllRolled) CurrentRollNumber++;
-            
-            return haveAllRolled;
+        public void TryAdvanceRollPhase()
+        {
+            if (HaveAllPlayersRolled()) CurrentRollNumber++;
         }
 
-        public int GetPlayerRolls(string playerName)
+        public int GetNumberOfPlayerRolls(PokerPlayer player)
         {
-            return PlayerNumberOfRolls[playerName];
+            return PlayerNumberOfRolls[player];
         }
 
-        public int ReturnNumberOfDice(string playerName)
+        public int ReturnNumberOfDice(PokerPlayer player)
         {
-            return PlayerDice[playerName].Count;
+            return PlayerDice[player].Count;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using PokerDiceRoom;
 using UnityEngine;
 
@@ -23,34 +24,35 @@ namespace StateMachine.PokerStateMachine
                 
             Debug.Log("=== GAME OVER ===");
             
-            string winner = DetermineWinner();
-        
-            Debug.Log($"\n*** WINNER: {winner} ***\n");
-            
-            OnGameOver?.Invoke(winner);
+            var winners = DetermineWinners();
+            if (winners.Count == 1)
+            {
+                Debug.Log($"🏆 Winner: {winners[0].PlayerName}");
+                OnGameOver?.Invoke(winners[0].PlayerName);
+            }
+            else
+            {
+                string tiedNames = string.Join(", ", winners.Select(w => w.PlayerName));
+                Debug.Log($"🤝 It's a tie between {tiedNames}!");
+                OnGameOver?.Invoke(null);
+            }
         }
     
         public void OnUpdate() { }
         public void OnExit() { }
     
-        private string DetermineWinner()
+        private List<PokerDiceHandResult> DetermineWinners()
         {
-            string winner = string.Empty;
-            int highestScore = -1;
-            PokerDiceHandRank highestRank = PokerDiceHandRank.HighCard;
-        
-            foreach (KeyValuePair<string, PokerDiceHandResult> playerHand in pokerGame.PlayerHands)
-            {
-                if (playerHand.Value.Rank <= highestRank &&
-                    (playerHand.Value.Rank != highestRank ||
-                     playerHand.Value.Score <= highestScore)) continue;
-                
-                highestRank = playerHand.Value.Rank;
-                highestScore = playerHand.Value.Score;
-                winner = playerHand.Key;
-            }
-        
-            return winner;
+            PokerDiceHandRank topRank = pokerGame.PlayerHands.Max(x => x.Value.Rank);
+            List<PokerDiceHandResult> candidates = pokerGame.PlayerHands
+                .Where(x => x.Value.Rank == topRank)
+                .Select(x => x.Value)
+                .ToList();
+
+            int topScore = candidates.Max(x => x.Score);
+            List<PokerDiceHandResult> winners = candidates.Where(x => x.Score == topScore).ToList();
+
+            return winners;
         }
     }
 }
