@@ -14,6 +14,7 @@ namespace PokerDiceRoom
     public class PokerUI : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI playerNameText;
+        [SerializeField] private TextMeshProUGUI wagerText;
         [SerializeField] private TextMeshProUGUI numberOfRoles;
         [SerializeField] private Button rollButton;
         [SerializeField] private Button holdButton;
@@ -23,6 +24,7 @@ namespace PokerDiceRoom
         [SerializeField] private PokerDiceGameManager pokerDiceGameManager;
         private PokerInputs PokerInputs => pokerDiceGameManager.PokerInputs;
         private PokerInputRules InputRules => pokerDiceGameManager.PokerInputRules;
+        private PokerGame PokerGame => pokerDiceGameManager.PokerGame;
         
         private void Awake()
         {
@@ -43,6 +45,7 @@ namespace PokerDiceRoom
             PokerDiceEvaluatingState.OnDiceEvaluationStarted += OnDiceEvaluationStarted;
             PokerDiceTurnEndState.OnTurnEndStarted += OnTurnEnded;
             PokerDiceGameOverState.OnGameOver += OnGameOver;
+            PokerGame.OnWagerChanged += SetWagerText;
             InputRules.OnRulesChanged += OnRulesChanged;
             rollButton.onClick.AddListener(OnRollPressed);
             holdButton.onClick.AddListener(OnHoldPressed);
@@ -59,12 +62,18 @@ namespace PokerDiceRoom
             PokerDiceEvaluatingState.OnDiceEvaluationStarted -= OnDiceEvaluationStarted;
             PokerDiceTurnEndState.OnTurnEndStarted -= OnTurnEnded;
             PokerDiceGameOverState.OnGameOver -= OnGameOver;
+            PokerGame.OnWagerChanged -= SetWagerText;
             InputRules.OnRulesChanged -= OnRulesChanged;
             rollButton.onClick.RemoveListener(OnRollPressed);
             holdButton.onClick.RemoveListener(OnHoldPressed);
             endButton.onClick.RemoveAllListeners();
         }
 
+        private void SetWagerText(int wager)
+        {
+            wagerText.text = $"Wager: {wager}";
+        }
+        
         private void OnDiceRollStarted(int numberOfRolls, int maxNumberOfRolls)
         {
             if (numberOfRolls <= 1)
@@ -95,7 +104,7 @@ namespace PokerDiceRoom
             numberOfRoles.gameObject.SetActive(false);
         }
         
-        private void OnGameOver(string playerName)
+        private void OnGameOver(int gold)
         {
             endButton.gameObject.SetActive(true);
         }
@@ -130,7 +139,6 @@ namespace PokerDiceRoom
         
         private async UniTask OnEndPressed()
         {
-            //TODO test this more
             _ = LevelManager.Instance.UnloadSceneAsync(pokerAssetReference.AssetGUID);
             await LevelManager.Instance.LoadSceneAsync(gameAssetReference);
         }

@@ -9,7 +9,7 @@ namespace StateMachine.PokerStateMachine
     public class PokerDiceGameOverState : IPokerDiceState
     {
         public static event Action OnGameOverStarted;
-        public static event Action<string> OnGameOver;
+        public static event Action<int> OnGameOver;
 
         private readonly PokerGame pokerGame;
     
@@ -24,17 +24,17 @@ namespace StateMachine.PokerStateMachine
                 
             Debug.Log("=== GAME OVER ===");
             
-            var winners = DetermineWinners();
+            List<PokerDiceHandResult> winners = DetermineWinners();
             if (winners.Count == 1)
             {
                 Debug.Log($"🏆 Winner: {winners[0].PlayerName}");
-                OnGameOver?.Invoke(winners[0].PlayerName);
+
+                if (winners[0].PlayerName == GameStrings.PLAYER) OnGameOver?.Invoke(pokerGame.Wager);
             }
             else
             {
                 string tiedNames = string.Join(", ", winners.Select(w => w.PlayerName));
                 Debug.Log($"🤝 It's a tie between {tiedNames}!");
-                OnGameOver?.Invoke(null);
             }
         }
     

@@ -20,17 +20,17 @@ namespace Managers
 
         private void Start()
         {
-            float volume = PlayerPrefs.GetFloat(GameEvents.VOLUME);
+            float volume = PlayerPrefs.GetFloat(GameStrings.VOLUME);
             SetVolume(volume);
             
-            float sfxVolume = PlayerPrefs.GetFloat(GameEvents.SFX_VOLUME);
+            float sfxVolume = PlayerPrefs.GetFloat(GameStrings.SFX_VOLUME);
             this.sfxVolume = sfxVolume;
         }
 
         public void SetVolume(float volume)
         {
             musicSource.volume = volume;   
-            PlayerPrefs.SetFloat(GameEvents.VOLUME, musicSource.volume);
+            PlayerPrefs.SetFloat(GameStrings.VOLUME, musicSource.volume);
         }
 
         public float GetVolume()
@@ -41,7 +41,7 @@ namespace Managers
         public void SetSfxVolume(float sfxVolume)
         {
             this.sfxVolume = sfxVolume;   
-            PlayerPrefs.SetFloat(GameEvents.SFX_VOLUME, this.sfxVolume);
+            PlayerPrefs.SetFloat(GameStrings.SFX_VOLUME, this.sfxVolume);
         }
 
         public float GetSfxVolume()

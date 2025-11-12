@@ -18,7 +18,6 @@ namespace Managers
     public class LevelManager : MonoBehaviour
     {
         public static LevelManager Instance { get; private set; }
-        public event Action<string, bool> OnSceneLoaded;
         
         [SerializeField] private List<SceneReferenceSO> persistentScenes;
         [SerializeField] private List<MapNodeLoaderSO> nodeLoaders;
@@ -41,7 +40,6 @@ namespace Managers
                 if (!setActive) return;
                 handle = loadedScenes[sceneReferenceSO.AssetGUID];
                 sceneInstance = await handle.Task;
-                SceneManager.SetActiveScene(sceneInstance.Scene);
             }
             else
             {
@@ -51,8 +49,6 @@ namespace Managers
             }
             
             if (setActive) SceneManager.SetActiveScene(sceneInstance.Scene);
-            
-            OnSceneLoaded?.Invoke(sceneReferenceSO.AssetGUID, true);
         }
         
         public async UniTask UnloadSceneAsync(string sceneGUID)

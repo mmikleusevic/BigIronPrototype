@@ -1,4 +1,5 @@
 using System;
+using StateMachine.PokerStateMachine;
 using UnityEngine;
 
 namespace Player
@@ -15,8 +16,15 @@ namespace Player
 
         private void OnEnable()
         {
+            PokerDiceGameOverState.OnGameOver += GainGoldAmount;
+            
             CurrentHealth = MaxHealth;
-            Gold = 0;
+            Gold = 10;
+        }
+
+        private void OnDisable()
+        {
+            PokerDiceGameOverState.OnGameOver -= GainGoldAmount;
         }
 
         public void GainGoldAmount(int amount)

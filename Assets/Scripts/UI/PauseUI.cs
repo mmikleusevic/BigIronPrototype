@@ -19,7 +19,7 @@ namespace UI
     
         [Header("Options")]
         [SerializeField] private Button optionsButton;
-        [SerializeField] private Options options;
+        [SerializeField] private OptionsUI optionsUI;
     
         [Space(20)]
         [SerializeField] private Button backToMainMenuButton;
@@ -54,7 +54,7 @@ namespace UI
 
         private void OpenOptions()
         {
-            options.gameObject.SetActive(true);
+            optionsUI.gameObject.SetActive(true);
         }
 
         private async UniTask BackToMainMenu()

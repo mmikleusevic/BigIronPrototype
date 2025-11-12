@@ -30,17 +30,17 @@ namespace PokerDiceRoom
 
         private readonly Quaternion[] sideRotations = new Quaternion[6]
         {
-            Quaternion.Euler(90, 0, 0),     // 1
-            Quaternion.Euler(0, 0, 0),      // 2 
-            Quaternion.Euler(0, 90, 0),     // 3 
-            Quaternion.Euler(0, 270, 0),    // 4 
-            Quaternion.Euler(0, 180, 0),    // 5 
-            Quaternion.Euler(360, -90, 90)  // 6
+            Quaternion.Euler(-90, 0, 0),   // 1
+            Quaternion.Euler(0, 180, 90),  // 2 
+            Quaternion.Euler(0, 270, 0),   // 3 
+            Quaternion.Euler(0, 90, 0),    // 4 
+            Quaternion.Euler(0, 0, 0),     // 5 
+            Quaternion.Euler(0, -90, -90)  // 6
         };
         
         private void Awake()
         {
-            //TODO remove comment GameManager.Instance.Clearables.Add(this);
+            GameManager.Instance.Clearables.Add(this);
         }
 
         public void Initialize(PokerPlayer[] players)

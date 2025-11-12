@@ -21,7 +21,7 @@ namespace Loading
 
             EventRoomManager.Instance?.DisplayCurrentEvent(chosenEvent);
 
-            await Task.CompletedTask;
+            await UniTask.CompletedTask;
         }
     }
 }

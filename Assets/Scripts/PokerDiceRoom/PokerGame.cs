@@ -1,14 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace PokerDiceRoom
 {
     public class PokerGame : MonoBehaviour
     {
+        public event Action<int> OnWagerChanged;
+        
         [field: SerializeField] public PokerPlayer[] Players { get; private set; }
         public Dictionary<PokerPlayer, PokerDiceHandResult> PlayerHands { get; } = new Dictionary<PokerPlayer, PokerDiceHandResult>();
         public Dictionary<PokerPlayer, List<int>> PlayerRolls { get; } = new Dictionary<PokerPlayer, List<int>>();
         public PokerPlayer CurrentPlayer { get; private set; }
+        public int Wager { get; private set; }
         
         private int currentPlayerIndex;
 
@@ -16,6 +21,7 @@ namespace PokerDiceRoom
         {
             PlayerHands.Clear();
             SetFirstPlayer();
+            SetWager();
         }
         
         public void NextPlayer()
@@ -41,6 +47,12 @@ namespace PokerDiceRoom
             int playerIndex = Random.Range(0, Players.Length);
             currentPlayerIndex = playerIndex;
             CurrentPlayer = Players[currentPlayerIndex];
+        }
+
+        private void SetWager()
+        { 
+            Wager = PokerDiceRoomManager.Instance.PlayerGoldToWager * Players.Length;
+            OnWagerChanged?.Invoke(Wager);
         }
     }
 }

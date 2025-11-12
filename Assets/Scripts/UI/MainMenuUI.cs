@@ -9,12 +9,12 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class MainMenu : MonoBehaviour
+    public class MainMenuUI : MonoBehaviour
     {
         [SerializeField] private Button playButton;
         [SerializeField] private Button optionsButton;
         [SerializeField] private Button exitButton;
-        [SerializeField] private Options options;
+        [SerializeField] private OptionsUI optionsUI;
 
         [SerializeField] private AssetReference mainMenuAssetReference;
         [SerializeField] private AssetReference gameAssetReference;
@@ -41,7 +41,7 @@ namespace UI
 
         private void OpenOptions()
         {
-            options.gameObject.SetActive(true);
+            optionsUI.gameObject.SetActive(true);
         }
 
         private void ExitGame()

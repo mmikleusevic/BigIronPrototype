@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class Options : MonoBehaviour
+    public class OptionsUI : MonoBehaviour
     {
         [Header("Volume")]
         [SerializeField] private Slider volumeSlider;
