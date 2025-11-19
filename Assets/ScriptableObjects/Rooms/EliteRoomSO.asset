@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: EliteRoomSO
   m_EditorClassIdentifier: Assembly-CSharp::Loading.CombatRoomLoaderSO
   levelNodeType: 2
+  combatTableSO: {fileID: 11400000, guid: c11f6dcd04e058c47b52300b30cf2ad3, type: 2}
   sceneReference:
     m_AssetGUID: f2c57bf8d3206554db19ebd0ab76652c
     m_SubObjectName: 

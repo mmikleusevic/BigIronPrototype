@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a252bfc5b9af4b68b35832bdace6e7a7, type: 3}
+  m_Name: EliteTableSO
+  m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.EncounterTableSO
+  encounters:
+  - {fileID: 11400000, guid: 5589e0f9abbfcf74884011a1a353e544, type: 2}
