@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using CombatRoom;
+﻿using CombatRoom;
 using Cysharp.Threading.Tasks;
 using Managers;
 using MapRoom;

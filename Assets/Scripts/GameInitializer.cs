@@ -2,9 +2,9 @@ using System;
 using Managers;
 using UnityEngine;
 
-public class GameInitializer : MonoBehaviour
+public class GameInitializer : SceneInitializer
 {
-    private void Start()
+    public override void Initialize()
     {
         GameManager.Instance.InitializeGame();
     }

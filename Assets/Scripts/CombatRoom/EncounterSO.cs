@@ -7,6 +7,5 @@ namespace CombatRoom
     public class EncounterSO : ScriptableObject
     {
         public List<EnemySO> enemies;
-        public int difficulty;
     }
 }
