@@ -10,6 +10,9 @@ namespace Managers
 {
     public class GameManager : MonoBehaviour
     {
+        public event Action OnPlayerInitialized;
+        public event Action OnPlayerReleased;
+        
         public static GameManager Instance { get; private set; }
 
         public PlayerContext PlayerContext { get; private set; }
@@ -29,11 +32,16 @@ namespace Managers
         public void InitializeGame()
         {
             PlayerContext = playerPrefab.GetPooledObject<PlayerContext>();
+            
+            OnPlayerInitialized?.Invoke();
+            PlayerContext.RefreshState();
         }
         
         public async UniTask DisposeGame()
         {
             PlayerContext.ReturnToPool();
+            OnPlayerReleased?.Invoke();
+            
             PlayerContext = null;
 
             foreach (IClearable clearable in Clearables)
@@ -42,6 +50,7 @@ namespace Managers
             }
             
             Clearables.Clear();
+            
             
             await UniTask.CompletedTask;
         }

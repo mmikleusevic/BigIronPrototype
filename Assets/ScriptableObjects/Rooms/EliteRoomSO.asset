@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Loading.CombatRoomLoaderSO
   levelNodeType: 2
   sceneReference:
-    m_AssetGUID: 924f00609443d8845a46e5ade16310ae
+    m_AssetGUID: f2c57bf8d3206554db19ebd0ab76652c
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 

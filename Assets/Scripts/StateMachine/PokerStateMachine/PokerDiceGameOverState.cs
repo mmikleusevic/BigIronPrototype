@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Managers;
 using PokerDiceRoom;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace StateMachine.PokerStateMachine
     public class PokerDiceGameOverState : IPokerDiceState
     {
         public static event Action OnGameOverStarted;
-        public static event Action<int> OnGameOver;
+        public static event Action OnGameOver;
 
         private readonly PokerGame pokerGame;
     
@@ -29,7 +30,10 @@ namespace StateMachine.PokerStateMachine
             {
                 Debug.Log($"🏆 Winner: {winners[0].PlayerName}");
 
-                if (winners[0].PlayerName == GameStrings.PLAYER) OnGameOver?.Invoke(pokerGame.Wager);
+                if (winners[0].PlayerName != GameStrings.PLAYER) return;
+                
+                GameManager.Instance.PlayerContext.GainGoldAmount(pokerGame.Wager);
+                OnGameOver?.Invoke();
             }
             else
             {

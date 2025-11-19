@@ -104,7 +104,7 @@ namespace PokerDiceRoom
             numberOfRoles.gameObject.SetActive(false);
         }
         
-        private void OnGameOver(int gold)
+        private void OnGameOver()
         {
             endButton.gameObject.SetActive(true);
         }

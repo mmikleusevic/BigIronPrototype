@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 967af8237a9f8b941a61bf86011576a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerContext
-  MaxHealth: 100
+  maxHealth: 100
