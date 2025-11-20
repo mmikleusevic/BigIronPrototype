@@ -32,7 +32,7 @@ namespace StateMachine.PokerStateMachine
 
             Dictionary<PokerPlayer, PokerDiceHandResult> results = new();
 
-            foreach (var (playerName, rolls) in pokerGame.PlayerRolls)
+            foreach ((PokerPlayer playerName, List<int> rolls) in pokerGame.PlayerRolls)
             {
                 PokerDiceHandResult result = PokerDiceHandEvaluation.EvaluateHand(playerName, rolls);
                 pokerGame.SetPlayerHand(playerName, result);
@@ -66,7 +66,7 @@ namespace StateMachine.PokerStateMachine
         {
             Debug.Log("=== Hand Evaluation Results ===");
 
-            foreach (var (player, result) in results)
+            foreach ((PokerPlayer player, PokerDiceHandResult result) in results)
             {
                 Debug.Log($"{player}: {result.Description} (Score: {result.Score})");
             }
@@ -74,7 +74,7 @@ namespace StateMachine.PokerStateMachine
             if (winners.Count == 1)
             {
                 // One winner
-                var winner = winners[0];
+                PokerDiceHandResult winner = winners[0];
                 Debug.Log($"🏆 Winner: {winner.PlayerName} with {winner.Description}!");
             }
             else

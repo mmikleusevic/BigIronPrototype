@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -53,6 +54,26 @@ namespace PokerDiceRoom
         { 
             Wager = PokerDiceRoomManager.Instance.PlayerGoldToWager * Players.Length;
             OnWagerChanged?.Invoke(Wager);
+        }
+        
+        public PokerDiceHandResult GetOpponentBestHand()
+        {
+            IEnumerable<PokerPlayer> opponents = Players.Where(p => p != CurrentPlayer);
+
+            List<PokerDiceHandResult> opponentHands = new List<PokerDiceHandResult>();
+
+            foreach (PokerPlayer opponent in opponents)
+            {
+                if (!PlayerRolls.TryGetValue(opponent, out List<int> rolls) || rolls.Count <= 0) continue;
+                
+                PokerDiceHandResult hand = PokerDiceHandEvaluation.EvaluateHand(opponent, rolls);
+                opponentHands.Add(hand);
+            }
+            
+            return opponentHands
+                .OrderByDescending(h => h.Rank)
+                .ThenByDescending(h => h.Score)
+                .First();
         }
     }
 }
