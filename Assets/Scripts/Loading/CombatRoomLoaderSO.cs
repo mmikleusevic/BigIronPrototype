@@ -10,13 +10,13 @@ namespace Loading
     [CreateAssetMenu(menuName = "Map Node Loaders/CombatRoomSO")]
     public class CombatRoomLoaderSO : MapNodeLoaderSO
     {
-        [SerializeField] private EncounterTableSO combatTableSO;
+        [SerializeField] private EncounterTableSO encounterTableSO;
         [SerializeField] private AssetReference sceneReference;
 
         public override async UniTask LoadAsync(LevelNode node, LevelManager context)
         {
-            int randomIndex = Random.Range(0, combatTableSO.encounters.Count);
-            EncounterSO randomEncounter = combatTableSO.encounters[randomIndex];
+            int randomIndex = Random.Range(0, encounterTableSO.encounters.Count);
+            EncounterSO randomEncounter = encounterTableSO.encounters[randomIndex];
             
             EncounterManager.Instance.SetNextEncounter(randomEncounter);
             
