@@ -11,18 +11,6 @@ namespace Player
         private int goldAmount;
         public int GoldAmount => goldAmount;
 
-        private void OnEnable()
-        {
-            goldAmount = 0;
-            
-            PokerDiceGameOverState.OnGameOver += GainGoldAmount;
-        }
-
-        private void OnDisable()
-        {
-            PokerDiceGameOverState.OnGameOver -= GainGoldAmount;
-        }
-
         public void GainGoldAmount(int goldGained)
         {
             goldAmount += goldGained;
@@ -37,7 +25,7 @@ namespace Player
 
         public void RefreshState()
         {
-            Gold.OnGoldChanged?.Invoke(Gold);
+            OnGoldChanged?.Invoke(goldAmount);
         }
     }
 }
