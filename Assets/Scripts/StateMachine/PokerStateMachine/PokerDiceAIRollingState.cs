@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using PokerDiceRoom;
@@ -26,8 +27,6 @@ namespace StateMachine.PokerStateMachine
             PokerPlayer player = pokerGame.CurrentPlayer;
             diceRoller.SetPlayerRolls(player);
 
-            if (diceRoller.CurrentRollNumber > 0) ToggleHighlight();
-            
             _ = StartAIRollRoutine();
         }
         
@@ -39,36 +38,53 @@ namespace StateMachine.PokerStateMachine
             
             Debug.Log(diceRoller.CurrentRollNumber);
             
-            if (diceRoller.CurrentRollNumber > 0) await SelectAllDiceToRoll();
+            if (diceRoller.CurrentRollNumber > 0) await SelectSmartDiceToRoll();
             
             OnRoll();
             
             await UniTask.Delay(1500);
         }
         
-        private async UniTask SelectAllDiceToRoll()
+        private async UniTask SelectSmartDiceToRoll()
         {
-            for (int i = 0; i < diceRoller.PlayerDice[pokerGame.CurrentPlayer].Count; i++)
+            PokerPlayer player = pokerGame.CurrentPlayer;
+
+            PokerDiceHandResult opponentHand = pokerGame.GetOpponentBestHand();
+
+            List<(int Index, int Value)> dice = diceRoller.PlayerDice[player]
+                .Select((die, index) => (Index: index, Value: die.Value))
+                .ToList();
+
+            PokerDiceHandResult myHand = PokerDiceHandEvaluation.EvaluateHand(player, dice.Select(d => d.Value).ToList());
+
+            HashSet<int> keep = PokerDiceAIHelper.SelectDiceToKeep(dice, myHand, opponentHand);
+
+            List<int> toRoll = dice
+                .Where(d => !keep.Contains(d.Index))
+                .Select(d => d.Index)
+                .ToList();
+
+            if (toRoll.Count == 0) return;
+
+            int maxIndex = toRoll.Max();
+
+            for (int i = selectedDieIndex; i <= maxIndex; i++)
             {
-                ToggleHighlight();
-                
                 selectedDieIndex = i;
-                
-                Die die = diceRoller.PlayerDice[pokerGame.CurrentPlayer][i];
-                
                 ToggleHighlight();
-                die.ToggleDie();
 
-                await UniTask.Delay(300);
+                if (toRoll.Contains(i))
+                {
+                    CurrentDie.ToggleDie();
+                }
+
+                await UniTask.Delay(500);
+                ToggleHighlight();
             }
-
-            await UniTask.CompletedTask;
         }
         
         private void OnRoll()
         {
-            if (diceRoller.CurrentRollNumber > 0) ToggleHighlight();
-            
             diceRoller.RollDice(pokerGame.CurrentPlayer,rolls => 
             {
                 pokerGame.SetPlayerRolls(rolls);

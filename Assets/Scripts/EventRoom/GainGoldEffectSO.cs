@@ -7,9 +7,9 @@ namespace EventRoom
     public class GainGoldEffectSO : EventEffectSO
     {
         public int Amount;
-        public override string Apply(PlayerContext context)
+        public override string Apply(PlayerContext playerContext)
         {
-            context.GainGoldAmount(Amount);
+            playerContext.GainGoldAmount(Amount);
 
             return $"You gained {Amount} gold.";
         }

@@ -41,7 +41,7 @@ namespace PokerDiceRoom
             pokerDiceRoomPanel.SetActive(true);
             
             goldSlider.minValue = 0;
-            goldSlider.maxValue = GameManager.Instance.PlayerContext.Gold;
+            goldSlider.maxValue = GameManager.Instance.PlayerContext.Gold.GoldAmount;
         }
 
         private void SetGoldText(float gold)

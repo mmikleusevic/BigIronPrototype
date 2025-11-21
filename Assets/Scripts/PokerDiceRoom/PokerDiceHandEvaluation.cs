@@ -12,7 +12,7 @@ namespace PokerDiceRoom
             List<int> frequencies = counts.Values.OrderByDescending(v => v).ToList();
             int sum = sorted.Sum();
 
-            var result = new PokerDiceHandResult(player.PlayerName);
+            PokerDiceHandResult result = new PokerDiceHandResult(player.PlayerName);
 
             if (frequencies[0] == 5)
                 return result.CreateResult(PokerDiceHandRank.FiveOfAKind, 100, "Five of a Kind!");

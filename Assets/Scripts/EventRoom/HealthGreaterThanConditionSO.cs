@@ -7,7 +7,7 @@ namespace EventRoom
     public class HealthGreaterThanConditionSO : EventConditionSO
     {
         public int Threshold;
-        public override bool IsSatisfied(PlayerContext context) => context.CurrentHealth > Threshold;
+        public override bool IsSatisfied(PlayerContext context) => context.PlayerHealth.CurrentHealth > Threshold;
         public override string GetFailReason() => $"Requires more than {Threshold} health.";
     }
 }
