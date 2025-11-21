@@ -7,9 +7,10 @@ namespace EventRoom
     public class LoseHealthEffectSO : EventEffectSO
     {
         public int Amount;
-        public override string Apply(PlayerContext context)
+        
+        public override string Apply(PlayerContext playerContext)
         {
-            context.LoseHealth(Amount);
+            playerContext.TakeDamage(Amount);
             
             return $"You lost {Amount} HP.";
         }

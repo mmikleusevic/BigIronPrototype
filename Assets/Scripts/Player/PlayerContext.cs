@@ -6,45 +6,22 @@ namespace Player
 {
     public class PlayerContext : MonoBehaviour
     {
-        public event Action<int> OnGoldChanged;
-        public event Action<int> OnHpChanged;
-        public event Action OnPlayerDeath;
-    
-        [SerializeField] private int MaxHealth;
-        public int CurrentHealth { get; private set; }
-        public int Gold { get; private set; }
-
-        private void OnEnable()
-        {
-            PokerDiceGameOverState.OnGameOver += GainGoldAmount;
-            
-            CurrentHealth = MaxHealth;
-            Gold = 10;
-        }
-
-        private void OnDisable()
-        {
-            PokerDiceGameOverState.OnGameOver -= GainGoldAmount;
-        }
+        [field: SerializeField] public Gold Gold { get; private set; }
+        [field: SerializeField] public PlayerHealth PlayerHealth { get; private set; }
 
         public void GainGoldAmount(int amount)
         {
-            Gold += amount;
-            OnGoldChanged?.Invoke(Gold);
+            Gold.GainGoldAmount(amount);
         }
 
         public void LoseGoldAmount(int amount)
         {
-            Gold -= amount;
-            OnGoldChanged?.Invoke(Gold);
+            Gold.LoseGoldAmount(amount);
         }
 
-        public void LoseHealth(int amount)
+        public void TakeDamage(int amount)
         {
-            CurrentHealth = Mathf.Clamp(CurrentHealth - amount,0,MaxHealth);
-            OnHpChanged?.Invoke(CurrentHealth);
-
-            if (CurrentHealth == 0) OnPlayerDeath?.Invoke();
+            PlayerHealth.TakeDamage(amount);
         }
     }
 }

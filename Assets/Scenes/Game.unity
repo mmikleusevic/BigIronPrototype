@@ -774,7 +774,7 @@ MonoBehaviour:
   pausePanel: {fileID: 567482854}
   resumeButton: {fileID: 920644284}
   optionsButton: {fileID: 645360770}
-  optionsUI: {fileID: 0}
+  optionsUI: {fileID: 2005577683}
   backToMainMenuButton: {fileID: 789950570}
   mainMenuSceneReference:
     m_AssetGUID: 0a64b82745e5ce549b159e5493e0d415
@@ -3254,6 +3254,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+--- !u!114 &2005577683 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1139002935194554975, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+  m_PrefabInstance: {fileID: 2005577682}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22d4f4d5ef104fccbd128da815c16fb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Options
 --- !u!224 &2005577684 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2420039229013180414, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
@@ -3634,7 +3645,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!224 &2144399487
 RectTransform:
