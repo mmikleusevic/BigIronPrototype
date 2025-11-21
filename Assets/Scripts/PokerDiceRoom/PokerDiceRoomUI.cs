@@ -15,7 +15,7 @@ namespace PokerDiceRoom
         [SerializeField] private Slider goldSlider;
         [SerializeField] private TextMeshProUGUI goldText;
         [SerializeField] private Button continueButton;
-        [SerializeField] private AssetReference sceneReference;
+        [SerializeField] private AssetReference pokerDiceSceneReference;
         
         private void Awake()
         {
@@ -55,8 +55,8 @@ namespace PokerDiceRoom
             int playerWageredGold = PokerDiceRoomManager.Instance.PlayerGoldToWager;
             GameManager.Instance.PlayerContext.LoseGoldAmount(playerWageredGold);
             
-            await LevelManager.Instance.LoadSceneAsync(sceneReference);
             pokerDiceRoomPanel.SetActive(false);
+            await LevelManager.Instance.LoadSceneAsync(pokerDiceSceneReference);
         }
     }
 }

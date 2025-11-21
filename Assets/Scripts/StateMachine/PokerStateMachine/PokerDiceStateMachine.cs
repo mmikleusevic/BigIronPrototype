@@ -17,5 +17,10 @@ namespace StateMachine.PokerStateMachine
         {
             CurrentState?.OnUpdate();
         }
+        
+        private void OnDestroy()
+        {
+            CurrentState?.OnExit();
+        }
     }
 }

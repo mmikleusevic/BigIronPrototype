@@ -11,6 +11,11 @@ namespace Player
         private int goldAmount;
         public int GoldAmount => goldAmount;
 
+        private void OnEnable()
+        {
+            goldAmount = 0;
+        }
+
         public void GainGoldAmount(int goldGained)
         {
             goldAmount += goldGained;
@@ -19,7 +24,7 @@ namespace Player
 
         public void LoseGoldAmount(int goldLost)
         {
-            goldAmount -= goldLost;
+            goldAmount = Mathf.Max(goldAmount - goldLost, 0);
             OnGoldChanged?.Invoke(GoldAmount);
         }
 

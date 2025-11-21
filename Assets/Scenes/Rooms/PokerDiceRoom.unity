@@ -594,6 +594,18 @@ MonoBehaviour:
   <DiceRoller>k__BackingField: {fileID: 1111814768}
   <PokerInputs>k__BackingField: {fileID: 825595837}
   <PokerGame>k__BackingField: {fileID: 1300653157}
+  <PokerAssetReference>k__BackingField:
+    m_AssetGUID: 26e92f9ec9992d641810f54c198222fb
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  <GameAssetReference>k__BackingField:
+    m_AssetGUID: eddf679106729c44fad510c8224dccbc
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
 --- !u!4 &587232040
 Transform:
   m_ObjectHideFlags: 0
@@ -731,18 +743,6 @@ MonoBehaviour:
   rollButton: {fileID: 1592893395}
   holdButton: {fileID: 1607147595}
   endButton: {fileID: 126142645}
-  gameAssetReference:
-    m_AssetGUID: eddf679106729c44fad510c8224dccbc
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_SubObjectGUID: 
-    m_EditorAssetChanged: 0
-  pokerAssetReference:
-    m_AssetGUID: 26e92f9ec9992d641810f54c198222fb
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_SubObjectGUID: 
-    m_EditorAssetChanged: 0
   pokerDiceGameManager: {fileID: 587232039}
 --- !u!1 &803846476
 GameObject:

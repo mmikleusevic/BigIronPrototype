@@ -3845,7 +3845,7 @@ MonoBehaviour:
   goldSlider: {fileID: 1778071517}
   goldText: {fileID: 1326052435}
   continueButton: {fileID: 1789560987}
-  sceneReference:
+  pokerDiceSceneReference:
     m_AssetGUID: 26e92f9ec9992d641810f54c198222fb
     m_SubObjectName: 
     m_SubObjectType: 

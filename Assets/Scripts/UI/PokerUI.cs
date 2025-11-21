@@ -19,8 +19,6 @@ namespace PokerDiceRoom
         [SerializeField] private Button rollButton;
         [SerializeField] private Button holdButton;
         [SerializeField] private Button endButton;
-        [SerializeField] private AssetReference gameAssetReference;
-        [SerializeField] private AssetReference pokerAssetReference;
         [SerializeField] private PokerDiceGameManager pokerDiceGameManager;
         private PokerInputs PokerInputs => pokerDiceGameManager.PokerInputs;
         private PokerInputRules InputRules => pokerDiceGameManager.PokerInputRules;
@@ -139,8 +137,8 @@ namespace PokerDiceRoom
         
         private async UniTask OnEndPressed()
         {
-            _ = LevelManager.Instance.UnloadSceneAsync(pokerAssetReference.AssetGUID);
-            await LevelManager.Instance.LoadSceneAsync(gameAssetReference);
+            _ = LevelManager.Instance.UnloadSceneAsync(pokerDiceGameManager.PokerAssetReference.AssetGUID);
+            await LevelManager.Instance.LoadSceneAsync(pokerDiceGameManager.GameAssetReference);
         }
         
         private void OnRulesChanged()
