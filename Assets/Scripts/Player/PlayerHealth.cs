@@ -8,5 +8,10 @@ namespace Player
             
             //TODO trigger game over
         }
+        
+        public void RefreshState()
+        {
+            OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
+        }
     }
 }

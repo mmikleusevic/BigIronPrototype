@@ -34,5 +34,10 @@ namespace Player
             goldAmount -= goldLost;
             OnGoldChanged?.Invoke(GoldAmount);
         }
+
+        public void RefreshState()
+        {
+            Gold.OnGoldChanged?.Invoke(Gold);
+        }
     }
 }

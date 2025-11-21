@@ -10,9 +10,9 @@ namespace UI
     {
         [SerializeField] private TextMeshProUGUI healthText;
 
-        protected override void Subscribe(PlayerContext ctx) => ctx.OnHealthChanged += UpdateUI;
+        protected override void Subscribe(PlayerContext ctx) => ctx.PlayerHealth.OnHealthChanged += UpdateUI;
 
-        protected override void Unsubscribe(PlayerContext ctx) => ctx.OnHealthChanged -= UpdateUI;
+        protected override void Unsubscribe(PlayerContext ctx) => ctx.PlayerHealth.OnHealthChanged -= UpdateUI;
 
         private void UpdateUI(int currentHealth, int maxHealth)
         {

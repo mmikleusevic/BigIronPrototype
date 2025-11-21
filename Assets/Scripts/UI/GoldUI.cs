@@ -9,9 +9,9 @@ namespace UI
     {
         [SerializeField] private TextMeshProUGUI goldText;
 
-        protected override void Subscribe(PlayerContext ctx) => ctx.OnGoldChanged += UpdateUI;
+        protected override void Subscribe(PlayerContext ctx) => ctx.Gold.OnGoldChanged += UpdateUI;
 
-        protected override void Unsubscribe(PlayerContext ctx) => ctx.OnGoldChanged -= UpdateUI;
+        protected override void Unsubscribe(PlayerContext ctx) => ctx.Gold.OnGoldChanged -= UpdateUI;
 
         private void UpdateUI(int goldAmount)
         {

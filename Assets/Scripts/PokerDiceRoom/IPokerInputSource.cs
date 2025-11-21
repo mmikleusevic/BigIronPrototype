@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 
-
 namespace PokerDiceRoom
 {
     public interface IPokerInputSource

@@ -23,5 +23,11 @@ namespace Player
         {
             PlayerHealth.TakeDamage(amount);
         }
+        
+        public void RefreshState()
+        {
+            PlayerHealth.RefreshState();
+            Gold.RefreshState();
+        }
     }
 }
