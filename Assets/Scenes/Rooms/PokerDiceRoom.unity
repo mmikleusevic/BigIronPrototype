@@ -899,7 +899,7 @@ MonoBehaviour:
   select: {fileID: 2678822054610358520, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   roll: {fileID: 2939768696439308868, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   holdTurn: {fileID: -5223695621977746684, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  end: {fileID: 0}
+  end: {fileID: -4861581020531500215, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   gameManager: {fileID: 587232039}
 --- !u!4 &825595838
 Transform:
