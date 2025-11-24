@@ -55,8 +55,11 @@ namespace PokerDiceRoom
             int playerWageredGold = PokerDiceRoomManager.Instance.PlayerGoldToWager;
             GameManager.Instance.PlayerContext.LoseGoldAmount(playerWageredGold);
             
-            pokerDiceRoomPanel.SetActive(false);
             await LevelManager.Instance.LoadSceneAsync(pokerDiceSceneReference);
+            
+            PokerDiceGameManager.Instance.InitializeGame();
+            
+            pokerDiceRoomPanel.SetActive(false);
         }
     }
 }

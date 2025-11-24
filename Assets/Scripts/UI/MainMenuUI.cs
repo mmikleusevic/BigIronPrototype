@@ -15,10 +15,12 @@ namespace UI
         [SerializeField] private Button optionsButton;
         [SerializeField] private Button exitButton;
         [SerializeField] private OptionsUI optionsUI;
-
+        
         [SerializeField] private AssetReference mainMenuAssetReference;
         [SerializeField] private AssetReference gameAssetReference;
     
+        public Selector selector;
+        
         private void OnEnable()
         {
             playButton.AddClickAsync(PlayGame);

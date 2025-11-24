@@ -8,7 +8,6 @@ namespace EventRoom
         protected override void OnDisable()
         {
             onClick.RemoveAllListeners();
-            base.OnDisable();
         }
 
         public abstract void Initialize(EventChoice eventChoice);

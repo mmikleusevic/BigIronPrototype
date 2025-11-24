@@ -24,6 +24,11 @@ namespace PokerDiceRoom
         {
             DieVisual.Initialize(uiContainer);
         }
+
+        public void ResetDieVisual()
+        {
+            DieVisual.ResetDieUITransform();
+        }
         
         public void ResetDie(bool isFirstRoll)
         {

@@ -3,7 +3,7 @@ using Managers;
 
 public class CombatSceneInitializer : SceneInitializer
 {
-    public override void Initialize()
+    protected override void Initialize()
     {
         EncounterManager.Instance.InitializeEncounter();
     }

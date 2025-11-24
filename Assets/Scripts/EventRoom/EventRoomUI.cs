@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace EventRoom
 {
-    public class EventRoomUI : MonoBehaviour, IClearable
+    public class EventRoomUI : MonoBehaviour
     {
         [SerializeField] private GameObject eventRoomPanel;
         [SerializeField] private TextMeshProUGUI titleText;
@@ -20,7 +20,6 @@ namespace EventRoom
         {
             eventRoomPanel.SetActive(false);
             continueButton.gameObject.SetActive(false);
-            GameManager.Instance.Clearables.Add(this);
         }
 
         private void OnEnable()
@@ -48,7 +47,7 @@ namespace EventRoom
 
             foreach (EventChoice eventChoice in eventSo.Choices)
             {
-                ChoiceButton choiceButton = choicePrefab.GetPooledObject<ChoiceButton>(choiceParent);
+                ChoiceButton choiceButton = Instantiate(choicePrefab, choicePrefab.transform.position, choicePrefab.transform.rotation, choiceParent);
                 choiceButton.Initialize(eventChoice);
             }
             
@@ -57,14 +56,14 @@ namespace EventRoom
         
         private void Hide()
         {
-            ReturnToPool();
             continueButton.gameObject.SetActive(false);
             eventRoomPanel.SetActive(false);
         }
         
         private void ShowChoiceResult(EventChoice choice, bool conditionsMet)
         {
-            ReturnToPool();
+            DestroyButtons();
+            
             SetDescriptionText(choice, conditionsMet);
             RegisterContinueButton(choice);
         }
@@ -88,9 +87,15 @@ namespace EventRoom
             }
         }
 
-        public void ReturnToPool()
+        private void DestroyButtons()
         {
-            choiceParent.ReturnAllToPool(new Transform[] { continueButton.transform, choicePrefab.transform });
+            for (int i = 0; i < choiceParent.childCount; i++)
+            {
+                if (i < 2) continue;
+                
+                Transform child = choiceParent.GetChild(i);
+                Destroy(child.gameObject);
+            }
         }
     }
 }

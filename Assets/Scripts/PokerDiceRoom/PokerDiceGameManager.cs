@@ -12,6 +12,8 @@ namespace PokerDiceRoom
 {
     public class PokerDiceGameManager : MonoBehaviour
     {
+        public static PokerDiceGameManager Instance { get; private set; }
+        
         [Header("References")] 
         [field: SerializeField] public PokerInputRules PokerInputRules { get; private set; }
         [field: SerializeField] public PokerDiceStateMachine StateMachine { get; private set; }
@@ -21,9 +23,31 @@ namespace PokerDiceRoom
         [field: SerializeField] public AssetReference PokerAssetReference { get; private set; }
         [field: SerializeField] public AssetReference GameAssetReference { get; private set; }
         
-        private void Start()
+        public bool IsGameOver { get; private set; }
+
+        private void Awake()
+        {
+            Instance = this;
+        }
+
+        public void InitializeGame()
         {
             StateMachine.ChangeState(new PokerDiceSetupState(this));
+        }
+
+        private void OnEnable()
+        {
+            PokerDiceGameOverState.OnGameOverStarted += SetGameOver;
+        }
+
+        private void OnDisable()
+        {
+            PokerDiceGameOverState.OnGameOverStarted -= SetGameOver;
+        }
+
+        private void SetGameOver()
+        {
+            IsGameOver = true;
         }
     }
 }

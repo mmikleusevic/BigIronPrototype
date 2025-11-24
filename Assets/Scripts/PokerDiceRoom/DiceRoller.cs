@@ -5,11 +5,12 @@ using System.Linq;
 using Extensions;
 using Managers;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace PokerDiceRoom
 {
-    public class DiceRoller : MonoBehaviour, IClearable
+    public class DiceRoller : MonoBehaviour
     {
         public static event Action<int, int> OnNumberOfRollsChanged;
         
@@ -37,11 +38,6 @@ namespace PokerDiceRoom
             Quaternion.Euler(0, 0, 0),     // 5 
             Quaternion.Euler(0, -90, -90)  // 6
         };
-        
-        private void Awake()
-        {
-            GameManager.Instance.Clearables.Add(this);
-        }
 
         public void Initialize(PokerPlayer[] players)
         {
@@ -62,12 +58,12 @@ namespace PokerDiceRoom
             int xPosition = 0;
             foreach (PokerPlayer pokerPlayer in pokerPlayers)
             {
-                RectTransform container = uiDiceContainerPrefab.GetPooledObject<RectTransform>(uiDiceContainerPrefab.parent);
+                RectTransform container = Instantiate(uiDiceContainerPrefab, uiDiceContainerPrefab.transform.position, uiDiceContainerPrefab.transform.rotation, uiDiceContainerPrefab.parent);
                 
                 container.gameObject.SetActive(true);
                 container.name = pokerPlayer.PlayerName;
                 
-                if (pokerPlayer.PlayerName == "Player")
+                if (pokerPlayer.PlayerName == GameStrings.PLAYER)
                 {
                     container.transform.SetAsLastSibling();
                 }
@@ -77,9 +73,11 @@ namespace PokerDiceRoom
                 }
 
                 List<Die> dice = new List<Die>();
+                
                 for (int i = 0; i < numberOfDice; i++)
                 {
-                    Die die = diePrefab.GetPooledObject<Die>();
+                    Die die = Instantiate(diePrefab, diePrefab.transform.position, diePrefab.transform.rotation);
+                    
                     die.Initialize(container);
                     dice.Add(die);
                     
@@ -103,14 +101,6 @@ namespace PokerDiceRoom
             }
         }
         
-        public void ReturnToPool()
-        {
-            foreach (List<Die> playerDice in PlayerDice.Values)
-            {
-                playerDice.ReturnAllToPool();
-            }
-        }
-
         public void RollDice(PokerPlayer player, Action<List<int>> onComplete)
         {
             StartCoroutine(RollDiceCoroutine(player, onComplete));

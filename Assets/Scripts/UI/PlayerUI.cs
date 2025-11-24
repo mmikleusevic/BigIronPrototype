@@ -9,15 +9,13 @@ namespace UI
         protected virtual void OnEnable()
         {
             GameManager.Instance.OnPlayerInitialized += OnPlayerInitialized;
-            GameManager.Instance.OnPlayerReleased += OnPlayerReleased;
         }
 
         protected virtual void OnDisable()
         {
             GameManager.Instance.OnPlayerInitialized -= OnPlayerInitialized;
-            GameManager.Instance.OnPlayerReleased -= OnPlayerReleased;
             
-            if (GameManager.Instance.PlayerContext) Unsubscribe(GameManager.Instance.PlayerContext);
+            Unsubscribe(GameManager.Instance.PlayerContext);
         }
 
         private void OnPlayerInitialized()
@@ -25,11 +23,6 @@ namespace UI
             Subscribe(GameManager.Instance.PlayerContext);
             
             GameManager.Instance.PlayerContext.RefreshState();
-        }
-
-        private void OnPlayerReleased()
-        {
-            Unsubscribe(GameManager.Instance.PlayerContext);
         }
 
         protected abstract void Subscribe(PlayerContext ctx);

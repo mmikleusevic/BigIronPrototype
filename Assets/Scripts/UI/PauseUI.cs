@@ -25,6 +25,8 @@ namespace UI
         [SerializeField] private Button backToMainMenuButton;
         [SerializeField] private AssetReference mainMenuSceneReference;
         
+        public Selector selector;
+        
         private void Awake()
         {
             pausePanel.SetActive(false);
@@ -46,10 +48,13 @@ namespace UI
             backToMainMenuButton.onClick.RemoveAllListeners();
         }
 
-        private void TogglePause()
+        public void TogglePause()
         {
             bool isPaused = GameManager.Instance.TogglePause();
+            
             pausePanel.SetActive(isPaused);
+            
+            if (isPaused) selector.SelectFirst();
         }
 
         private void OpenOptions()
@@ -59,8 +64,6 @@ namespace UI
 
         private async UniTask BackToMainMenu()
         {
-            await GameManager.Instance.DisposeGame();
-            
             _ = LevelManager.Instance.UnloadAllButPersistentScenesAsync();
             await LevelManager.Instance.LoadSceneAsync(mainMenuSceneReference);
 

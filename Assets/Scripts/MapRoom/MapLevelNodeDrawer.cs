@@ -6,15 +6,10 @@ using UnityEngine.UI.Extensions;
 
 namespace MapRoom
 {
-    public class MapLevelNodeDrawer : MonoBehaviour, IClearable
+    public class MapLevelNodeDrawer : MonoBehaviour
     {
         [SerializeField] private UILineRenderer uiLineRendererPrefab;
         [SerializeField] private RectTransform parent;
-
-        private void Awake()
-        {
-            GameManager.Instance.Clearables.Add(this);
-        }
 
         public void DrawConnections(MapLevelNodes mapLevelNodes)
         {
@@ -30,7 +25,8 @@ namespace MapRoom
                     MapLevelNode endNode = mapLevelNodes.GetNodeByLevelNode(connection);
                     RectTransform endRect = endNode.GetComponent<RectTransform>();
 
-                    UILineRenderer lineRenderer = uiLineRendererPrefab.GetPooledObject<UILineRenderer>(parent);
+                    UILineRenderer lineRenderer = Instantiate(uiLineRendererPrefab, uiLineRendererPrefab.transform.position, uiLineRendererPrefab.transform.rotation);
+                    lineRenderer.transform.SetParent(parent, false);
                     
                     Vector2 startPos = WorldToLocal(startRect.position, parent);
                     Vector2 endPos = WorldToLocal(endRect.position, parent);
@@ -50,11 +46,6 @@ namespace MapRoom
                 out Vector2 localPoint
             );
             return localPoint;
-        }
-
-        public void ReturnToPool()
-        {
-            parent.ReturnToPool();
         }
     }
 }

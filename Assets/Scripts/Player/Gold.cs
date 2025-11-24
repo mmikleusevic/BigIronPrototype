@@ -22,10 +22,14 @@ namespace Player
             OnGoldChanged?.Invoke(GoldAmount);
         }
 
-        public void LoseGoldAmount(int goldLost)
+        public int LoseGoldAmount(int goldToLose)
         {
-            goldAmount = Mathf.Max(goldAmount - goldLost, 0);
+            int actualLoss = Mathf.Min(goldAmount, goldToLose);
+
+            goldAmount -= actualLoss;
             OnGoldChanged?.Invoke(GoldAmount);
+
+            return actualLoss;
         }
 
         public void RefreshState()

@@ -58,7 +58,11 @@ namespace StateMachine.PokerStateMachine
         }
     
         public void OnUpdate() { }
-        public void OnExit() { }
+
+        public void OnExit()
+        {
+            pokerInputs.OnEnd -= End;
+        }
     
         private List<PokerDiceHandResult> DetermineWinners()
         {

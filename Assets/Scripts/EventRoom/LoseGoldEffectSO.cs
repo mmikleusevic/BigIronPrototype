@@ -9,9 +9,9 @@ namespace EventRoom
         public int Amount;
         public override string Apply(PlayerContext playerContext)
         {
-            playerContext.LoseGoldAmount(Amount);
+            int lostGold = playerContext.LoseGoldAmount(Amount);
 
-            return $"You lost {Amount} gold.";
+            return $"You lost {lostGold} gold.";
         }
     }
 }

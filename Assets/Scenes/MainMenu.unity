@@ -119,6 +119,22 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &12496335 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5085771949957453951, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+  m_PrefabInstance: {fileID: 3270497186353358640}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &28714659 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1409343556107005034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+  m_PrefabInstance: {fileID: 3270497186353358640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1 &109805744
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,6 +222,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ExitButton
       objectReference: {fileID: 0}
+    - target: {fileID: 3657595189652688428, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3657595189652688428, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 702230523}
+    - target: {fileID: 3657595189652688428, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 1975809425}
     - target: {fileID: 4487471764182548608, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -331,6 +359,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: OptionsButton
       objectReference: {fileID: 0}
+    - target: {fileID: 3657595189652688428, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 1975809425}
+    - target: {fileID: 3657595189652688428, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 647811734}
     - target: {fileID: 4487471764182548608, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -411,14 +447,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7040449232361538722, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
-      propertyPath: m_fontSize
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 7040449232361538722, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 40
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -458,6 +486,7 @@ GameObject:
   - component: {fileID: 1873867776}
   - component: {fileID: 1873867775}
   - component: {fileID: 1873867779}
+  - component: {fileID: 1873867780}
   m_Layer: 5
   m_Name: MainMenuCanvas
   m_TagString: Untagged
@@ -567,7 +596,7 @@ MonoBehaviour:
   playButton: {fileID: 1975809425}
   optionsButton: {fileID: 702230523}
   exitButton: {fileID: 647811734}
-  options: {fileID: 3270497186353358641}
+  optionsUI: {fileID: 3270497186353358641}
   mainMenuAssetReference:
     m_AssetGUID: 0a64b82745e5ce549b159e5493e0d415
     m_SubObjectName: 
@@ -580,6 +609,20 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
+  selector: {fileID: 1873867780}
+--- !u!114 &1873867780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873867774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6107fd39bc4edce4082b7fda3166263f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.ButtonSelector
+  firstSelectable: {fileID: 1975809425}
 --- !u!1001 &1975809423
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -592,6 +635,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayButton
       objectReference: {fileID: 0}
+    - target: {fileID: 3657595189652688428, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3657595189652688428, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 647811734}
+    - target: {fileID: 3657595189652688428, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 702230523}
     - target: {fileID: 4487471764182548608, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -717,6 +772,34 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1139002935194554975, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: buttonSelector
+      value: 
+      objectReference: {fileID: 3270497186353358642}
+    - target: {fileID: 1409343556107005034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409343556107005034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 3270497186353358643}
+    - target: {fileID: 1409343556107005034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.b
+      value: 0.29803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409343556107005034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.g
+      value: 0.29803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409343556107005034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.r
+      value: 0.5647059
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409343556107005034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 3270497186353358644}
     - target: {fileID: 2420039229013180414, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -805,6 +888,30 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4437644783602913034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437644783602913034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 28714659}
+    - target: {fileID: 4437644783602913034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.b
+      value: 0.29803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437644783602913034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.g
+      value: 0.29803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437644783602913034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.r
+      value: 0.5647059
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437644783602913034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 3270497186353358643}
     - target: {fileID: 5085771949957453951, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
       propertyPath: m_Name
       value: OptionsPanel
@@ -813,22 +920,72 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5516229038798110568, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5516229038798110568, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 3270497186353358644}
+    - target: {fileID: 5516229038798110568, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 28714659}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5085771949957453951, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3270497186353358642}
   m_SourcePrefab: {fileID: 100100000, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
 --- !u!114 &3270497186353358641 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1139002935194554975, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
   m_PrefabInstance: {fileID: 3270497186353358640}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 12496335}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 22d4f4d5ef104fccbd128da815c16fb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Options
+--- !u!114 &3270497186353358642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 12496335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6107fd39bc4edce4082b7fda3166263f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.ButtonSelector
+  firstSelectable: {fileID: 28714659}
+--- !u!114 &3270497186353358643 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5516229038798110568, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+  m_PrefabInstance: {fileID: 3270497186353358640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!114 &3270497186353358644 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4437644783602913034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+  m_PrefabInstance: {fileID: 3270497186353358640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

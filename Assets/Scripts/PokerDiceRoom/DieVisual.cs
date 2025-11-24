@@ -26,14 +26,21 @@ namespace PokerDiceRoom
             dieImage.texture = renderTexture;
             
             dieCamera.targetTexture = renderTexture;
-            dieCamera.Render();
-            
+
             ResetVisual();
+        }
+
+        public void ResetDieUITransform()
+        {
+            dieUI.transform.SetParent(transform.parent, false);
         }
 
         private void ResetVisual()
         {
             dieOutline.enabled = true;
+            highlightDie.gameObject.SetActive(false);
+            
+            dieCamera.Render();
         }
 
         public void SetVisual(bool isHeld)

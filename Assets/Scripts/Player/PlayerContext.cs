@@ -14,9 +14,9 @@ namespace Player
             Gold.GainGoldAmount(amount);
         }
 
-        public void LoseGoldAmount(int amount)
+        public int LoseGoldAmount(int amount)
         {
-            Gold.LoseGoldAmount(amount);
+            return Gold.LoseGoldAmount(amount);
         }
 
         public void TakeDamage(int amount)

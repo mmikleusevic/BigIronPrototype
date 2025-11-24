@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace MapRoom
 {
-    public class MapController : MonoBehaviour, IClearable
+    public class MapController : MonoBehaviour
     {
         [SerializeField] private LevelNodeGenerator levelNodeGenerator;
         [SerializeField] private MapLevelNodeDrawer mapLevelNodeDrawer;
@@ -19,11 +19,6 @@ namespace MapRoom
         
         private readonly MapLevelNodes mapLevelNodes = new MapLevelNodes();
         private MapLevelNode currentLevelNode;
-
-        private void Awake()
-        {
-            GameManager.Instance.Clearables.Add(this);
-        }
 
         private void OnEnable()
         {
@@ -39,14 +34,16 @@ namespace MapRoom
         {
             for (int i = levelNodeGenerator.LevelNodeGraph.Count- 1; i >= 0; i--)
             {
-                GameObject mapLevelNodeGroup = mapLevelNodeGroupPrefab.GetPooledObject(mapLevelNodeParent);
+                GameObject mapLevelNodeGroup = Instantiate(mapLevelNodeGroupPrefab, mapLevelNodeGroupPrefab.transform.position, mapLevelNodeGroupPrefab.transform.rotation);
+                mapLevelNodeGroup.transform.SetParent(mapLevelNodeParent, false);
             
                 IReadOnlyList<LevelNode> floor = levelNodeGenerator.LevelNodeGraph[i];
 
                 for (int j = floor.Count - 1; j >= 0; j--)
                 {
-                    MapLevelNode nodeUI = mapLevelNodePrefab.GetPooledObject<MapLevelNode>(mapLevelNodeGroup.transform);
-                
+                    MapLevelNode nodeUI = Instantiate(mapLevelNodePrefab, mapLevelNodePrefab.transform.position, mapLevelNodePrefab.transform.rotation);
+                    nodeUI.transform.SetParent(mapLevelNodeGroup.transform, false);
+                    
                     mapLevelNodes.AddNode(nodeUI);
 
                     LevelNode nodeData = floor[j];
@@ -94,12 +91,6 @@ namespace MapRoom
                 MapLevelNode mapLevelNode = mapLevelNodes.GetNodeByLevelNode(levelNode);
                 mapLevelNode.SetInteractable(true);
             }
-        }
-
-        public void ReturnToPool()
-        {
-            mapLevelNodes.LevelNodeGraph.ReturnAllToPool();
-            mapLevelNodeParent.ReturnToPool();
         }
     }
 }

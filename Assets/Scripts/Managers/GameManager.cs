@@ -11,7 +11,6 @@ namespace Managers
     public class GameManager : MonoBehaviour
     {
         public event Action OnPlayerInitialized;
-        public event Action OnPlayerReleased;
         
         public static GameManager Instance { get; private set; }
 
@@ -19,8 +18,6 @@ namespace Managers
 
         [SerializeField] private PlayerContext playerPrefab;
         [SerializeField] private SceneReferenceSO gameSceneReferenceSO;
-        
-        public List<IClearable> Clearables { get; set; } = new List<IClearable>();
         
         private bool isPaused;
         
@@ -31,28 +28,9 @@ namespace Managers
 
         public void InitializeGame()
         {
-            PlayerContext = playerPrefab.GetPooledObject<PlayerContext>();
+            PlayerContext = Instantiate(playerPrefab, playerPrefab.transform.position, playerPrefab.transform.rotation);
             
             OnPlayerInitialized?.Invoke();
-            PlayerContext.RefreshState();
-        }
-        
-        public async UniTask DisposeGame()
-        {
-            PlayerContext.ReturnToPool();
-            OnPlayerReleased?.Invoke();
-            
-            PlayerContext = null;
-
-            foreach (IClearable clearable in Clearables)
-            {
-                clearable.ReturnToPool();
-            }
-            
-            Clearables.Clear();
-            
-            
-            await UniTask.CompletedTask;
         }
 
         public bool TogglePause()

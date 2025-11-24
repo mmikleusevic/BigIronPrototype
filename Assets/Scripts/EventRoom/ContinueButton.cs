@@ -12,7 +12,7 @@ namespace EventRoom
             AddListener(eventChoice);
             gameObject.SetActive(true);
         }
-        
+
         protected override void AddListener(EventChoice eventChoice)
         {
             onClick.AddListener(() =>

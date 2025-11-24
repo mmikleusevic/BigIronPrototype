@@ -63,6 +63,7 @@ namespace UI
         private void BackToMainMenu()
         {
             gameObject.SetActive(false);
+            transform.parent.GetComponent<Selector>().SelectFirst();
         }
     
         private string GetVolumeText(float value)

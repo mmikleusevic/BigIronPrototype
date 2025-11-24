@@ -23,7 +23,7 @@ namespace PokerDiceRoom
         private PokerInputRules Rules => gameManager.PokerInputRules;
         
         private InputActionReference[] actions;
-        private bool InputEnabled => !gameManager.PokerGame.CurrentPlayer.IsAI;
+        private bool InputEnabled => !gameManager.PokerGame.CurrentPlayer.IsAI || gameManager.IsGameOver;
     
         private void Awake()
         {
@@ -57,8 +57,15 @@ namespace PokerDiceRoom
             foreach (InputActionReference inputActionReference in actions)
             {
                 if (!inputActionReference) continue;
-                if (enable) inputActionReference.action.Enable();
-                else inputActionReference.action.Disable();
+                
+                if (enable)
+                {
+                    inputActionReference.action.Enable();
+                }
+                else
+                {
+                    inputActionReference.action.Disable();
+                }
             }
         }
         

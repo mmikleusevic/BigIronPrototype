@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using Extensions;
 using Managers;
+using PokerDiceRoom;
 using StateMachine.PokerStateMachine;
 using TMPro;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
-namespace PokerDiceRoom
+namespace UI
 {
     public class PokerUI : MonoBehaviour
     {

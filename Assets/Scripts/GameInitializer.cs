@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameInitializer : SceneInitializer
 {
-    public override void Initialize()
+    protected override void Initialize()
     {
         GameManager.Instance.InitializeGame();
     }
