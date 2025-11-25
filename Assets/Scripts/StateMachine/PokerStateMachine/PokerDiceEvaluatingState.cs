@@ -8,11 +8,9 @@ namespace StateMachine.PokerStateMachine
 {
     public class PokerDiceEvaluatingState : IPokerDiceState
     {
-        public static event Action OnDiceEvaluationStarted;
-        public static event Action<PokerDiceHandResult> OnHandEvaluated;
-        
         private readonly PokerDiceGameManager pokerDiceGameManager;
         private readonly PokerGame pokerGame;
+        private readonly PokerGameEvents pokerGameEvents;
     
         private readonly float displayDuration = 3f;
         private float displayTimer;
@@ -21,13 +19,14 @@ namespace StateMachine.PokerStateMachine
         {
             pokerDiceGameManager = manager;
             pokerGame = pokerDiceGameManager.PokerGame;
+            pokerGameEvents = pokerDiceGameManager.PokerGameEvents;
         }
     
         public void OnEnter()
         {
             //TODO test more 
             
-            OnDiceEvaluationStarted?.Invoke();
+            pokerGameEvents.OnDiceEvaluationStarted?.Invoke();
             Debug.Log("=== Evaluating Hands ===");
 
             Dictionary<PokerPlayer, PokerDiceHandResult> results = new();
@@ -37,7 +36,6 @@ namespace StateMachine.PokerStateMachine
                 PokerDiceHandResult result = PokerDiceHandEvaluation.EvaluateHand(playerName, rolls);
                 pokerGame.SetPlayerHand(playerName, result);
                 results[playerName] = result;
-                OnHandEvaluated?.Invoke(result);
             }
 
             List<PokerDiceHandResult> winners = DetermineWinners(results);

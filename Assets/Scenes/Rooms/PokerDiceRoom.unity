@@ -273,6 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15315bab9f7a45b09f4d7ac95c4482ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PokerDiceRoom.PokerInputRules
+  pokerDiceGameManager: {fileID: 587232039}
 --- !u!4 &134426246
 Transform:
   m_ObjectHideFlags: 0

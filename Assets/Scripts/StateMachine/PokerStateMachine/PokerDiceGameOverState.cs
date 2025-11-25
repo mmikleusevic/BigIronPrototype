@@ -10,23 +10,22 @@ namespace StateMachine.PokerStateMachine
 {
     public class PokerDiceGameOverState : IPokerDiceState
     {
-        public static event Action OnGameOverStarted;
-        public static event Action OnGameOver;
-
         private readonly PokerDiceGameManager pokerDiceGameManager;
         private readonly PokerGame pokerGame;
         private readonly PokerInputs pokerInputs;
+        private readonly PokerGameEvents pokerGameEvents;
     
         public PokerDiceGameOverState(PokerDiceGameManager manager)
         {
             pokerDiceGameManager = manager;
             pokerGame = pokerDiceGameManager.PokerGame;
             pokerInputs = pokerDiceGameManager.PokerInputs;
+            pokerGameEvents = pokerDiceGameManager.PokerGameEvents;
         }
     
         public void OnEnter()
         {
-            OnGameOverStarted?.Invoke();
+            pokerGameEvents.OnGameOverStarted?.Invoke();
             
             pokerInputs.OnEnd += End;
                 
@@ -40,7 +39,7 @@ namespace StateMachine.PokerStateMachine
                 if (winners[0].PlayerName != GameStrings.PLAYER) return;
                 
                 GameManager.Instance.PlayerContext.GainGoldAmount(pokerGame.Wager);
-                OnGameOver?.Invoke();
+                pokerGameEvents.OnGameOver?.Invoke();
             }
             else
             {

@@ -21,6 +21,8 @@ namespace UI
         private PokerInputs PokerInputs => pokerDiceGameManager.PokerInputs;
         private PokerInputRules InputRules => pokerDiceGameManager.PokerInputRules;
         private PokerGame PokerGame => pokerDiceGameManager.PokerGame;
+        private PokerGameEvents PokerGameEvents => pokerDiceGameManager.PokerGameEvents;
+        private DiceRoller DiceRoller => pokerDiceGameManager.DiceRoller;
         
         private void Awake()
         {
@@ -34,13 +36,13 @@ namespace UI
         private void OnEnable()
         {
             DiceRoller.OnNumberOfRollsChanged += SetNumberOfRolls;
-            PokerDiceTurnStartState.OnTurnStart += SetCurrentPlayerText;
-            PokerDiceRollingState.OnDiceRollingStarted += OnDiceRollStarted;
-            PokerDiceRollingState.OnRoll += DisableGameButtons;
-            PokerDiceRollingState.OnHold += DisableGameButtons;
-            PokerDiceEvaluatingState.OnDiceEvaluationStarted += OnDiceEvaluationStarted;
-            PokerDiceTurnEndState.OnTurnEndStarted += OnTurnEnded;
-            PokerDiceGameOverState.OnGameOver += OnGameOver;
+            PokerGameEvents.OnTurnStart += SetCurrentPlayerText;
+            PokerGameEvents.OnDiceRollingStarted += OnDiceRollStarted;
+            PokerGameEvents.OnRoll += DisableGameButtons;
+            PokerGameEvents.OnHold += DisableGameButtons;
+            PokerGameEvents.OnDiceEvaluationStarted += OnDiceEvaluationStarted;
+            PokerGameEvents.OnTurnEndStarted += OnTurnEnded;
+            PokerGameEvents.OnGameOver += OnGameOver;
             PokerGame.OnWagerChanged += SetWagerText;
             InputRules.OnRulesChanged += OnRulesChanged;
             rollButton.onClick.AddListener(OnRollPressed);
@@ -51,13 +53,13 @@ namespace UI
         private void OnDisable()
         {
             DiceRoller.OnNumberOfRollsChanged -= SetNumberOfRolls;
-            PokerDiceTurnStartState.OnTurnStart -= SetCurrentPlayerText;
-            PokerDiceRollingState.OnDiceRollingStarted -= OnDiceRollStarted;
-            PokerDiceRollingState.OnRoll -= DisableGameButtons;
-            PokerDiceRollingState.OnHold -= DisableGameButtons;
-            PokerDiceEvaluatingState.OnDiceEvaluationStarted -= OnDiceEvaluationStarted;
-            PokerDiceTurnEndState.OnTurnEndStarted -= OnTurnEnded;
-            PokerDiceGameOverState.OnGameOver -= OnGameOver;
+            PokerGameEvents.OnTurnStart -= SetCurrentPlayerText;
+            PokerGameEvents.OnDiceRollingStarted -= OnDiceRollStarted;
+            PokerGameEvents.OnRoll -= DisableGameButtons;
+            PokerGameEvents.OnHold -= DisableGameButtons;
+            PokerGameEvents.OnDiceEvaluationStarted -= OnDiceEvaluationStarted;
+            PokerGameEvents.OnTurnEndStarted -= OnTurnEnded;
+            PokerGameEvents.OnGameOver -= OnGameOver;
             PokerGame.OnWagerChanged -= SetWagerText;
             InputRules.OnRulesChanged -= OnRulesChanged;
             rollButton.onClick.RemoveListener(OnRollPressed);

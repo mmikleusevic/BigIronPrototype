@@ -23,6 +23,8 @@ namespace PokerDiceRoom
         [field: SerializeField] public AssetReference PokerAssetReference { get; private set; }
         [field: SerializeField] public AssetReference GameAssetReference { get; private set; }
         
+        public PokerGameEvents PokerGameEvents { get; private set; } = new PokerGameEvents();
+        
         public bool IsGameOver { get; private set; }
 
         private void Awake()
@@ -37,12 +39,12 @@ namespace PokerDiceRoom
 
         private void OnEnable()
         {
-            PokerDiceGameOverState.OnGameOverStarted += SetGameOver;
+            PokerGameEvents.OnGameOverStarted += SetGameOver;
         }
 
         private void OnDisable()
         {
-            PokerDiceGameOverState.OnGameOverStarted -= SetGameOver;
+            PokerGameEvents.OnGameOverStarted -= SetGameOver;
         }
 
         private void SetGameOver()

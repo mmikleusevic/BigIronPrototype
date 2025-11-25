@@ -6,22 +6,22 @@ namespace StateMachine.PokerStateMachine
 {
     public class PokerDiceTurnEndState : IPokerDiceState
     {
-        public static event Action OnTurnEndStarted ;
-        
         private readonly PokerDiceGameManager pokerDiceGameManager;
+        private readonly PokerGameEvents pokerGameEvents;
         private readonly DiceRoller diceRoller;
         private readonly PokerGame pokerGame;
         
         public PokerDiceTurnEndState(PokerDiceGameManager manager)
         {
             pokerDiceGameManager = manager;
+            pokerGameEvents = pokerDiceGameManager.PokerGameEvents;
             diceRoller = pokerDiceGameManager.DiceRoller;
             pokerGame = pokerDiceGameManager.PokerGame;
         }
     
         public void OnEnter()
         {
-            OnTurnEndStarted?.Invoke();
+            pokerGameEvents.OnTurnEndStarted?.Invoke();
 
             diceRoller.TryAdvanceRollPhase();
             

@@ -6,8 +6,7 @@ namespace StateMachine.PokerStateMachine
 {
     public class PokerDiceTurnStartState : IPokerDiceState
     {
-        public static event Action<PokerPlayer> OnTurnStart;
-        
+        private readonly PokerGameEvents pokerGameEvents;
         private readonly PokerDiceGameManager pokerDiceGameManager;
         private readonly DiceRoller diceRoller;
         private readonly PokerGame pokerGame;
@@ -18,6 +17,7 @@ namespace StateMachine.PokerStateMachine
         public PokerDiceTurnStartState(PokerDiceGameManager manager)
         {
             pokerDiceGameManager = manager;
+            pokerGameEvents = pokerDiceGameManager.PokerGameEvents;
             diceRoller = pokerDiceGameManager.DiceRoller;
             pokerGame = pokerDiceGameManager.PokerGame;
         }
@@ -28,7 +28,7 @@ namespace StateMachine.PokerStateMachine
             
             diceRoller.ResetDiceHolds(pokerGame.CurrentPlayer);
             
-            OnTurnStart?.Invoke(pokerGame.CurrentPlayer);
+            pokerGameEvents.OnTurnStart?.Invoke(pokerGame.CurrentPlayer);
         
             delayTimer = 0f;
         }

@@ -6,6 +6,8 @@ namespace PokerDiceRoom
 {
     public class PokerInputRules : MonoBehaviour
     {
+        [SerializeField] private PokerDiceGameManager pokerDiceGameManager;
+        
         public event Action OnRulesChanged;
         
         public bool CanRoll { get; private set; }
@@ -13,21 +15,23 @@ namespace PokerDiceRoom
         public bool CanEnd { get; private set; }
         public bool CanSelect { get; private set; }
         public bool CanMove { get; private set; }
+        
+        private PokerGameEvents PokerGameEvents => pokerDiceGameManager.PokerGameEvents;
 
         private void OnEnable()
         {
-            PokerDiceRollingState.OnDiceRollingStarted += SetRollingPhase;
-            PokerDiceRollingState.OnDiceRollingEnded += Reset;
-            PokerDiceEvaluatingState.OnDiceEvaluationStarted += SetEvaluationPhase;
-            PokerDiceGameOverState.OnGameOverStarted += SetGameOverPhase;
+            PokerGameEvents.OnDiceRollingStarted += SetRollingPhase;
+            PokerGameEvents.OnDiceRollingEnded += Reset;
+            PokerGameEvents.OnDiceEvaluationStarted += SetEvaluationPhase;
+            PokerGameEvents.OnGameOverStarted += SetGameOverPhase;
         }
 
         private void OnDisable()
         {
-            PokerDiceRollingState.OnDiceRollingStarted -= SetRollingPhase;
-            PokerDiceRollingState.OnDiceRollingEnded -= Reset;
-            PokerDiceEvaluatingState.OnDiceEvaluationStarted -= SetEvaluationPhase;
-            PokerDiceGameOverState.OnGameOverStarted -= SetGameOverPhase;
+            PokerGameEvents.OnDiceRollingStarted -= SetRollingPhase;
+            PokerGameEvents.OnDiceRollingEnded -= Reset;
+            PokerGameEvents.OnDiceEvaluationStarted -= SetEvaluationPhase;
+            PokerGameEvents.OnGameOverStarted -= SetGameOverPhase;
         }
 
         private void SetRollingPhase(int currentRoll, int maxRolls)

@@ -8,10 +8,11 @@ namespace Managers
 {
     public class EventRoomManager : MonoBehaviour
     {
+        public static EventRoomManager Instance { get; private set; }
+        
         public event Action<EventSO> OnEventLoaded;
         public event Action<EventChoice, bool> OnChoiceResult;
         public event Action OnEventEnded;
-        public static EventRoomManager Instance { get; private set; }
     
         private EventSO currentEventSo; 
         

@@ -12,7 +12,7 @@ namespace PokerDiceRoom
 {
     public class DiceRoller : MonoBehaviour
     {
-        public static event Action<int, int> OnNumberOfRollsChanged;
+        public event Action<int, int> OnNumberOfRollsChanged;
         
         [Header("Game Settings")]
         [SerializeField] private Die diePrefab;

@@ -10,16 +10,12 @@ namespace StateMachine.PokerStateMachine
 {
     public class PokerDiceRollingState : IPokerDiceState
     {
-        public static event Action<int, int> OnDiceRollingStarted;
-        public static event Action OnRoll;
-        public static event Action OnHold;
-        public static event Action OnDiceRollingEnded;
-        
         private readonly PokerDiceGameManager pokerDiceGameManager;
         private readonly IPokerInputSource pokerInputSource;
         private readonly PokerInputRules pokerInputRules;
         private readonly DiceRoller diceRoller;
         private readonly PokerGame pokerGame;
+        private readonly PokerGameEvents pokerGameEvents;
         
         private int selectedDieIndex;
         private bool hasDoneAction;
@@ -31,6 +27,7 @@ namespace StateMachine.PokerStateMachine
             pokerInputRules = pokerDiceGameManager.PokerInputRules;
             diceRoller = pokerDiceGameManager.DiceRoller;
             pokerGame = pokerDiceGameManager.PokerGame;
+            pokerGameEvents = pokerDiceGameManager.PokerGameEvents;
         }
         
         public void OnEnter()
@@ -44,7 +41,7 @@ namespace StateMachine.PokerStateMachine
             diceRoller.SetPlayerRolls(player);
             int playerRolls = diceRoller.GetNumberOfPlayerRolls(player);
             
-            OnDiceRollingStarted?.Invoke(playerRolls, diceRoller.MaxRolls);
+            pokerGameEvents.OnDiceRollingStarted?.Invoke(playerRolls, diceRoller.MaxRolls);
             
             ToggleHighlight();
         }
@@ -57,7 +54,7 @@ namespace StateMachine.PokerStateMachine
 
             hasDoneAction = true;
             
-            OnRoll?.Invoke();
+            pokerGameEvents.OnRoll?.Invoke();
             
             ToggleHighlight();
             
@@ -74,7 +71,7 @@ namespace StateMachine.PokerStateMachine
 
             hasDoneAction = true;
             
-            OnHold?.Invoke();
+            pokerGameEvents.OnHold?.Invoke();
             
             ToggleHighlight();
             EndTurn();
@@ -122,7 +119,7 @@ namespace StateMachine.PokerStateMachine
         
         public void OnExit()
         {
-            OnDiceRollingEnded?.Invoke();
+            pokerGameEvents.OnDiceRollingEnded?.Invoke();
             
             pokerInputSource.OnRoll -= Roll;
             pokerInputSource.OnHold -= HoldTurn;
