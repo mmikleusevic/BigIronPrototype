@@ -5,6 +5,7 @@ using Managers;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.InputSystem;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
@@ -15,7 +16,7 @@ public class Boot : MonoBehaviour
     [SerializeField] private AssetReference mainMenuScene;
     
     private void Start()
-    { 
+    {
         _ = LoadScene();
     }
 

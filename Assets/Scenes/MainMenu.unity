@@ -622,7 +622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6107fd39bc4edce4082b7fda3166263f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.ButtonSelector
-  firstSelectable: {fileID: 1975809425}
+  selectable: {fileID: 1975809425}
 --- !u!1001 &1975809423
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -932,7 +932,8 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
       objectReference: {fileID: 28714659}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7119821305856364596, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -963,7 +964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6107fd39bc4edce4082b7fda3166263f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.ButtonSelector
-  firstSelectable: {fileID: 28714659}
+  selectable: {fileID: 28714659}
 --- !u!114 &3270497186353358643 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5516229038798110568, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}

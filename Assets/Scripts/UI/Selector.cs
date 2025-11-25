@@ -7,19 +7,23 @@ namespace UI
 {
     public class Selector : MonoBehaviour
     {
-        [SerializeField] private Selectable firstSelectable;
-
+        [SerializeField] private Selectable selectable;
+        
         private void OnEnable()
         {
-            SelectFirst();
+            Select();
         }
 
-        public void SelectFirst()
+        public void Select()
         {
-            if (!firstSelectable) return;
+            if (!selectable)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+                return;
+            }
             
-            EventSystem.current.SetSelectedGameObject(firstSelectable.gameObject);
-            firstSelectable.Select();
+            EventSystem.current.SetSelectedGameObject(selectable.gameObject);
+            selectable.Select();
         }
     }
 }

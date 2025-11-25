@@ -1,11 +1,12 @@
-using System;
-using Extensions;
+using System.Collections.Generic;
+using EventRoom;
 using Managers;
+using MapRoom;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EventRoom
+namespace UI
 {
     public class EventRoomUI : MonoBehaviour
     {
@@ -15,6 +16,8 @@ namespace EventRoom
         [SerializeField] private ChoiceButton choicePrefab;
         [SerializeField] private ContinueButton continueButton;
         [SerializeField] private Transform choiceParent;
+
+        private Selectable firstSelectable;
         
         private void Awake()
         {
@@ -45,19 +48,51 @@ namespace EventRoom
             titleText.text = eventSo.Title;
             descriptionText.text = eventSo.Description;
 
+            DestroyButtons();
+            firstSelectable = null;
+            
+            List<Selectable> choices = new List<Selectable>();
+            
             foreach (EventChoice eventChoice in eventSo.Choices)
             {
                 ChoiceButton choiceButton = Instantiate(choicePrefab, choicePrefab.transform.position, choicePrefab.transform.rotation, choiceParent);
                 choiceButton.Initialize(eventChoice);
+                
+                choices.Add(choiceButton);
+
+                if (!firstSelectable) firstSelectable = choiceButton;
+            }
+            
+            int count = choices.Count;
+            for (int i = 0; i < count; i++)
+            {
+                Navigation nav = new Navigation
+                {
+                    mode = Navigation.Mode.Explicit,
+                    selectOnDown = choices[(i + 1) % count],
+                    selectOnUp = choices[(i - 1 + count) % count],
+                    selectOnLeft = null,
+                    selectOnRight = null
+                };
+                
+                choices[i].navigation = nav;
             }
             
             eventRoomPanel.SetActive(true);
+
+            if (!firstSelectable) return;
+            
+            UIFocusManager.Instance.PushFocus(firstSelectable);
+            firstSelectable.Select();
         }
         
         private void Hide()
         {
             continueButton.gameObject.SetActive(false);
             eventRoomPanel.SetActive(false);
+            
+            UIFocusManager.Instance.PopFocus();
+            firstSelectable = null;
         }
         
         private void ShowChoiceResult(EventChoice choice, bool conditionsMet)
@@ -70,7 +105,10 @@ namespace EventRoom
 
         private void RegisterContinueButton(EventChoice eventChoice)
         {
+            UIFocusManager.Instance.PopFocus();
             continueButton.Initialize(eventChoice);
+            continueButton.Select();
+            UIFocusManager.Instance.PushFocus(continueButton);
         }
 
         private void SetDescriptionText(EventChoice choice, bool conditionsMet)

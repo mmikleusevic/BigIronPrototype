@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Extensions;
 using Managers;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace MapRoom
 {
@@ -19,15 +21,18 @@ namespace MapRoom
         
         private readonly MapLevelNodes mapLevelNodes = new MapLevelNodes();
         private MapLevelNode currentLevelNode;
+        private MapLevelNode lastSelectedNode;
 
         private void OnEnable()
         {
             levelNodeGenerator.OnLevelNodesGenerated += OnNodesGenerated;
+            GameManager.Instance.OnRoomPassed += SetInteractableButtons;
         }
 
         private void OnDisable()
         {
             levelNodeGenerator.OnLevelNodesGenerated -= OnNodesGenerated;
+            GameManager.Instance.OnRoomPassed -= SetInteractableButtons;
         }
 
         private void OnNodesGenerated()
@@ -58,6 +63,12 @@ namespace MapRoom
             SetInteractableButtons();
             currentLevelNode?.Highlight(true);
         }
+        
+        private void HandleNodeSelected(MapLevelNode node)
+        {
+            UIFocusManager.Instance.PopFocus();
+            SetLastSelectedNode(node);
+        }
 
         private void HandleNodeClicked(MapLevelNode clickedNode)
         {
@@ -67,9 +78,10 @@ namespace MapRoom
             currentLevelNode.SetInteractable(false);
             currentLevelNode = clickedNode;
             currentLevelNode.Highlight(true);
-
+            UIFocusManager.Instance.PopFocus();
+            lastSelectedNode = null;
+            
             DisableOtherButtons();
-            SetInteractableButtons();
             
             Debug.Log($"Loading level: {clickedNode.LevelNode.LevelNodeType}");
         }
@@ -78,6 +90,7 @@ namespace MapRoom
         {
             foreach (MapLevelNode mapLevelNode in mapLevelNodes.LevelNodeGraph)
             {
+                mapLevelNode.OnNodeSelected -= HandleNodeSelected;
                 mapLevelNode.SetInteractable(false);
             }
         }
@@ -85,12 +98,55 @@ namespace MapRoom
         private void SetInteractableButtons()
         {
             if (!currentLevelNode) return;
-        
-            foreach (LevelNode levelNode in currentLevelNode.LevelNode.Connections)
+            
+            List<MapLevelNode> nextNodes = new List<MapLevelNode>();
+
+            for (int i = currentLevelNode.LevelNode.Connections.Count - 1; i >= 0; i--)
             {
+                LevelNode levelNode = currentLevelNode.LevelNode.Connections[i];
                 MapLevelNode mapLevelNode = mapLevelNodes.GetNodeByLevelNode(levelNode);
                 mapLevelNode.SetInteractable(true);
+
+                mapLevelNode.OnNodeSelected -= HandleNodeSelected;
+                mapLevelNode.OnNodeSelected += HandleNodeSelected;
+                
+                nextNodes.Add(mapLevelNode);
+                
+                if (lastSelectedNode) continue;
+
+                SetLastSelectedNode(mapLevelNode);
             }
+
+            int count = nextNodes.Count;
+            if (count == 0) return;
+            
+            for (int i = 0; i < count; i++)
+            {
+                int rightIndex = (i + 1) % count;
+                int leftIndex = (i - 1 + count) % count;
+
+                MapLevelNode current = nextNodes[i];
+                MapLevelNode rightNode = nextNodes[rightIndex];
+                MapLevelNode leftNode = nextNodes[leftIndex];
+                
+                current.SetNavigation(leftNode.NodeButton, rightNode.NodeButton);
+            }
+            
+            if (!lastSelectedNode || !lastSelectedNode.NodeButton.interactable)
+            {
+                int defaultIndex = count / 2; 
+                EventSystem.current.SetSelectedGameObject(nextNodes[defaultIndex].gameObject);
+            }
+            else
+            {
+                EventSystem.current.SetSelectedGameObject(lastSelectedNode.gameObject);
+            }
+        }
+
+        private void SetLastSelectedNode(MapLevelNode mapLevelNode)
+        {
+            lastSelectedNode = mapLevelNode;
+            UIFocusManager.Instance.PushFocus(lastSelectedNode.NodeButton);
         }
     }
 }

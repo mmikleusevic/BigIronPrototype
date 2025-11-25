@@ -16,7 +16,7 @@ namespace PokerDiceRoom
         
         [Header("References")] 
         [field: SerializeField] public PokerInputRules PokerInputRules { get; private set; }
-        [field: SerializeField] public PokerDiceStateMachine StateMachine { get; private set; }
+        [field: SerializeField] public StateMachine.StateMachine StateMachine { get; private set; }
         [field: SerializeField] public DiceRoller DiceRoller { get; private set; }
         [field: SerializeField] public PokerInputs PokerInputs { get; private set; }
         [field: SerializeField] public PokerGame PokerGame { get; private set; }

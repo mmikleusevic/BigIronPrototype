@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using StateMachine.PokerStateMachine;
+using UnityEngine;
 
-namespace StateMachine.PokerStateMachine
+namespace StateMachine
 {
-    public class PokerDiceStateMachine : MonoBehaviour
+    public class StateMachine : MonoBehaviour
     {
         private IPokerDiceState CurrentState { get; set; }
         

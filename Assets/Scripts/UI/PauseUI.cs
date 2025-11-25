@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Extensions;
 using Managers;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace UI
@@ -20,8 +23,10 @@ namespace UI
         [Header("Options")]
         [SerializeField] private Button optionsButton;
         [SerializeField] private OptionsUI optionsUI;
-    
-        [Space(20)]
+
+        [Space(20)] 
+        [SerializeField] private string uiActionMapName;
+        [SerializeField] private InputActionAsset inputActionAsset;
         [SerializeField] private Button backToMainMenuButton;
         [SerializeField] private AssetReference mainMenuSceneReference;
         
@@ -51,10 +56,20 @@ namespace UI
         public void TogglePause()
         {
             bool isPaused = GameManager.Instance.TogglePause();
-            
             pausePanel.SetActive(isPaused);
-            
-            if (isPaused) selector.SelectFirst();
+
+            if (isPaused)
+            {
+                InputManager.Instance.EnableOnlyUIMap();
+                UIFocusManager.Instance.SaveFocus(EventSystem.current.currentSelectedGameObject?.GetComponent<Selectable>());
+                selector.Select();
+            }
+            else
+            {
+                InputManager.Instance.RestoreMaps();
+                UIFocusManager.Instance.RestoreBeforePause();
+                UIFocusManager.Instance.RestoreFocus();
+            }
         }
 
         private void OpenOptions()
@@ -64,6 +79,9 @@ namespace UI
 
         private async UniTask BackToMainMenu()
         {
+            UIFocusManager.Instance.ClearFocus();
+            InputManager.Instance.StartingMapsSetup();
+            
             _ = LevelManager.Instance.UnloadAllButPersistentScenesAsync();
             await LevelManager.Instance.LoadSceneAsync(mainMenuSceneReference);
 

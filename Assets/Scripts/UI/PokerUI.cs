@@ -5,6 +5,7 @@ using PokerDiceRoom;
 using StateMachine.PokerStateMachine;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UI
@@ -18,6 +19,7 @@ namespace UI
         [SerializeField] private Button holdButton;
         [SerializeField] private Button endButton;
         [SerializeField] private PokerDiceGameManager pokerDiceGameManager;
+        
         private PokerInputs PokerInputs => pokerDiceGameManager.PokerInputs;
         private PokerInputRules InputRules => pokerDiceGameManager.PokerInputRules;
         private PokerGame PokerGame => pokerDiceGameManager.PokerGame;
@@ -117,7 +119,8 @@ namespace UI
         {
             rollButton.gameObject.SetActive(false);
             holdButton.gameObject.SetActive(false);
-
+            EventSystem.current.SetSelectedGameObject(null);
+            
             PokerInputs.TriggerRoll();
         }
         
@@ -125,20 +128,25 @@ namespace UI
         {
             rollButton.gameObject.SetActive(false);
             holdButton.gameObject.SetActive(false);
+            EventSystem.current.SetSelectedGameObject(null);
             
             PokerInputs.TriggerHold();
+        }
+        
+        private async UniTask OnEndPressed()
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            
+            _ = LevelManager.Instance.UnloadSceneAsync(pokerDiceGameManager.PokerAssetReference.AssetGUID);
+            await LevelManager.Instance.LoadSceneAsync(pokerDiceGameManager.GameAssetReference);
+            
+            GameManager.Instance.RoomPassed();
         }
 
         private void DisableGameButtons()
         {
             rollButton.gameObject.SetActive(false);
             holdButton.gameObject.SetActive(false);
-        }
-        
-        private async UniTask OnEndPressed()
-        {
-            _ = LevelManager.Instance.UnloadSceneAsync(pokerDiceGameManager.PokerAssetReference.AssetGUID);
-            await LevelManager.Instance.LoadSceneAsync(pokerDiceGameManager.GameAssetReference);
         }
         
         private void OnRulesChanged()

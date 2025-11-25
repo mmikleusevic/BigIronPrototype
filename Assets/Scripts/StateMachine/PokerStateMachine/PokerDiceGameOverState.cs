@@ -27,7 +27,7 @@ namespace StateMachine.PokerStateMachine
         {
             pokerGameEvents.OnGameOverStarted?.Invoke();
             
-            pokerInputs.OnEnd += End;
+            pokerInputs.OnEnd += EndWrapper;
                 
             Debug.Log("=== GAME OVER ===");
             
@@ -35,7 +35,7 @@ namespace StateMachine.PokerStateMachine
             if (winners.Count == 1)
             {
                 Debug.Log($"🏆 Winner: {winners[0].PlayerName}");
-
+                
                 if (winners[0].PlayerName != GameStrings.PLAYER) return;
                 
                 GameManager.Instance.PlayerContext.GainGoldAmount(pokerGame.Wager);
@@ -48,19 +48,27 @@ namespace StateMachine.PokerStateMachine
             }
         }
 
-        private void End()
+        private void EndWrapper()
         {
-            pokerInputs.OnEnd -= End;
+            _ = End();
+        }
+
+        private async UniTask End()
+        {
+            pokerInputs.OnEnd -= EndWrapper;
             
             _ = LevelManager.Instance.UnloadSceneAsync(pokerDiceGameManager.PokerAssetReference.AssetGUID);
-            _ = LevelManager.Instance.LoadSceneAsync(pokerDiceGameManager.GameAssetReference);
+            await LevelManager.Instance.LoadSceneAsync(pokerDiceGameManager.GameAssetReference);
         }
     
         public void OnUpdate() { }
 
         public void OnExit()
         {
-            pokerInputs.OnEnd -= End;
+            pokerInputs.OnEnd -= EndWrapper;
+            
+            InputManager.Instance.EnableOnlyUIMap();
+            GameManager.Instance.RoomPassed();
         }
     
         private List<PokerDiceHandResult> DetermineWinners()

@@ -11,6 +11,7 @@ namespace Managers
     public class GameManager : MonoBehaviour
     {
         public event Action OnPlayerInitialized;
+        public event Action OnRoomPassed;
         
         public static GameManager Instance { get; private set; }
 
@@ -39,6 +40,11 @@ namespace Managers
             Time.timeScale = isPaused ? 0 : 1;
             
             return isPaused;
+        }
+
+        public void RoomPassed()
+        {
+            OnRoomPassed?.Invoke();
         }
     }
 }

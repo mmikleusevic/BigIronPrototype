@@ -84,6 +84,7 @@ namespace Managers
         {
             Debug.Log("Event chain finished!");
             OnEventEnded?.Invoke();
+            GameManager.Instance.RoomPassed();
         }
     }
 }
