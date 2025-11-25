@@ -41,11 +41,11 @@ namespace StateMachine.PokerStateMachine
             
             if (pokerGame.CurrentPlayer.IsAI)
             {
-                pokerDiceGameManager.StateMachine.ChangeState(new PokerDiceAIRollingState(pokerDiceGameManager));    
+                pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceAIRollingState(pokerDiceGameManager));    
             }
             else
             {
-                pokerDiceGameManager.StateMachine.ChangeState(new PokerDiceRollingState(pokerDiceGameManager));
+                pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceRollingState(pokerDiceGameManager));
             }
         }
     

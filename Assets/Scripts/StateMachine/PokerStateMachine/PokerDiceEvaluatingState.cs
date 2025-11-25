@@ -52,7 +52,7 @@ namespace StateMachine.PokerStateMachine
             
             if (pokerGame.AllPlayersFinished())
             {
-                pokerDiceGameManager.StateMachine.ChangeState(new PokerDiceGameOverState(pokerDiceGameManager));
+                pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceGameOverState(pokerDiceGameManager));
             }
         }
     

@@ -23,7 +23,7 @@ namespace StateMachine.PokerStateMachine
             pokerGame.Initialize();
             diceRoller.Initialize(pokerGame.Players);
 
-            pokerDiceGameManager.StateMachine.ChangeState(new PokerDiceTurnStartState(pokerDiceGameManager));
+            pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceTurnStartState(pokerDiceGameManager));
         }
 
         public void OnUpdate() { }

@@ -8,7 +8,7 @@ namespace Managers
     {
         public static EncounterManager Instance { get; private set; }
 
-        private EncounterSO encounterSO;
+        public EncounterSO EncounterSO { get; private set; }
 
         private void Awake()
         {
@@ -17,12 +17,7 @@ namespace Managers
 
         public void SetNextEncounter(EncounterSO encounterSO)
         {
-            this.encounterSO = encounterSO;
-        }
-
-        public void InitializeEncounter()
-        {
-            //TODO initialize encounter
+            EncounterSO = encounterSO;
         }
     }
 }

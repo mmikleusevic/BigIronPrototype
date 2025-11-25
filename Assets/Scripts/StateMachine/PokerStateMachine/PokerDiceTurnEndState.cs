@@ -31,12 +31,12 @@ namespace StateMachine.PokerStateMachine
             
             if (diceRoller.HaveAllPlayersRolled() && diceRoller.CurrentRollNumber >= diceRoller.MaxRolls)
             {
-                pokerDiceGameManager.StateMachine.ChangeState(new PokerDiceEvaluatingState(pokerDiceGameManager));
+                pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceEvaluatingState(pokerDiceGameManager));
             }
             else
             {
                 pokerGame.NextPlayer();
-                pokerDiceGameManager.StateMachine.ChangeState(new PokerDiceTurnStartState(pokerDiceGameManager));
+                pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceTurnStartState(pokerDiceGameManager));
             }
         }
     

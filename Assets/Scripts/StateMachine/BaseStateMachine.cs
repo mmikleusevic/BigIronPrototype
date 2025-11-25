@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace StateMachine
 {
-    public class StateMachine : MonoBehaviour
+    public class BaseStateMachine : MonoBehaviour
     {
         private IPokerDiceState CurrentState { get; set; }
         

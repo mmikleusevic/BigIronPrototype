@@ -591,7 +591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PokerDiceRoom.PokerDiceGameManager
   <PokerInputRules>k__BackingField: {fileID: 134426245}
-  <StateMachine>k__BackingField: {fileID: 820407565}
+  <BaseStateMachine>k__BackingField: {fileID: 820407565}
   <DiceRoller>k__BackingField: {fileID: 1111814768}
   <PokerInputs>k__BackingField: {fileID: 825595837}
   <PokerGame>k__BackingField: {fileID: 1300653157}

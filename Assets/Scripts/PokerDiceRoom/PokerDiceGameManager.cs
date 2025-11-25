@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Extensions;
-using Managers;
-using StateMachine;
+﻿using StateMachine;
 using StateMachine.PokerStateMachine;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using Random = UnityEngine.Random;
 
 namespace PokerDiceRoom
 {
@@ -16,7 +11,7 @@ namespace PokerDiceRoom
         
         [Header("References")] 
         [field: SerializeField] public PokerInputRules PokerInputRules { get; private set; }
-        [field: SerializeField] public StateMachine.StateMachine StateMachine { get; private set; }
+        [field: SerializeField] public BaseStateMachine BaseStateMachine { get; private set; }
         [field: SerializeField] public DiceRoller DiceRoller { get; private set; }
         [field: SerializeField] public PokerInputs PokerInputs { get; private set; }
         [field: SerializeField] public PokerGame PokerGame { get; private set; }
@@ -34,7 +29,7 @@ namespace PokerDiceRoom
 
         public void InitializeGame()
         {
-            StateMachine.ChangeState(new PokerDiceSetupState(this));
+            BaseStateMachine.ChangeState(new PokerDiceSetupState(this));
         }
 
         private void OnEnable()
