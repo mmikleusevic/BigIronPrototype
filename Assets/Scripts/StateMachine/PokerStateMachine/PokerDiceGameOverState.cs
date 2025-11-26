@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace StateMachine.PokerStateMachine
 {
-    public class PokerDiceGameOverState : IPokerDiceState
+    public class PokerDiceGameOverState : IState
     {
         private readonly PokerDiceGameManager pokerDiceGameManager;
         private readonly PokerGame pokerGame;
@@ -23,7 +23,7 @@ namespace StateMachine.PokerStateMachine
             pokerGameEvents = pokerDiceGameManager.PokerGameEvents;
         }
     
-        public void OnEnter()
+        public UniTask OnEnter()
         {
             pokerGameEvents.OnGameOverStarted?.Invoke();
             
@@ -36,9 +36,9 @@ namespace StateMachine.PokerStateMachine
             {
                 Debug.Log($"🏆 Winner: {winners[0].PlayerName}");
                 
-                if (winners[0].PlayerName != GameStrings.PLAYER) return;
+                if (winners[0].PlayerName != GameStrings.PLAYER) return UniTask.CompletedTask;
                 
-                GameManager.Instance.PlayerContext.GainGoldAmount(pokerGame.Wager);
+                GameManager.Instance.PlayerCombatant.GainGoldAmount(pokerGame.Wager);
                 pokerGameEvents.OnGameOver?.Invoke();
             }
             else
@@ -46,29 +46,36 @@ namespace StateMachine.PokerStateMachine
                 string tiedNames = string.Join(", ", winners.Select(w => w.PlayerName));
                 Debug.Log($"🤝 It's a tie between {tiedNames}!");
             }
+
+            return UniTask.CompletedTask;
         }
 
         private void EndWrapper()
         {
-            _ = End();
+            End().Forget();
+        }
+        
+        public void OnUpdate()
+        {
+
+        }
+
+        public UniTask OnExit()
+        {
+            pokerInputs.OnEnd -= EndWrapper;
+            
+            InputManager.Instance.EnableOnlyUIMap();
+            GameManager.Instance.RoomPassed();
+            
+            return UniTask.CompletedTask;
         }
 
         private async UniTask End()
         {
             pokerInputs.OnEnd -= EndWrapper;
             
-            _ = LevelManager.Instance.UnloadSceneAsync(pokerDiceGameManager.PokerAssetReference.AssetGUID);
+            LevelManager.Instance.UnloadSceneAsync(pokerDiceGameManager.PokerAssetReference.AssetGUID).Forget();
             await LevelManager.Instance.LoadSceneAsync(pokerDiceGameManager.GameAssetReference);
-        }
-    
-        public void OnUpdate() { }
-
-        public void OnExit()
-        {
-            pokerInputs.OnEnd -= EndWrapper;
-            
-            InputManager.Instance.EnableOnlyUIMap();
-            GameManager.Instance.RoomPassed();
         }
     
         private List<PokerDiceHandResult> DetermineWinners()

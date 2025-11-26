@@ -1,17 +1,18 @@
-﻿using StateMachine.PokerStateMachine;
+﻿using Cysharp.Threading.Tasks;
+using StateMachine.PokerStateMachine;
 using UnityEngine;
 
 namespace StateMachine
 {
     public class BaseStateMachine : MonoBehaviour
     {
-        private IPokerDiceState CurrentState { get; set; }
+        private IState CurrentState { get; set; }
         
-        public void ChangeState(IPokerDiceState newPokerDiceState)
+        public async UniTask ChangeState(IState newState)
         {
-            CurrentState?.OnExit();
-            CurrentState = newPokerDiceState;
-            CurrentState?.OnEnter();
+            if (CurrentState != null) await CurrentState.OnExit();
+            CurrentState = newState;
+            if (CurrentState != null) await CurrentState.OnEnter();
         }
 
         private void Update()

@@ -6,13 +6,13 @@ using UnityEngine;
 
 namespace UI
 {
-    public class HealthUI : PlayerUI
+    public class PlayerHealthUI : PlayerUI
     {
         [SerializeField] private TextMeshProUGUI healthText;
 
-        protected override void Subscribe(PlayerContext ctx) => ctx.PlayerHealth.OnHealthChanged += UpdateUI;
+        protected override void Subscribe(PlayerCombatant playerCombatant) => playerCombatant.Health.OnHealthChanged += UpdateUI;
 
-        protected override void Unsubscribe(PlayerContext ctx) => ctx.PlayerHealth.OnHealthChanged -= UpdateUI;
+        protected override void Unsubscribe(PlayerCombatant playerCombatant) => playerCombatant.Health.OnHealthChanged -= UpdateUI;
 
         private void UpdateUI(int currentHealth, int maxHealth)
         {

@@ -1,14 +1,16 @@
-using System;
-using StateMachine.PokerStateMachine;
+﻿using CombatRoom;
 using UnityEngine;
 
 namespace Player
 {
-    public class PlayerContext : MonoBehaviour
+    public class PlayerCombatant : Combatant
     {
-        [field: SerializeField] public Gold Gold { get; private set; }
-        [field: SerializeField] public PlayerHealth PlayerHealth { get; private set; }
-
+        [SerializeField] private PlayerHealth playerHealth;
+        [SerializeField] private Gold gold;
+        
+        public override Health Health => playerHealth;
+        public override Gold Gold => gold;
+        
         public void GainGoldAmount(int amount)
         {
             Gold.GainGoldAmount(amount);
@@ -21,12 +23,12 @@ namespace Player
 
         public void TakeDamage(int amount)
         {
-            PlayerHealth.TakeDamage(amount);
+            Health.TakeDamage(amount);
         }
         
         public void RefreshState()
         {
-            PlayerHealth.RefreshState();
+            Health.RefreshState();
             Gold.RefreshState();
         }
     }

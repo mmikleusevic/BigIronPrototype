@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace StateMachine.PokerStateMachine
 {
-    public class PokerDiceRollingState : IPokerDiceState
+    public class PokerDiceRollingState : IState
     {
         private readonly PokerDiceGameManager pokerDiceGameManager;
         private readonly IPokerInputSource pokerInputSource;
@@ -30,12 +30,9 @@ namespace StateMachine.PokerStateMachine
             pokerGameEvents = pokerDiceGameManager.PokerGameEvents;
         }
         
-        public void OnEnter()
+        public UniTask OnEnter()
         {
-            pokerInputSource.OnRoll += Roll;
-            pokerInputSource.OnHold += HoldTurn;
-            pokerInputSource.OnMove += MoveSelection;
-            pokerInputSource.OnSelect += Select;
+            SubscribeInputs();
          
             PokerPlayer player = pokerGame.CurrentPlayer;
             diceRoller.SetPlayerRolls(player);
@@ -44,10 +41,40 @@ namespace StateMachine.PokerStateMachine
             pokerGameEvents.OnDiceRollingStarted?.Invoke(playerRolls, diceRoller.MaxRolls);
             
             ToggleHighlight();
+
+            return UniTask.CompletedTask;
         }
 
-        public void OnUpdate() { }
+        public void OnUpdate()
+        {
 
+        }
+        
+        public UniTask OnExit()
+        {
+            UnsubscribeInputs();
+            
+            pokerGameEvents.OnDiceRollingEnded?.Invoke();
+
+            return UniTask.CompletedTask;
+        }
+        
+        private void SubscribeInputs()
+        {
+            pokerInputSource.OnRoll += Roll;
+            pokerInputSource.OnHold += HoldTurn;
+            pokerInputSource.OnMove += MoveSelection;
+            pokerInputSource.OnSelect += Select;
+        }
+
+        private void UnsubscribeInputs()
+        {
+            pokerInputSource.OnRoll -= Roll;
+            pokerInputSource.OnHold -= HoldTurn;
+            pokerInputSource.OnMove -= MoveSelection;
+            pokerInputSource.OnSelect -= Select;
+        }
+        
         private void Roll()
         {
             if (hasDoneAction) return;
@@ -74,7 +101,7 @@ namespace StateMachine.PokerStateMachine
             pokerGameEvents.OnHold?.Invoke();
             
             ToggleHighlight();
-            EndTurn();
+            ChangeState();
         }
         
         private void MoveSelection(Vector2 move)
@@ -102,12 +129,12 @@ namespace StateMachine.PokerStateMachine
         private void RollComplete()
         {
             Debug.Log($"Dice: {string.Join(", ", diceRoller.PlayerDice.Where(a => a.Key == pokerGame.CurrentPlayer).SelectMany(d => d.Value.Select(c => c.Value)))}");
-            EndTurn();
+            ChangeState();
         }
-
-        private void EndTurn()
+        
+        private void ChangeState()
         {
-            pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceTurnEndState(pokerDiceGameManager));
+            pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceTurnEndState(pokerDiceGameManager)).Forget();
         }
         
         private Die CurrentDie => diceRoller.PlayerDice[pokerGame.CurrentPlayer][selectedDieIndex];
@@ -115,16 +142,6 @@ namespace StateMachine.PokerStateMachine
         private void ToggleHighlight()
         {
             if (pokerInputRules.CanMove) CurrentDie?.DieVisual.ToggleHighlight();
-        }
-        
-        public void OnExit()
-        {
-            pokerGameEvents.OnDiceRollingEnded?.Invoke();
-            
-            pokerInputSource.OnRoll -= Roll;
-            pokerInputSource.OnHold -= HoldTurn;
-            pokerInputSource.OnMove -= MoveSelection;
-            pokerInputSource.OnSelect -= Select;
         }
     }
 }

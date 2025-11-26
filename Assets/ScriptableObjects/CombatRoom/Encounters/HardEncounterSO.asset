@@ -10,9 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f907f5d450444eba2cda254c97bfc7a, type: 3}
-  m_Name: CowboyEncounterSO
+  m_Name: HardEncounterSO
   m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.EncounterSO
-  encounterId: 
-  difficulty: 0
-  enemies: []
-  weight: 1
+  enemies:
+  - {fileID: 8645678584655061399, guid: 8257900f5a8aa8040a7f914daf3caf73, type: 3}

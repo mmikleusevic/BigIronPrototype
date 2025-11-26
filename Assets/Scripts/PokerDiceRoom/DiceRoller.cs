@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using Extensions;
 using Managers;
 using UnityEngine;
@@ -39,10 +40,12 @@ namespace PokerDiceRoom
             Quaternion.Euler(0, -90, -90)  // 6
         };
 
-        public void Initialize(PokerPlayer[] players)
+        public async UniTask Initialize(PokerPlayer[] players)
         {
             InitializePlayerRolls(players);
             InitializeDice(players);
+            
+            await UniTask.CompletedTask;
         }
 
         private void InitializePlayerRolls(PokerPlayer[] pokerPlayers)

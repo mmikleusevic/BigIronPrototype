@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace StateMachine.PokerStateMachine
 {
-    public class PokerDiceAIRollingState : IPokerDiceState
+    public class PokerDiceAIRollingState : IState
     {
         private readonly PokerDiceGameManager pokerDiceGameManager;
         private readonly DiceRoller diceRoller;
@@ -22,15 +22,15 @@ namespace StateMachine.PokerStateMachine
             pokerGame = pokerDiceGameManager.PokerGame;
         }
         
-        public void OnEnter()
+        public async UniTask OnEnter()
         {
             PokerPlayer player = pokerGame.CurrentPlayer;
             diceRoller.SetPlayerRolls(player);
 
-            _ = StartAIRollRoutine();
+            await StartAIRollRoutine();
         }
         
-        private async UniTaskVoid StartAIRollRoutine()
+        private async UniTask StartAIRollRoutine()
         {
             Debug.Log($"{pokerGame.CurrentPlayer} (AI) is thinking...");
 
@@ -43,6 +43,16 @@ namespace StateMachine.PokerStateMachine
             OnRoll();
             
             await UniTask.Delay(1500);
+        }
+        
+        public void OnUpdate()
+        {
+
+        }
+
+        public UniTask OnExit()
+        {
+            return UniTask.CompletedTask;
         }
         
         private async UniTask SelectSmartDiceToRoll()
@@ -95,12 +105,12 @@ namespace StateMachine.PokerStateMachine
         private void OnRollComplete()
         {
             Debug.Log($"Dice: {string.Join(", ", diceRoller.PlayerDice.Where(a => a.Key == pokerGame.CurrentPlayer).SelectMany(d => d.Value.Select(c => c.Value)))}");
-            EndTurn();
+            ChangeState();
         }
         
-        private void EndTurn()
+        private void ChangeState()
         {
-            pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceTurnEndState(pokerDiceGameManager));
+            pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceTurnEndState(pokerDiceGameManager)).Forget();
         }
         
         private Die CurrentDie => diceRoller.PlayerDice[pokerGame.CurrentPlayer][selectedDieIndex];
@@ -108,16 +118,6 @@ namespace StateMachine.PokerStateMachine
         private void ToggleHighlight()
         {
             CurrentDie?.DieVisual.ToggleHighlight();
-        }
-        
-        public void OnUpdate()
-        {
-
-        }
-
-        public void OnExit()
-        {
-
         }
     }
 }

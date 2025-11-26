@@ -7,7 +7,7 @@ namespace EventRoom
     public class LoseGoldEffectSO : EventEffectSO
     {
         public int Amount;
-        public override string Apply(PlayerContext playerContext)
+        public override string Apply(PlayerCombatant playerContext)
         {
             int lostGold = playerContext.LoseGoldAmount(Amount);
 

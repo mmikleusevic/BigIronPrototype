@@ -140,9 +140,9 @@ GameObject:
   - component: {fileID: 8599959131642698212}
   - component: {fileID: 6431855475848164698}
   - component: {fileID: 7672301557396174479}
-  - component: {fileID: 5079734530017321613}
   - component: {fileID: 4117786208091181389}
   - component: {fileID: 739255252842885961}
+  - component: {fileID: 4380643922054356488}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -245,20 +245,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5079734530017321613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7473559536041415719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 967af8237a9f8b941a61bf86011576a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerContext
-  <Gold>k__BackingField: {fileID: 4117786208091181389}
-  <PlayerHealth>k__BackingField: {fileID: 739255252842885961}
 --- !u!114 &4117786208091181389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,3 +270,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerHealth
   maxHealth: 100
+--- !u!114 &4380643922054356488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7473559536041415719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d24d04193c343b6be959303e54ebe51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerCombatant
+  <Name>k__BackingField: Player
+  <Speed>k__BackingField: 10
+  <Type>k__BackingField: 0
+  playerHealth: {fileID: 739255252842885961}
+  gold: {fileID: 4117786208091181389}

@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Enemy
+﻿namespace Enemies
 {
     public class EnemyHealth : Health
     {

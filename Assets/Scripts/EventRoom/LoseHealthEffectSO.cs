@@ -8,7 +8,7 @@ namespace EventRoom
     {
         public int Amount;
         
-        public override string Apply(PlayerContext playerContext)
+        public override string Apply(PlayerCombatant playerContext)
         {
             playerContext.TakeDamage(Amount);
             

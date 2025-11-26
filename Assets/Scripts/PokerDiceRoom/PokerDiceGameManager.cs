@@ -1,4 +1,6 @@
-﻿using StateMachine;
+﻿using System;
+using Cysharp.Threading.Tasks;
+using StateMachine;
 using StateMachine.PokerStateMachine;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -7,8 +9,6 @@ namespace PokerDiceRoom
 {
     public class PokerDiceGameManager : MonoBehaviour
     {
-        public static PokerDiceGameManager Instance { get; private set; }
-        
         [Header("References")] 
         [field: SerializeField] public PokerInputRules PokerInputRules { get; private set; }
         [field: SerializeField] public BaseStateMachine BaseStateMachine { get; private set; }
@@ -22,14 +22,14 @@ namespace PokerDiceRoom
         
         public bool IsGameOver { get; private set; }
 
-        private void Awake()
+        private void Start()
         {
-            Instance = this;
+            InitializeGame().Forget();
         }
 
-        public void InitializeGame()
+        private async UniTask InitializeGame()
         {
-            BaseStateMachine.ChangeState(new PokerDiceSetupState(this));
+            await BaseStateMachine.ChangeState(new PokerDiceSetupState(this));
         }
 
         private void OnEnable()

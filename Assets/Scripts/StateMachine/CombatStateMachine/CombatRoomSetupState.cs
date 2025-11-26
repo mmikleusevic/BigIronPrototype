@@ -1,21 +1,27 @@
 ﻿using CombatRoom;
+using Cysharp.Threading.Tasks;
 using StateMachine.PokerStateMachine;
 
 namespace StateMachine.CombatStateMachine
 {
-    public class CombatRoomSetupState : IPokerDiceState
+    public class CombatRoomSetupState : IState
     {
         private readonly CombatRoomManager combatRoomManager;
-        
         
         public CombatRoomSetupState(CombatRoomManager manager)
         {
             combatRoomManager = manager;
         }
         
-        public void OnEnter()
+        public async UniTask OnEnter()
         {
-            combatRoomManager.BaseStateMachine.ChangeState(new CombatRoomTurnStartState(combatRoomManager));
+            combatRoomManager.SpawnEnemies();
+            
+            await UniTask.Delay(1000);
+            
+            combatRoomManager.CalculateTurnOrder();
+            
+            await combatRoomManager.BaseStateMachine.ChangeState(new CombatRoomTurnStartState(combatRoomManager));
         }
 
         public void OnUpdate()
@@ -23,9 +29,9 @@ namespace StateMachine.CombatStateMachine
             
         }
 
-        public void OnExit()
+        public UniTask OnExit()
         {
-            
+            return UniTask.CompletedTask;
         }
     }
 }

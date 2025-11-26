@@ -82,7 +82,7 @@ namespace UI
             UIFocusManager.Instance.ClearFocus();
             InputManager.Instance.StartingMapsSetup();
             
-            _ = LevelManager.Instance.UnloadAllButPersistentScenesAsync();
+            LevelManager.Instance.UnloadAllButPersistentScenesAsync().Forget();
             await LevelManager.Instance.LoadSceneAsync(mainMenuSceneReference);
 
             GameManager.Instance.TogglePause();

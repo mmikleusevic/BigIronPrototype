@@ -37,7 +37,7 @@ namespace UI
     
         private async UniTask PlayGame()
         {
-            _ = LevelManager.Instance.UnloadSceneAsync(mainMenuAssetReference.AssetGUID);
+            LevelManager.Instance.UnloadSceneAsync(mainMenuAssetReference.AssetGUID).Forget();
             await LevelManager.Instance.LoadSceneAsync(gameAssetReference);
         }
 

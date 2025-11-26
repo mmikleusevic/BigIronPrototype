@@ -17,13 +17,13 @@ public class Boot : MonoBehaviour
     
     private void Start()
     {
-        _ = LoadScene();
+        LoadScene().Forget();
     }
 
     private async UniTask LoadScene()
     {
         await LevelManager.Instance.LoadSceneAsync(loaderScene, false);
         await LevelManager.Instance.LoadSceneAsync(mainMenuScene);
-        _ = SceneManager.UnloadSceneAsync(0);
+        await SceneManager.UnloadSceneAsync(0);
     }
 }

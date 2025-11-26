@@ -137,7 +137,7 @@ namespace UI
         {
             EventSystem.current.SetSelectedGameObject(null);
             
-            _ = LevelManager.Instance.UnloadSceneAsync(pokerDiceGameManager.PokerAssetReference.AssetGUID);
+            LevelManager.Instance.UnloadSceneAsync(pokerDiceGameManager.PokerAssetReference.AssetGUID).Forget();
             await LevelManager.Instance.LoadSceneAsync(pokerDiceGameManager.GameAssetReference);
             
             GameManager.Instance.RoomPassed();

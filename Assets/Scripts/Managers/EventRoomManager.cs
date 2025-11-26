@@ -23,7 +23,7 @@ namespace Managers
 
         public void OnChoiceSelected(EventChoice choice)
         {
-            PlayerContext player = GameManager.Instance?.PlayerContext;
+            PlayerCombatant player = GameManager.Instance?.PlayerCombatant;
 
             bool conditionsMet = CheckConditions(choice, player);
             TriggerEffects(choice, player,conditionsMet);
@@ -43,7 +43,7 @@ namespace Managers
             }
         }
 
-        private bool CheckConditions(EventChoice choice, PlayerContext player)
+        private bool CheckConditions(EventChoice choice, PlayerCombatant player)
         {
             bool conditionsMet = true;
             foreach (EventConditionSO eventConditionSO in choice.Conditions)
@@ -58,7 +58,7 @@ namespace Managers
             return conditionsMet;
         }
 
-        private void TriggerEffects(EventChoice choice, PlayerContext player , bool conditionsMet)
+        private void TriggerEffects(EventChoice choice, PlayerCombatant player , bool conditionsMet)
         {
             if (!conditionsMet) return;
             

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using PokerDiceRoom;
 using UnityEngine;
 
 namespace StateMachine.PokerStateMachine
 {
-    public class PokerDiceEvaluatingState : IPokerDiceState
+    public class PokerDiceEvaluatingState : IState
     {
         private readonly PokerDiceGameManager pokerDiceGameManager;
         private readonly PokerGame pokerGame;
@@ -22,10 +23,8 @@ namespace StateMachine.PokerStateMachine
             pokerGameEvents = pokerDiceGameManager.PokerGameEvents;
         }
     
-        public void OnEnter()
+        public async UniTask OnEnter()
         {
-            //TODO test more 
-            
             pokerGameEvents.OnDiceEvaluationStarted?.Invoke();
             Debug.Log("=== Evaluating Hands ===");
 
@@ -41,24 +40,24 @@ namespace StateMachine.PokerStateMachine
             List<PokerDiceHandResult> winners = DetermineWinners(results);
             DisplayEvaluationReport(results, winners);
 
-            displayTimer = 0f;
+            await UniTask.Delay(TimeSpan.FromSeconds(displayDuration));
+            
+            if (pokerGame.AllPlayersFinished())
+            {
+                await pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceGameOverState(pokerDiceGameManager));
+            }
         }
     
         public void OnUpdate()
         {
-            displayTimer += Time.deltaTime;
 
-            if (displayTimer < displayDuration) return;
-            
-            if (pokerGame.AllPlayersFinished())
-            {
-                pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceGameOverState(pokerDiceGameManager));
-            }
         }
-    
-        public void OnExit() { }
-        
-        
+
+        public UniTask OnExit()
+        {
+            return UniTask.CompletedTask;
+        }
+
         // TODO remove methods later
         private void DisplayEvaluationReport(Dictionary<PokerPlayer, PokerDiceHandResult> results, List<PokerDiceHandResult> winners)
         {

@@ -15,7 +15,7 @@ namespace Loading
 
         public override async UniTask LoadAsync(LevelNode node, LevelManager context)
         {
-            int randomIndex = Random.Range(0, encounterTableSO.encounters.Count);
+            int randomIndex = Random.Range(0, encounterTableSO.encounters.Length);
             EncounterSO randomEncounter = encounterTableSO.encounters[randomIndex];
             
             EncounterManager.Instance.SetNextEncounter(randomEncounter);

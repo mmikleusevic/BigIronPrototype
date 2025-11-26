@@ -24,6 +24,10 @@ namespace MapRoom
         {
             SetInteractable(false);
             Highlight(false);
+        }
+
+        private void OnDestroy()
+        {
             RemoveListener();
         }
 

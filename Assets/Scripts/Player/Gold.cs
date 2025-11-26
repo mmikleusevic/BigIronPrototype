@@ -7,14 +7,10 @@ namespace Player
     public class Gold : MonoBehaviour
     {
         public Action<int> OnGoldChanged;
-        
-        private int goldAmount;
-        public int GoldAmount => goldAmount;
 
-        private void OnEnable()
-        {
-            goldAmount = 0;
-        }
+        [SerializeField] private int goldAmount;
+        
+        public int GoldAmount => goldAmount;
 
         public void GainGoldAmount(int goldGained)
         {

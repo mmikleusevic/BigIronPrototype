@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 7193657763561590430}
   - component: {fileID: 3848035230145826988}
   - component: {fileID: 5997151282401117039}
+  - component: {fileID: 334877662318913158}
+  - component: {fileID: 476071579847495146}
+  - component: {fileID: 2891574057460004659}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -127,3 +130,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy.EnemyHealth
   maxHealth: 100
+--- !u!114 &334877662318913158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303186955438294661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62187b73d4a5446cb7e45805eb8d045e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemies.Enemy
+  <Health>k__BackingField: {fileID: 5997151282401117039}
+--- !u!114 &476071579847495146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303186955438294661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e80be468d4b4f15a873713489f03e22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemyCombatant
+  <Name>k__BackingField: 
+  <Speed>k__BackingField: 0
+  <Type>k__BackingField: 0
+  enemyHealth: {fileID: 5997151282401117039}
+  gold: {fileID: 2891574057460004659}
+--- !u!114 &2891574057460004659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303186955438294661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff4f8c6be317410c9c34b9802a217d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player.Gold
+  goldAmount: 0

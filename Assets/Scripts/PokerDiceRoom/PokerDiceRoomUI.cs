@@ -41,7 +41,7 @@ namespace PokerDiceRoom
             pokerDiceRoomPanel.SetActive(true);
             
             goldSlider.minValue = 0;
-            goldSlider.maxValue = GameManager.Instance.PlayerContext.Gold.GoldAmount;
+            goldSlider.maxValue = GameManager.Instance.PlayerCombatant.Gold.GoldAmount;
         }
 
         private void SetGoldText(float gold)
@@ -53,11 +53,9 @@ namespace PokerDiceRoom
         private async UniTask ContinueToPokerDiceRoom()
         {
             int playerWageredGold = PokerDiceRoomManager.Instance.PlayerGoldToWager;
-            GameManager.Instance.PlayerContext.LoseGoldAmount(playerWageredGold);
+            GameManager.Instance.PlayerCombatant.LoseGoldAmount(playerWageredGold);
             
             await LevelManager.Instance.LoadSceneAsync(pokerDiceSceneReference);
-            
-            PokerDiceGameManager.Instance.InitializeGame();
             
             pokerDiceRoomPanel.SetActive(false);
         }

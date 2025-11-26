@@ -321,9 +321,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.CombatRoomManager
   <BaseStateMachine>k__BackingField: {fileID: 475863547}
   EnemyPositions:
-  - {x: -1.5, y: 0, z: 2.5}
   - {x: 0, y: 0, z: 0}
-  - {x: 1.5, y: 0, z: 2.5}
+  - {x: -2.5, y: 0, z: 10}
+  - {x: 2.5, y: 0, z: 10}
 --- !u!4 &2060721762
 Transform:
   m_ObjectHideFlags: 0

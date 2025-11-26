@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -18,11 +19,13 @@ namespace PokerDiceRoom
         
         private int currentPlayerIndex;
 
-        public void Initialize()
+        public async UniTask Initialize()
         {
             PlayerHands.Clear();
             SetFirstPlayer();
             SetWager();
+
+            await UniTask.CompletedTask;
         }
         
         public void NextPlayer()

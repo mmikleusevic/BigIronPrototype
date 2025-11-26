@@ -15,17 +15,17 @@ namespace UI
         {
             GameManager.Instance.OnPlayerInitialized -= OnPlayerInitialized;
             
-            Unsubscribe(GameManager.Instance.PlayerContext);
+            Unsubscribe(GameManager.Instance.PlayerCombatant);
         }
 
         private void OnPlayerInitialized()
         {
-            Subscribe(GameManager.Instance.PlayerContext);
+            Subscribe(GameManager.Instance.PlayerCombatant);
             
-            GameManager.Instance.PlayerContext.RefreshState();
+            GameManager.Instance.PlayerCombatant.RefreshState();
         }
 
-        protected abstract void Subscribe(PlayerContext ctx);
-        protected abstract void Unsubscribe(PlayerContext ctx);
+        protected abstract void Subscribe(PlayerCombatant playerCombatant);
+        protected abstract void Unsubscribe(PlayerCombatant playerCombatant);
     }
 }

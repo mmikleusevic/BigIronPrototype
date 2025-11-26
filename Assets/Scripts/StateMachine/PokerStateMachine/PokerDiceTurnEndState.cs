@@ -1,10 +1,11 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using PokerDiceRoom;
 using UnityEngine;
 
 namespace StateMachine.PokerStateMachine
 {
-    public class PokerDiceTurnEndState : IPokerDiceState
+    public class PokerDiceTurnEndState : IState
     {
         private readonly PokerDiceGameManager pokerDiceGameManager;
         private readonly PokerGameEvents pokerGameEvents;
@@ -19,7 +20,7 @@ namespace StateMachine.PokerStateMachine
             pokerGame = pokerDiceGameManager.PokerGame;
         }
     
-        public void OnEnter()
+        public async UniTask OnEnter()
         {
             pokerGameEvents.OnTurnEndStarted?.Invoke();
 
@@ -31,16 +32,23 @@ namespace StateMachine.PokerStateMachine
             
             if (diceRoller.HaveAllPlayersRolled() && diceRoller.CurrentRollNumber >= diceRoller.MaxRolls)
             {
-                pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceEvaluatingState(pokerDiceGameManager));
+                await pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceEvaluatingState(pokerDiceGameManager));
             }
             else
             {
                 pokerGame.NextPlayer();
-                pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceTurnStartState(pokerDiceGameManager));
+                await pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceTurnStartState(pokerDiceGameManager));
             }
         }
-    
-        public void OnUpdate() { }
-        public void OnExit() { }
+
+        public void OnUpdate()
+        {
+
+        }
+
+        public UniTask OnExit()
+        {
+            return UniTask.CompletedTask;
+        }
     }
 }

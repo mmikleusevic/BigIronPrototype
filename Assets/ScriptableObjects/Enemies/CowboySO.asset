@@ -9,10 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f907f5d450444eba2cda254c97bfc7a, type: 3}
-  m_Name: IndianEncounterSO
-  m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.EncounterSO
-  encounterId: 
-  difficulty: 0
-  enemies: []
-  weight: 1
+  m_Script: {fileID: 11500000, guid: f7ce7713ef004fe594a9c9a1530d691f, type: 3}
+  m_Name: CowboySO
+  m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.EnemySO
+  prefab: {fileID: 8429520671789382043, guid: 5753c066a84c0db49964d2c5843549ee, type: 3}

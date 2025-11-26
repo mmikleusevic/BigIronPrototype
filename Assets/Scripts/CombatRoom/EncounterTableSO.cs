@@ -6,6 +6,6 @@ namespace CombatRoom
     [CreateAssetMenu(menuName = "Combat/EncounterTable")]
     public class EncounterTableSO : ScriptableObject
     {
-        public List<EncounterSO> encounters;
+        public EncounterSO[] encounters;
     }
 }

@@ -15,9 +15,9 @@ namespace Managers
         
         public static GameManager Instance { get; private set; }
 
-        public PlayerContext PlayerContext { get; private set; }
+        public PlayerCombatant PlayerCombatant { get; private set; }
 
-        [SerializeField] private PlayerContext playerPrefab;
+        [SerializeField] private PlayerCombatant playerPrefab;
         [SerializeField] private SceneReferenceSO gameSceneReferenceSO;
         
         private bool isPaused;
@@ -29,7 +29,7 @@ namespace Managers
 
         public void InitializeGame()
         {
-            PlayerContext = Instantiate(playerPrefab, playerPrefab.transform.position, playerPrefab.transform.rotation);
+            PlayerCombatant = Instantiate(playerPrefab, playerPrefab.transform.position, playerPrefab.transform.rotation);
             
             OnPlayerInitialized?.Invoke();
         }

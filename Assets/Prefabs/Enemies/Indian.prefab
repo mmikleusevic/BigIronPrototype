@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5625374006522962118
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 303186955438294661, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: m_Name
+      value: Indian
+      objectReference: {fileID: 0}
+    - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: gold
+      value: 
+      objectReference: {fileID: -3471077077928913700}
+    - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: enemyHealth
+      value: 
+      objectReference: {fileID: 2101912788984685481}
+    - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: <Name>k__BackingField
+      value: Indian
+      objectReference: {fileID: 0}
+    - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: <Type>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: <Speed>k__BackingField
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: <EnemyHealth>k__BackingField
+      value: 
+      objectReference: {fileID: 2101912788984685481}
+    - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: <GoldDropAmount>k__BackingField
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571615170333215887, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571615170333215887, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571615170333215887, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571615170333215887, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571615170333215887, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571615170333215887, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571615170333215887, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571615170333215887, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571615170333215887, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571615170333215887, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 303186955438294661, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -3471077077928913700}
+  m_SourcePrefab: {fileID: 100100000, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+--- !u!114 &2101912788984685481 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5997151282401117039, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+  m_PrefabInstance: {fileID: 5625374006522962118}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5342523938141038147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0b1eab2001240ee84573baa1290972e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy.EnemyHealth
+--- !u!1 &5342523938141038147 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 303186955438294661, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+  m_PrefabInstance: {fileID: 5625374006522962118}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-3471077077928913700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5342523938141038147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff4f8c6be317410c9c34b9802a217d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player.Gold
+  goldAmount: 10

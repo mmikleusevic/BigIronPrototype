@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Enemies;
 using UnityEngine;
 
 namespace CombatRoom
@@ -6,6 +7,6 @@ namespace CombatRoom
     [CreateAssetMenu(menuName = "Combat/Encounter")]
     public class EncounterSO : ScriptableObject
     {
-        public List<EnemySO> enemies;
+        public EnemyCombatant[] enemies;
     }
 }
