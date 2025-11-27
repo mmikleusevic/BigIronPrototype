@@ -7,19 +7,21 @@ namespace StateMachine.CombatStateMachine
     public class CombatRoomPlayerTurnState : IState
     {
         private readonly CombatRoomManager combatRoomManager;
-        
-        // This is just to delay currently so that it doesn't go to infinite loop
-        private bool delay = true;
+        private readonly CombatRoomEvents combatRoomEvents;
         
         public CombatRoomPlayerTurnState(CombatRoomManager manager)
         {
             combatRoomManager = manager;
+            combatRoomEvents = combatRoomManager.CombatRoomEvents;
         }        
         
-        public async UniTask OnEnter()
+        public UniTask OnEnter()
         {
-            //TODO remove this condition later
-            if (!delay) await combatRoomManager.BaseStateMachine.ChangeState(new CombatRoomTurnEndState(combatRoomManager));
+            combatRoomEvents.OnPlayerTurnStarted?.Invoke();
+
+            combatRoomManager.OnShoot += HandleShootChosen;
+            
+            return UniTask.CompletedTask;
         }
 
         public void OnUpdate()
@@ -29,7 +31,17 @@ namespace StateMachine.CombatStateMachine
 
         public UniTask OnExit()
         {
+            combatRoomEvents.OnPlayerTurnEnded?.Invoke();
+            
+            combatRoomManager.OnShoot -= HandleShootChosen;
+            
             return UniTask.CompletedTask;
+        }
+
+        private void HandleShootChosen()
+        {
+            combatRoomManager.BaseStateMachine
+                .ChangeState(new CombatRoomPlayerTargetSelectingState(combatRoomManager)).Forget();
         }
     }
 }

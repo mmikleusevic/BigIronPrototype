@@ -72,6 +72,10 @@ PrefabInstance:
       propertyPath: goldAmount
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5997151282401117039, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: maxHealth
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4585155165451189736, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
     m_RemovedGameObjects: []

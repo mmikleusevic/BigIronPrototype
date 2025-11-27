@@ -14,14 +14,20 @@ namespace CombatRoom
 {
     public class CombatRoomManager : MonoBehaviour
     {
+        public event Action OnShoot;
+        
         [field: SerializeField] public BaseStateMachine BaseStateMachine { get; private set; }
+        [field: SerializeField] public CombatTargetInputs CombatTargetInputs { get; private set; }
+        [field: SerializeField] public CombatInputRules CombatInputRules { get; private set; }
+        
         [SerializeField] private Vector3[] EnemyPositions;
         private List<Combatant> ActiveCombatants { get; } = new List<Combatant>();
         public Queue<Combatant> TurnQueue { get; private set; } = new Queue<Combatant>();
         public Combatant CurrentCombatant { get; private set; }
+        public CombatRoomEvents CombatRoomEvents { get; private set; } = new CombatRoomEvents();
+        public EnemyCombatant SelectedEnemy { get; private set; }
         
         private readonly Dictionary<Combatant, Action> deathActions = new Dictionary<Combatant, Action>();
-        
         private void Start()
         {
             MovePlayerToCombatScene();
@@ -49,6 +55,24 @@ namespace CombatRoom
                 
                 ActiveCombatants.Add(enemy);
             }
+        }
+
+        public void HandleShootChosen()
+        {
+            OnShoot?.Invoke();
+        }
+        
+        public List<EnemyCombatant> GetAliveEnemies()
+        {
+            return ActiveCombatants
+                .Where(c => c.Type == CombatantType.Enemy && !c.IsDead)
+                .Cast<EnemyCombatant>()
+                .ToList();
+        }
+
+        public void HandleTargetChosen(EnemyCombatant target)
+        {
+            SelectedEnemy = target;
         }
 
         private void MovePlayerToCombatScene()

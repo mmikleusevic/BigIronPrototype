@@ -10,6 +10,7 @@ public class Health : MonoBehaviour
 
     private int currentHealth;
     public int CurrentHealth => currentHealth;
+    public int MaxHealth => maxHealth;
 
     protected virtual void OnEnable()
     {

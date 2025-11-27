@@ -13,61 +13,62 @@ namespace PokerDiceRoom
         public event Action<Vector2> OnMove;
         public event Action OnSelect;
         public event Action OnEnd;
-        
-        [Header("Input Action References")]
-        [SerializeField] private InputActionReference moveSelection;
-        [SerializeField] private InputActionReference select;
-        [SerializeField] private InputActionReference roll;
-        [SerializeField] private InputActionReference holdTurn;
-        [SerializeField] private InputActionReference end;
+
+        [Header("Input Action References")] [SerializeField]
+        private InputActionAsset inputActionAsset;
         [SerializeField] private PokerDiceGameManager gameManager;
         private PokerInputRules Rules => gameManager.PokerInputRules;
         
-        private InputActionReference[] actions;
+        private InputActionMap pokerDiceMap;
+        private InputAction moveAction;
+        private InputAction selectAction;
+        private InputAction rollAction;
+        private InputAction holdAction;
+        private InputAction endAction;
         private bool InputEnabled => !gameManager.PokerGame.CurrentPlayer.IsAI || gameManager.IsGameOver;
-    
-        private void Awake()
-        {
-            actions = new[] { moveSelection, select, roll, holdTurn, end };
-        }
 
         private void OnEnable()
         {
-            if (moveSelection) moveSelection.action.performed += OnMovePerformed;
-            if (select) select.action.performed += DiceSelected;
-            if (roll) roll.action.performed += OnRollPerformed;
-            if (holdTurn) holdTurn.action.performed += OnHoldPerformed;
-            if (end) end.action.performed += OnEndPerformed;
+            pokerDiceMap = inputActionAsset.FindActionMap(GameStrings.POKER_GAME);
             
-            EnableAll(true);
+            moveAction = pokerDiceMap.FindAction(GameStrings.MOVE);
+            selectAction = pokerDiceMap.FindAction(GameStrings.SELECT);
+            rollAction = pokerDiceMap.FindAction(GameStrings.ROLL);
+            holdAction = pokerDiceMap.FindAction(GameStrings.HOLD);
+            endAction = pokerDiceMap.FindAction(GameStrings.END);
+            
+            moveAction.performed += OnMovePerformed;
+            selectAction.performed += DiceSelected;
+            rollAction.performed += OnRollPerformed;
+            holdAction.performed += OnHoldPerformed;
+            endAction.performed += OnEndPerformed;
+            
+            Debug.Log(pokerDiceMap.enabled);
+            
+            DisablePlayerTurnInput();
         }
 
         private void OnDisable()
         {
-            if (moveSelection) moveSelection.action.performed -= OnMovePerformed;
-            if (select) select.action.performed -= DiceSelected;
-            if (roll) roll.action.performed -= OnRollPerformed;
-            if (holdTurn) holdTurn.action.performed -= OnHoldPerformed;
-            if (end) end.action.performed -= OnEndPerformed;
+            moveAction.performed -= OnMovePerformed;
+            selectAction.performed -= DiceSelected;
+            rollAction.performed -= OnRollPerformed;
+            holdAction.performed -= OnHoldPerformed;
+            endAction.performed -= OnEndPerformed;
             
-            EnableAll(false);
+            DisablePlayerTurnInput();
         }
-    
-        private void EnableAll(bool enable)
+        
+        public void EnablePlayerTurnInput()
         {
-            foreach (InputActionReference inputActionReference in actions)
-            {
-                if (!inputActionReference) continue;
-                
-                if (enable)
-                {
-                    inputActionReference.action.Enable();
-                }
-                else
-                {
-                    inputActionReference.action.Disable();
-                }
-            }
+            pokerDiceMap.Enable();
+            
+            Debug.Log(pokerDiceMap.enabled);
+        }
+        
+        public void DisablePlayerTurnInput()
+        {
+            pokerDiceMap.Disable();
         }
         
         private void OnMovePerformed(InputAction.CallbackContext ctx)

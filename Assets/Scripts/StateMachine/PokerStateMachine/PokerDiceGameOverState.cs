@@ -27,6 +27,7 @@ namespace StateMachine.PokerStateMachine
         {
             pokerGameEvents.OnGameOverStarted?.Invoke();
             
+            pokerInputs.EnablePlayerTurnInput();
             pokerInputs.OnEnd += EndWrapper;
                 
             Debug.Log("=== GAME OVER ===");
@@ -62,6 +63,7 @@ namespace StateMachine.PokerStateMachine
 
         public UniTask OnExit()
         {
+            pokerInputs.DisablePlayerTurnInput();
             pokerInputs.OnEnd -= EndWrapper;
             
             InputManager.Instance.EnableOnlyUIMap();
@@ -72,6 +74,7 @@ namespace StateMachine.PokerStateMachine
 
         private async UniTask End()
         {
+            pokerInputs.DisablePlayerTurnInput();
             pokerInputs.OnEnd -= EndWrapper;
             
             LevelManager.Instance.UnloadSceneAsync(pokerDiceGameManager.PokerAssetReference.AssetGUID).Forget();

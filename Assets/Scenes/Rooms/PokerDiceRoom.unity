@@ -392,6 +392,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -528,6 +529,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -896,11 +898,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c917e36727b4219a91ae6240a902f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PokerInputHandler
-  moveSelection: {fileID: -1192623838659010386, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  select: {fileID: 2678822054610358520, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  roll: {fileID: 2939768696439308868, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  holdTurn: {fileID: -5223695621977746684, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  end: {fileID: -4861581020531500215, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   gameManager: {fileID: 587232039}
 --- !u!4 &825595838
 Transform:
@@ -1196,6 +1194,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

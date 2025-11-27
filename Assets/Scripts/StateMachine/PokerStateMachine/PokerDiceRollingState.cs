@@ -11,7 +11,7 @@ namespace StateMachine.PokerStateMachine
     public class PokerDiceRollingState : IState
     {
         private readonly PokerDiceGameManager pokerDiceGameManager;
-        private readonly IPokerInputSource pokerInputSource;
+        private readonly PokerInputs pokerInputSource;
         private readonly PokerInputRules pokerInputRules;
         private readonly DiceRoller diceRoller;
         private readonly PokerGame pokerGame;
@@ -41,6 +41,8 @@ namespace StateMachine.PokerStateMachine
             pokerGameEvents.OnDiceRollingStarted?.Invoke(playerRolls, diceRoller.MaxRolls);
             
             ToggleHighlight();
+            
+            pokerInputSource.EnablePlayerTurnInput();
 
             return UniTask.CompletedTask;
         }
@@ -84,8 +86,9 @@ namespace StateMachine.PokerStateMachine
             pokerGameEvents.OnRoll?.Invoke();
             
             ToggleHighlight();
+            pokerInputSource.DisablePlayerTurnInput();
             
-            diceRoller.RollDice(pokerGame.CurrentPlayer,rolls => 
+            diceRoller?.RollDice(pokerGame.CurrentPlayer,rolls => 
             {
                 pokerGame.SetPlayerRolls(rolls);
                 RollComplete();
@@ -99,6 +102,7 @@ namespace StateMachine.PokerStateMachine
             hasDoneAction = true;
             
             pokerGameEvents.OnHold?.Invoke();
+            pokerInputSource.DisablePlayerTurnInput();
             
             ToggleHighlight();
             ChangeState();

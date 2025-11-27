@@ -95,7 +95,7 @@ namespace StateMachine.PokerStateMachine
         
         private void OnRoll()
         {
-            diceRoller.RollDice(pokerGame.CurrentPlayer,rolls => 
+            diceRoller?.RollDice(pokerGame.CurrentPlayer,rolls => 
             {
                 pokerGame.SetPlayerRolls(rolls);
                 OnRollComplete();

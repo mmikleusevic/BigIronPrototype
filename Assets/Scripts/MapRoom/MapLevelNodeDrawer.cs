@@ -27,7 +27,7 @@ namespace MapRoom
 
                     UILineRenderer lineRenderer = Instantiate(uiLineRendererPrefab, uiLineRendererPrefab.transform.position, uiLineRendererPrefab.transform.rotation);
                     lineRenderer.transform.SetParent(parent, false);
-                    lineRenderer.LineThickness = 3f;
+                    lineRenderer.LineThickness = 5f;
                     
                     Vector2 startPos = WorldToLocal(startRect.position, parent);
                     Vector2 endPos = WorldToLocal(endRect.position, parent);
