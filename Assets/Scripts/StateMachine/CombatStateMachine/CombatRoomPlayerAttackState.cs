@@ -1,6 +1,7 @@
 ﻿using CombatRoom;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace StateMachine.CombatStateMachine
 {
@@ -21,9 +22,10 @@ namespace StateMachine.CombatStateMachine
         {
             combatRoomEvents.OnPlayerAttackStarted?.Invoke();
             
-            combatInputs.EnablePlayerInput();
             combatInputs.OnShoot += Shoot;
             combatInputs.OnAim += Aim;
+            combatInputs.OnReload += Reload;
+            combatInputs.EnablePlayerInput();
             
             return UniTask.CompletedTask;
         }
@@ -39,6 +41,7 @@ namespace StateMachine.CombatStateMachine
             
             combatInputs.OnShoot -= Shoot;
             combatInputs.OnAim -= Aim;
+            combatInputs.OnReload -= Reload;
             combatInputs.DisablePlayerInput();
             
             return UniTask.CompletedTask;
@@ -52,6 +55,11 @@ namespace StateMachine.CombatStateMachine
         private void Aim(Vector2 move)
         {
 
+        }
+
+        private void Reload()
+        {
+            
         }
     }
 }

@@ -8,6 +8,7 @@ namespace CombatRoom
     {
         public event Action OnShoot;
         public event Action<Vector2> OnAim;
+        public event Action OnReload;
 
         [SerializeField] private InputActionAsset inputActionAsset;
         [SerializeField] private CombatRoomManager combatRoomManager;
@@ -15,6 +16,7 @@ namespace CombatRoom
         private InputActionMap combatMap;
         private InputAction shootAction;
         private InputAction aimAction;
+        private InputAction reloadAction;
 
         private CombatInputRules CombatInputRules => combatRoomManager.CombatInputRules;
 
@@ -24,9 +26,11 @@ namespace CombatRoom
 
             shootAction = combatMap.FindAction(GameStrings.SHOOT);
             aimAction = combatMap.FindAction(GameStrings.AIM);
+            reloadAction = combatMap.FindAction(GameStrings.RELOAD);
 
             shootAction.performed += OnShootPerformed;
             aimAction.performed += OnAimPerformed;
+            reloadAction.performed += OnReloadPerformed;
 
             DisablePlayerInput();
         }
@@ -35,6 +39,7 @@ namespace CombatRoom
         {
             shootAction.performed -= OnShootPerformed;
             aimAction.performed -= OnAimPerformed;
+            reloadAction.performed -= OnReloadPerformed;
 
             DisablePlayerInput();
         }
@@ -60,6 +65,18 @@ namespace CombatRoom
 
             Vector2 value = ctx.ReadValue<Vector2>();
             OnAim?.Invoke(value);
+        }
+        
+        private void OnReloadPerformed(InputAction.CallbackContext ctx)
+        {
+            TriggerReload();
+        }
+
+        private void TriggerReload()
+        {
+            if (!CombatInputRules.CanReload) return;
+            
+            OnReload?.Invoke();
         }
 
         private void TriggerShoot()

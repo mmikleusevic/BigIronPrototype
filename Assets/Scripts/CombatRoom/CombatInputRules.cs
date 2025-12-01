@@ -13,6 +13,7 @@ namespace CombatRoom
         public bool CanShoot { get; private set; }
         public bool CanAim { get; private set; }
         public bool CanCancel { get; private set; }
+        public bool CanReload { get; private set; }
         
         private CombatRoomEvents CombatRoomEvents => combatRoomManager.CombatRoomEvents;
         
@@ -64,12 +65,14 @@ namespace CombatRoom
         {
             CanShoot = true;
             CanAim = true;
+            CanReload = true;
         }
 
         private void ResetPlayerAttack()
         {
             CanShoot = false;
             CanAim = false;
+            CanReload = false;
         }
     }
 }
