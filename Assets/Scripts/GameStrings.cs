@@ -15,4 +15,8 @@ public static class GameStrings
     public const string HOLD = "Hold";
     public const string CANCEL = "Cancel";
     public const string SHOOT_SELECT = "ShootSelect";
+    public const string COMBAT = "Combat";
+    public const string SHOOT = "Shoot";
+    public const string AIM = "Aim";
+    public const string AIM_SENSITIVITY = "AimSensitivity";
 }

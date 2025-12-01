@@ -16,6 +16,7 @@ namespace CombatRoom
     {
         [field: SerializeField] public BaseStateMachine BaseStateMachine { get; private set; }
         [field: SerializeField] public CombatTargetInputs CombatTargetInputs { get; private set; }
+        [field: SerializeField] public CombatInputs CombatInputs { get; private set; }
         [field: SerializeField] public CombatInputRules CombatInputRules { get; private set; }
         
         [SerializeField] private Vector3[] EnemyPositions;

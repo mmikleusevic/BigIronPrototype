@@ -119,22 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &12496335 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5085771949957453951, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-  m_PrefabInstance: {fileID: 3270497186353358640}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &28714659 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1409343556107005034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-  m_PrefabInstance: {fileID: 3270497186353358640}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1 &109805744
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,34 +756,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1139002935194554975, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-      propertyPath: buttonSelector
-      value: 
-      objectReference: {fileID: 3270497186353358642}
-    - target: {fileID: 1409343556107005034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 4
+    - target: {fileID: 1706031513656413757, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1409343556107005034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 3270497186353358643}
-    - target: {fileID: 1409343556107005034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-      propertyPath: m_Colors.m_SelectedColor.b
-      value: 0.29803923
+    - target: {fileID: 1706031513656413757, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1409343556107005034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-      propertyPath: m_Colors.m_SelectedColor.g
-      value: 0.29803923
+    - target: {fileID: 1706031513656413757, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1409343556107005034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-      propertyPath: m_Colors.m_SelectedColor.r
-      value: 0.5647059
-      objectReference: {fileID: 0}
-    - target: {fileID: 1409343556107005034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 3270497186353358644}
     - target: {fileID: 2420039229013180414, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -884,34 +852,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3172462087699827584, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_text
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3509955391327650086, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4437644783602913034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4437644783602913034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 28714659}
-    - target: {fileID: 4437644783602913034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-      propertyPath: m_Colors.m_SelectedColor.b
-      value: 0.29803923
-      objectReference: {fileID: 0}
-    - target: {fileID: 4437644783602913034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-      propertyPath: m_Colors.m_SelectedColor.g
-      value: 0.29803923
-      objectReference: {fileID: 0}
-    - target: {fileID: 4437644783602913034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-      propertyPath: m_Colors.m_SelectedColor.r
-      value: 0.5647059
-      objectReference: {fileID: 0}
-    - target: {fileID: 4437644783602913034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 3270497186353358643}
     - target: {fileID: 5085771949957453951, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
       propertyPath: m_Name
       value: OptionsPanel
@@ -920,73 +868,46 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5516229038798110568, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 4
+    - target: {fileID: 7845006821107226479, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5516229038798110568, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 3270497186353358644}
-    - target: {fileID: 5516229038798110568, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 28714659}
-    m_RemovedComponents:
-    - {fileID: 7119821305856364596, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+    - target: {fileID: 7845006821107226479, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9207922786509168119, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9207922786509168119, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_MaxValue
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9207922786509168119, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_MinValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9207922786509168119, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_WholeNumbers
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5085771949957453951, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3270497186353358642}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
 --- !u!114 &3270497186353358641 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1139002935194554975, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
   m_PrefabInstance: {fileID: 3270497186353358640}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 12496335}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 22d4f4d5ef104fccbd128da815c16fb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Options
---- !u!114 &3270497186353358642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 12496335}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6107fd39bc4edce4082b7fda3166263f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UI.ButtonSelector
-  selectable: {fileID: 28714659}
---- !u!114 &3270497186353358643 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5516229038798110568, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-  m_PrefabInstance: {fileID: 3270497186353358640}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
---- !u!114 &3270497186353358644 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4437644783602913034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
-  m_PrefabInstance: {fileID: 3270497186353358640}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

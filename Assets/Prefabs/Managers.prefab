@@ -133,8 +133,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Managers.InputManager
   mapsToDisableAtStart:
-  - Gameplay
+  - Combat
   - PokerGame
+  - CombatTarget
   inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!1 &3727704363834472834
 GameObject:
@@ -333,8 +334,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14d1b019761a4f6ba29f6d3928d0a586, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Managers.GameManager
-  playerPrefab: {fileID: 5079734530017321613, guid: 556d302b3f9ae9e4a807dccc82a8a440, type: 3}
+  playerPrefab: {fileID: 4380643922054356488, guid: 556d302b3f9ae9e4a807dccc82a8a440, type: 3}
   gameSceneReferenceSO: {fileID: 11400000, guid: 844513f7e169656498a1bd6fee43c97b, type: 2}
+--- !u!1 &5470214555176258164
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 540992771522771297}
+  - component: {fileID: 3387604056837156878}
+  m_Layer: 0
+  m_Name: CameraManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &540992771522771297
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5470214555176258164}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7865968215400868933}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3387604056837156878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5470214555176258164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5bd1c03bed64ef3bc120829a4919775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Managers.CameraManager
 --- !u!1 &6439290125650103391
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,6 +416,7 @@ Transform:
   - {fileID: 2370821539610859715}
   - {fileID: 4608574517765600459}
   - {fileID: 6772249455464703083}
+  - {fileID: 540992771522771297}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6877191675503399853

@@ -22,6 +22,8 @@ namespace CombatRoom
             CombatRoomEvents.OnPlayerTurnEnded += ResetPlayerTurnState;
             CombatRoomEvents.OnPlayerTargetSelectingStarted += SetTargetSelecting;
             CombatRoomEvents.OnPlayerTargetSelectingEnded += ResetTargetSelection;
+            CombatRoomEvents.OnPlayerAttackStarted += SetPlayerAttack;
+            CombatRoomEvents.OnPlayerAttackEnded += ResetPlayerAttack;
         }
 
         private void OnDisable()
@@ -30,6 +32,8 @@ namespace CombatRoom
             CombatRoomEvents.OnPlayerTurnEnded -= ResetPlayerTurnState;
             CombatRoomEvents.OnPlayerTargetSelectingStarted -= SetTargetSelecting;
             CombatRoomEvents.OnPlayerTargetSelectingEnded -= ResetTargetSelection;
+            CombatRoomEvents.OnPlayerAttackStarted -= SetPlayerAttack;
+            CombatRoomEvents.OnPlayerAttackEnded -= ResetPlayerAttack;
         }
 
         private void SetPlayerTurnState()
@@ -56,7 +60,13 @@ namespace CombatRoom
             CanCancel = false;
         }
 
-        private void ResetShooting()
+        private void SetPlayerAttack()
+        {
+            CanShoot = true;
+            CanAim = true;
+        }
+
+        private void ResetPlayerAttack()
         {
             CanShoot = false;
             CanAim = false;
