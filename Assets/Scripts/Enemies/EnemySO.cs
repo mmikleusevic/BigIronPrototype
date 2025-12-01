@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using Enemies;
 
-namespace CombatRoom
+namespace Enemies
 {
     [CreateAssetMenu(menuName = "Combat/Enemy")]
     public class EnemySO : ScriptableObject

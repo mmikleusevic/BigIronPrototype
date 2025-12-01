@@ -9,7 +9,8 @@ namespace StateMachine.CombatStateMachine
     public class CombatRoomPlayerTargetSelectingState : IState
     {
         private readonly CombatRoomManager combatRoomManager;
-        private readonly CombatTargetInputs combatTargetInputSource;
+        private readonly CombatTargetInputs combatTargetInputs;
+        private readonly CombatRoomEvents combatRoomEvents;
         
         private List<EnemyCombatant> enemies;
         private int enemyIndex;
@@ -17,19 +18,22 @@ namespace StateMachine.CombatStateMachine
         public CombatRoomPlayerTargetSelectingState(CombatRoomManager manager)
         {
             combatRoomManager = manager;
-            combatTargetInputSource = combatRoomManager.CombatTargetInputs;
+            combatTargetInputs = combatRoomManager.CombatTargetInputs;
+            combatRoomEvents = combatRoomManager.CombatRoomEvents;
         }
         
         public UniTask OnEnter()
         {
+            combatRoomEvents.OnPlayerTargetSelectingStarted?.Invoke();
+            
             enemies = combatRoomManager.GetAliveEnemies();
             enemyIndex = 0;
 
             HighlightEnemy(enemies[enemyIndex]);
-        
-            combatTargetInputSource.EnablePlayerTurnInput();
-            combatTargetInputSource.OnMove += Move;
-            combatTargetInputSource.OnConfirm += Confirm;
+            
+            combatTargetInputs.OnMove += Move;
+            combatTargetInputs.OnConfirm += Confirm;
+            combatTargetInputs.OnCancel += Cancel;
             
             return UniTask.CompletedTask;
         }
@@ -41,10 +45,13 @@ namespace StateMachine.CombatStateMachine
 
         public UniTask OnExit()
         {
-            combatTargetInputSource.DisablePlayerTurnInput();
-            combatTargetInputSource.OnMove -= Move;
-            combatTargetInputSource.OnConfirm -= Confirm;
-
+            combatRoomEvents.OnPlayerTargetSelectingEnded?.Invoke();
+            
+            combatTargetInputs.DisablePlayerTurnInput();
+            combatTargetInputs.OnMove -= Move;
+            combatTargetInputs.OnConfirm -= Confirm;
+            combatTargetInputs.OnCancel -= Cancel;
+            
             UnhighlightEnemy(enemies[enemyIndex]);
             
             return UniTask.CompletedTask;
@@ -66,6 +73,11 @@ namespace StateMachine.CombatStateMachine
         {
             combatRoomManager.HandleTargetChosen(enemies[enemyIndex]);
             combatRoomManager.BaseStateMachine.ChangeState(new CombatRoomPlayerAttackState(combatRoomManager)).Forget();
+        }
+
+        private void Cancel()
+        {
+            combatRoomManager.BaseStateMachine.ChangeState(new CombatRoomPlayerTurnState(combatRoomManager)).Forget();
         }
         
         private void HighlightEnemy(EnemyCombatant enemyCombatant) => enemyCombatant?.EnemyUI?.Show();

@@ -749,17 +749,6 @@
                 },
                 {
                     "name": "",
-                    "id": "4463c689-16fb-4991-b8dd-98b71c297a3e",
-                    "path": "<Touchscreen>/Press",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Select",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "97b7b89c-8855-4768-b181-01b6aa9c70ac",
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
@@ -928,6 +917,24 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "ShootSelect",
+                    "type": "Button",
+                    "id": "09632d6c-d42c-419e-886c-be4d527b5acf",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cancel",
+                    "type": "Button",
+                    "id": "5b05d4b2-e839-4bb3-b955-24551f7a165c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Move",
                     "type": "Value",
                     "id": "e0e8ffb2-9f31-409b-b258-5472c19f25f4",
@@ -941,7 +948,7 @@
                 {
                     "name": "",
                     "id": "ca87fcd3-824b-47db-a60d-360fe6e9b11b",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -962,12 +969,45 @@
                 },
                 {
                     "name": "",
-                    "id": "9cd98a9f-bce6-45e1-b16d-0a30aa9361da",
-                    "path": "<Touchscreen>/Press",
+                    "id": "9c860bea-f25e-4200-894c-974c30fee485",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Confirm",
+                    "action": "ShootSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ae76fa22-6562-4d4c-bde5-cbfb9e2a1495",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShootSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d1b4a6c9-f798-4345-a4a3-a97cf8de3485",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "68cd332e-8ff5-4f07-b92c-2018ae387e41",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

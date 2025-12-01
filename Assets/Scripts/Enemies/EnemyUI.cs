@@ -36,7 +36,7 @@ namespace Enemies
 
         public void Hide()
         {
-            enemyUIPanel.SetActive(false);
+            enemyUIPanel?.SetActive(false);
         }
 
         private void UpdateHealthBar(int current, int max)

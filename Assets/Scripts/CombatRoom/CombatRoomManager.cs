@@ -14,8 +14,6 @@ namespace CombatRoom
 {
     public class CombatRoomManager : MonoBehaviour
     {
-        public event Action OnShoot;
-        
         [field: SerializeField] public BaseStateMachine BaseStateMachine { get; private set; }
         [field: SerializeField] public CombatTargetInputs CombatTargetInputs { get; private set; }
         [field: SerializeField] public CombatInputRules CombatInputRules { get; private set; }
@@ -55,11 +53,6 @@ namespace CombatRoom
                 
                 ActiveCombatants.Add(enemy);
             }
-        }
-
-        public void HandleShootChosen()
-        {
-            OnShoot?.Invoke();
         }
         
         public List<EnemyCombatant> GetAliveEnemies()

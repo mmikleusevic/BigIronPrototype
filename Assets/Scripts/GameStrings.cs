@@ -13,4 +13,6 @@ public static class GameStrings
     public const string END = "End";
     public const string ROLL = "Roll";
     public const string HOLD = "Hold";
+    public const string CANCEL = "Cancel";
+    public const string SHOOT_SELECT = "ShootSelect";
 }
