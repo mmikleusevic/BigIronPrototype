@@ -1,4 +1,5 @@
 ﻿using System;
+using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,14 +12,14 @@ namespace CombatRoom
         public event Action OnReload;
 
         [SerializeField] private InputActionAsset inputActionAsset;
-        [SerializeField] private CombatRoomManager combatRoomManager;
+        [SerializeField] private CombatRoomController combatRoomController;
 
         private InputActionMap combatMap;
         private InputAction shootAction;
         private InputAction aimAction;
         private InputAction reloadAction;
 
-        private CombatInputRules CombatInputRules => combatRoomManager.CombatInputRules;
+        private CombatInputRules CombatInputRules => combatRoomController.CombatInputRules;
 
         private void OnEnable()
         {

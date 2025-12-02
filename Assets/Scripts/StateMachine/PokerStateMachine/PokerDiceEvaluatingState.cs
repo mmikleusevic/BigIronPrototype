@@ -9,18 +9,18 @@ namespace StateMachine.PokerStateMachine
 {
     public class PokerDiceEvaluatingState : IState
     {
-        private readonly PokerDiceGameManager pokerDiceGameManager;
+        private readonly PokerDiceGameController pokerDiceGameController;
         private readonly PokerGame pokerGame;
         private readonly PokerGameEvents pokerGameEvents;
     
         private readonly float displayDuration = 3f;
         private float displayTimer;
     
-        public PokerDiceEvaluatingState(PokerDiceGameManager manager)
+        public PokerDiceEvaluatingState(PokerDiceGameController controller)
         {
-            pokerDiceGameManager = manager;
-            pokerGame = pokerDiceGameManager.PokerGame;
-            pokerGameEvents = pokerDiceGameManager.PokerGameEvents;
+            pokerDiceGameController = controller;
+            pokerGame = pokerDiceGameController.PokerGame;
+            pokerGameEvents = pokerDiceGameController.PokerGameEvents;
         }
     
         public async UniTask OnEnter()
@@ -44,7 +44,7 @@ namespace StateMachine.PokerStateMachine
             
             if (pokerGame.AllPlayersFinished())
             {
-                await pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceGameOverState(pokerDiceGameManager));
+                await pokerDiceGameController.BaseStateMachine.ChangeState(new PokerDiceGameOverState(pokerDiceGameController));
             }
         }
     

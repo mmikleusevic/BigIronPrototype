@@ -7,17 +7,17 @@ namespace StateMachine.PokerStateMachine
 {
     public class PokerDiceTurnEndState : IState
     {
-        private readonly PokerDiceGameManager pokerDiceGameManager;
+        private readonly PokerDiceGameController pokerDiceGameController;
         private readonly PokerGameEvents pokerGameEvents;
         private readonly DiceRoller diceRoller;
         private readonly PokerGame pokerGame;
         
-        public PokerDiceTurnEndState(PokerDiceGameManager manager)
+        public PokerDiceTurnEndState(PokerDiceGameController controller)
         {
-            pokerDiceGameManager = manager;
-            pokerGameEvents = pokerDiceGameManager.PokerGameEvents;
-            diceRoller = pokerDiceGameManager.DiceRoller;
-            pokerGame = pokerDiceGameManager.PokerGame;
+            pokerDiceGameController = controller;
+            pokerGameEvents = pokerDiceGameController.PokerGameEvents;
+            diceRoller = pokerDiceGameController.DiceRoller;
+            pokerGame = pokerDiceGameController.PokerGame;
         }
     
         public async UniTask OnEnter()
@@ -32,12 +32,12 @@ namespace StateMachine.PokerStateMachine
             
             if (diceRoller.HaveAllPlayersRolled() && diceRoller.CurrentRollNumber >= diceRoller.MaxRolls)
             {
-                await pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceEvaluatingState(pokerDiceGameManager));
+                await pokerDiceGameController.BaseStateMachine.ChangeState(new PokerDiceEvaluatingState(pokerDiceGameController));
             }
             else
             {
                 pokerGame.NextPlayer();
-                await pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceTurnStartState(pokerDiceGameManager));
+                await pokerDiceGameController.BaseStateMachine.ChangeState(new PokerDiceTurnStartState(pokerDiceGameController));
             }
         }
 

@@ -1,31 +1,32 @@
 ﻿using CombatRoom;
 using Cysharp.Threading.Tasks;
+using Managers;
 using UnityEngine;
 
 namespace StateMachine.CombatStateMachine
 {
     public class CombatRoomCheckWinState : IState
     {
-        private readonly CombatRoomManager combatRoomManager;
+        private readonly CombatRoomController combatRoomController;
 
-        public CombatRoomCheckWinState(CombatRoomManager manager)
+        public CombatRoomCheckWinState(CombatRoomController controller)
         {
-            combatRoomManager = manager;
+            combatRoomController = controller;
         }
 
         public async UniTask OnEnter()
         {
-            if (combatRoomManager.CheckWinCondition())
+            if (combatRoomController.CheckWinCondition())
             {
-                await combatRoomManager.BaseStateMachine.ChangeState(new CombatRoomVictoryState(combatRoomManager));
+                await combatRoomController.BaseStateMachine.ChangeState(new CombatRoomVictoryState(combatRoomController));
             }
-            else if (combatRoomManager.CheckLossCondition())
+            else if (combatRoomController.CheckLossCondition())
             {
-                await combatRoomManager.BaseStateMachine.ChangeState(new CombatRoomDefeatState(combatRoomManager));
+                await combatRoomController.BaseStateMachine.ChangeState(new CombatRoomDefeatState(combatRoomController));
             }
             else
             {
-                await combatRoomManager.BaseStateMachine.ChangeState(new CombatRoomTurnStartState(combatRoomManager));
+                await combatRoomController.BaseStateMachine.ChangeState(new CombatRoomTurnStartState(combatRoomController));
             }
         }
 

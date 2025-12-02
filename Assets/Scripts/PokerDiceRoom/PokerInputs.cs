@@ -16,8 +16,8 @@ namespace PokerDiceRoom
 
         [Header("Input Action References")] [SerializeField]
         private InputActionAsset inputActionAsset;
-        [SerializeField] private PokerDiceGameManager gameManager;
-        private PokerInputRules Rules => gameManager.PokerInputRules;
+        [SerializeField] private PokerDiceGameController gameController;
+        private PokerInputRules Rules => gameController.PokerInputRules;
         
         private InputActionMap pokerDiceMap;
         private InputAction moveAction;
@@ -25,7 +25,7 @@ namespace PokerDiceRoom
         private InputAction rollAction;
         private InputAction holdAction;
         private InputAction endAction;
-        private bool InputEnabled => !gameManager.PokerGame.CurrentPlayer.IsAI || gameManager.IsGameOver;
+        private bool InputEnabled => !gameController.PokerGame.CurrentPlayer.IsAI || gameController.IsGameOver;
 
         private void OnEnable()
         {

@@ -10,17 +10,17 @@ namespace StateMachine.PokerStateMachine
 {
     public class PokerDiceGameOverState : IState
     {
-        private readonly PokerDiceGameManager pokerDiceGameManager;
+        private readonly PokerDiceGameController pokerDiceGameController;
         private readonly PokerGame pokerGame;
         private readonly PokerInputs pokerInputs;
         private readonly PokerGameEvents pokerGameEvents;
     
-        public PokerDiceGameOverState(PokerDiceGameManager manager)
+        public PokerDiceGameOverState(PokerDiceGameController controller)
         {
-            pokerDiceGameManager = manager;
-            pokerGame = pokerDiceGameManager.PokerGame;
-            pokerInputs = pokerDiceGameManager.PokerInputs;
-            pokerGameEvents = pokerDiceGameManager.PokerGameEvents;
+            pokerDiceGameController = controller;
+            pokerGame = pokerDiceGameController.PokerGame;
+            pokerInputs = pokerDiceGameController.PokerInputs;
+            pokerGameEvents = pokerDiceGameController.PokerGameEvents;
         }
     
         public UniTask OnEnter()
@@ -77,8 +77,8 @@ namespace StateMachine.PokerStateMachine
             pokerInputs.DisablePlayerTurnInput();
             pokerInputs.OnEnd -= EndWrapper;
             
-            LevelManager.Instance.UnloadSceneAsync(pokerDiceGameManager.PokerAssetReference.AssetGUID).Forget();
-            await LevelManager.Instance.LoadSceneAsync(pokerDiceGameManager.GameAssetReference);
+            LevelManager.Instance.UnloadSceneAsync(pokerDiceGameController.PokerAssetReference.AssetGUID).Forget();
+            await LevelManager.Instance.LoadSceneAsync(pokerDiceGameController.GameAssetReference);
         }
     
         private List<PokerDiceHandResult> DetermineWinners()

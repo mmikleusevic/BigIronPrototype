@@ -1,15 +1,16 @@
 ﻿using CombatRoom;
 using Cysharp.Threading.Tasks;
+using Managers;
 
 namespace StateMachine.CombatStateMachine
 {
     public class CombatRoomVictoryState : IState
     {
-        private readonly CombatRoomManager combatRoomManager;
+        private readonly CombatRoomController combatRoomController;
         
-        public CombatRoomVictoryState(CombatRoomManager manager)
+        public CombatRoomVictoryState(CombatRoomController controller)
         {
-            combatRoomManager = manager;
+            combatRoomController = controller;
         }
         
         public UniTask OnEnter()

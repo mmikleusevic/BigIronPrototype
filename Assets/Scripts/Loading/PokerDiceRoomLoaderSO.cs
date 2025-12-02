@@ -13,7 +13,7 @@ namespace Loading
     {
         public override async UniTask LoadAsync(LevelNode node, LevelManager context)
         {
-            PokerDiceRoomManager.Instance.DisplayPokerDice();
+            PokerDiceRoomController.Instance.DisplayPokerDice();
 
             await UniTask.CompletedTask;
         }

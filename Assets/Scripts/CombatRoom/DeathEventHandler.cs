@@ -1,17 +1,18 @@
 ﻿using System;
+using Managers;
 
 namespace CombatRoom
 {
     public class DeathEventHandler
     {
-        private readonly CombatRoomManager combatRoomManager;
+        private readonly CombatRoomController combatRoomController;
         private readonly Combatant combatant;
         public Action DeathDelegate { get; private set; }
         
-        public DeathEventHandler(Combatant combatant, CombatRoomManager combatRoomManager)
+        public DeathEventHandler(Combatant combatant, CombatRoomController combatRoomController)
         {
             this.combatant = combatant;
-            this.combatRoomManager = combatRoomManager;
+            this.combatRoomController = combatRoomController;
             
             DeathDelegate = OnDied; 
         }
@@ -20,9 +21,9 @@ namespace CombatRoom
         {
             combatant.Health.OnDied -= DeathDelegate;
             
-            combatRoomManager.UnsubscribeFromDeath(combatant);
+            combatRoomController.UnsubscribeFromDeath(combatant);
             
-            combatRoomManager.HandleDeathCleanup(combatant);
+            combatRoomController.HandleDeathCleanup(combatant);
         }
     }
 }

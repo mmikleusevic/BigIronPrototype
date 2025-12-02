@@ -10,7 +10,7 @@ namespace StateMachine.PokerStateMachine
 {
     public class PokerDiceRollingState : IState
     {
-        private readonly PokerDiceGameManager pokerDiceGameManager;
+        private readonly PokerDiceGameController pokerDiceGameController;
         private readonly PokerInputs pokerInputSource;
         private readonly PokerInputRules pokerInputRules;
         private readonly DiceRoller diceRoller;
@@ -20,14 +20,14 @@ namespace StateMachine.PokerStateMachine
         private int selectedDieIndex;
         private bool hasDoneAction;
         
-        public PokerDiceRollingState(PokerDiceGameManager manager)
+        public PokerDiceRollingState(PokerDiceGameController controller)
         {
-            pokerDiceGameManager = manager;
-            pokerInputSource = pokerDiceGameManager.PokerInputs;
-            pokerInputRules = pokerDiceGameManager.PokerInputRules;
-            diceRoller = pokerDiceGameManager.DiceRoller;
-            pokerGame = pokerDiceGameManager.PokerGame;
-            pokerGameEvents = pokerDiceGameManager.PokerGameEvents;
+            pokerDiceGameController = controller;
+            pokerInputSource = pokerDiceGameController.PokerInputs;
+            pokerInputRules = pokerDiceGameController.PokerInputRules;
+            diceRoller = pokerDiceGameController.DiceRoller;
+            pokerGame = pokerDiceGameController.PokerGame;
+            pokerGameEvents = pokerDiceGameController.PokerGameEvents;
         }
         
         public UniTask OnEnter()
@@ -138,7 +138,7 @@ namespace StateMachine.PokerStateMachine
         
         private void ChangeState()
         {
-            pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceTurnEndState(pokerDiceGameManager)).Forget();
+            pokerDiceGameController.BaseStateMachine.ChangeState(new PokerDiceTurnEndState(pokerDiceGameController)).Forget();
         }
         
         private Die CurrentDie => diceRoller.PlayerDice[pokerGame.CurrentPlayer][selectedDieIndex];

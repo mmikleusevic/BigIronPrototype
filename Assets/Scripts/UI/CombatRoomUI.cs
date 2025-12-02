@@ -1,5 +1,6 @@
 ﻿using System;
 using CombatRoom;
+using Managers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,10 +12,10 @@ namespace UI
         [SerializeField] private Button shootButton;
         [SerializeField] private Button cancelButton;
         [SerializeField] private Button confirmButton;
-        [SerializeField] private CombatRoomManager combatRoomManager;
+        [SerializeField] private CombatRoomController combatRoomController;
         
-        private CombatRoomEvents combatRoomEvents => combatRoomManager.CombatRoomEvents;
-        private CombatTargetInputs combatTargetInputs => combatRoomManager.CombatTargetInputs;
+        private CombatRoomEvents combatRoomEvents => combatRoomController.CombatRoomEvents;
+        private CombatTargetInputs combatTargetInputs => combatRoomController.CombatTargetInputs;
         
         private void Awake()
         {

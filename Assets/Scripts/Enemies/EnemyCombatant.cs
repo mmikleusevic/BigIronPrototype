@@ -10,7 +10,7 @@ namespace Enemies
         [SerializeField] private EnemyHealth enemyHealth;
         [SerializeField] private Gold gold;
         [field: SerializeField] public EnemyUI EnemyUI { get; private set; }
-
+        
         public override Health Health => enemyHealth;
         public override Gold Gold => gold;
 

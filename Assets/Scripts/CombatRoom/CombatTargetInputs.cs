@@ -1,4 +1,5 @@
 ﻿using System;
+using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,7 +13,7 @@ namespace CombatRoom
         public event Action OnCancel;
         
         [SerializeField] private InputActionAsset inputActionAsset;
-        [SerializeField] private CombatRoomManager combatRoomManager;
+        [SerializeField] private CombatRoomController combatRoomController;
         
         private InputActionMap combatTargetMap;
         private InputAction shootSelectedAction;
@@ -20,7 +21,7 @@ namespace CombatRoom
         private InputAction confirmAction;
         private InputAction cancelAction;
         
-        private CombatInputRules CombatInputRules => combatRoomManager.CombatInputRules; 
+        private CombatInputRules CombatInputRules => combatRoomController.CombatInputRules; 
 
         private void OnEnable()
         {

@@ -1,11 +1,12 @@
 ﻿using System;
+using Managers;
 using UnityEngine;
 
 namespace CombatRoom
 {
     public class CombatInputRules : MonoBehaviour
     {
-        [SerializeField] private CombatRoomManager combatRoomManager;
+        [SerializeField] private CombatRoomController combatRoomController;
         
         public bool CanConfirm { get; private set; }
         public bool CanMoveSelection { get; private set; }
@@ -15,7 +16,7 @@ namespace CombatRoom
         public bool CanCancel { get; private set; }
         public bool CanReload { get; private set; }
         
-        private CombatRoomEvents CombatRoomEvents => combatRoomManager.CombatRoomEvents;
+        private CombatRoomEvents CombatRoomEvents => combatRoomController.CombatRoomEvents;
         
         private void OnEnable()
         {

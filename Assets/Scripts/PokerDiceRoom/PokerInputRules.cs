@@ -6,7 +6,7 @@ namespace PokerDiceRoom
 {
     public class PokerInputRules : MonoBehaviour
     {
-        [SerializeField] private PokerDiceGameManager pokerDiceGameManager;
+        [SerializeField] private PokerDiceGameController pokerDiceGameController;
         
         public event Action OnRulesChanged;
         
@@ -16,7 +16,7 @@ namespace PokerDiceRoom
         public bool CanSelect { get; private set; }
         public bool CanMove { get; private set; }
         
-        private PokerGameEvents PokerGameEvents => pokerDiceGameManager.PokerGameEvents;
+        private PokerGameEvents PokerGameEvents => pokerDiceGameController.PokerGameEvents;
 
         private void OnEnable()
         {

@@ -273,7 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15315bab9f7a45b09f4d7ac95c4482ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PokerDiceRoom.PokerInputRules
-  pokerDiceGameManager: {fileID: 587232039}
+  pokerDiceGameController: {fileID: 587232039}
 --- !u!4 &134426246
 Transform:
   m_ObjectHideFlags: 0
@@ -574,7 +574,7 @@ GameObject:
   - component: {fileID: 587232040}
   - component: {fileID: 587232039}
   m_Layer: 0
-  m_Name: PokerDiceGameManager
+  m_Name: PokerDiceGameController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -746,7 +746,7 @@ MonoBehaviour:
   rollButton: {fileID: 1592893395}
   holdButton: {fileID: 1607147595}
   endButton: {fileID: 126142645}
-  pokerDiceGameManager: {fileID: 587232039}
+  pokerDiceGameController: {fileID: 587232039}
 --- !u!1 &803846476
 GameObject:
   m_ObjectHideFlags: 0
@@ -899,7 +899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PokerInputHandler
   inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  gameManager: {fileID: 587232039}
+  gameController: {fileID: 587232039}
 --- !u!4 &825595838
 Transform:
   m_ObjectHideFlags: 0

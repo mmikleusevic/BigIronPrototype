@@ -6,15 +6,15 @@ namespace StateMachine.PokerStateMachine
 {
     public class PokerDiceSetupState : IState
     {
-        private readonly PokerDiceGameManager pokerDiceGameManager;
+        private readonly PokerDiceGameController pokerDiceGameController;
         private readonly DiceRoller diceRoller;
         private readonly PokerGame pokerGame;
         
-        public PokerDiceSetupState(PokerDiceGameManager manager)
+        public PokerDiceSetupState(PokerDiceGameController controller)
         {
-            pokerDiceGameManager = manager;
-            diceRoller = pokerDiceGameManager.DiceRoller;
-            pokerGame = pokerDiceGameManager.PokerGame;
+            pokerDiceGameController = controller;
+            diceRoller = pokerDiceGameController.DiceRoller;
+            pokerGame = pokerDiceGameController.PokerGame;
         }
 
         public async UniTask OnEnter()
@@ -23,7 +23,7 @@ namespace StateMachine.PokerStateMachine
             
             await pokerGame.Initialize();
             await diceRoller.Initialize(pokerGame.Players);
-            await pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceTurnStartState(pokerDiceGameManager));
+            await pokerDiceGameController.BaseStateMachine.ChangeState(new PokerDiceTurnStartState(pokerDiceGameController));
         }
 
         public void OnUpdate()

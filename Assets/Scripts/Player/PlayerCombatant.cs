@@ -1,10 +1,12 @@
 ﻿using CombatRoom;
 using UnityEngine;
+using Weapons;
 
 namespace Player
 {
     public class PlayerCombatant : Combatant
     {
+        [field: SerializeField] public Gun Gun { get; private set; }
         [SerializeField] private PlayerHealth playerHealth;
         [SerializeField] private Gold gold;
         

@@ -158,7 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemyCombatant
   <Name>k__BackingField: 
   <Speed>k__BackingField: 0
-  <Type>k__BackingField: 0
+  <Type>k__BackingField: 1
   enemyHealth: {fileID: 5997151282401117039}
   gold: {fileID: 2891574057460004659}
   <EnemyUI>k__BackingField: {fileID: 135854513061995731}

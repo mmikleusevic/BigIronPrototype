@@ -9,17 +9,17 @@ namespace StateMachine.PokerStateMachine
 {
     public class PokerDiceAIRollingState : IState
     {
-        private readonly PokerDiceGameManager pokerDiceGameManager;
+        private readonly PokerDiceGameController pokerDiceGameController;
         private readonly DiceRoller diceRoller;
         private readonly PokerGame pokerGame;
         
         private int selectedDieIndex;
         
-        public PokerDiceAIRollingState(PokerDiceGameManager manager)
+        public PokerDiceAIRollingState(PokerDiceGameController controller)
         {
-            pokerDiceGameManager = manager;
-            diceRoller = pokerDiceGameManager.DiceRoller;
-            pokerGame = pokerDiceGameManager.PokerGame;
+            pokerDiceGameController = controller;
+            diceRoller = pokerDiceGameController.DiceRoller;
+            pokerGame = pokerDiceGameController.PokerGame;
         }
         
         public async UniTask OnEnter()
@@ -110,7 +110,7 @@ namespace StateMachine.PokerStateMachine
         
         private void ChangeState()
         {
-            pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceTurnEndState(pokerDiceGameManager)).Forget();
+            pokerDiceGameController.BaseStateMachine.ChangeState(new PokerDiceTurnEndState(pokerDiceGameController)).Forget();
         }
         
         private Die CurrentDie => diceRoller.PlayerDice[pokerGame.CurrentPlayer][selectedDieIndex];

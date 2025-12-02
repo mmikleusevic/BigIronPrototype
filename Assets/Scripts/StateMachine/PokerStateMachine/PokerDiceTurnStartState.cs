@@ -8,18 +8,18 @@ namespace StateMachine.PokerStateMachine
     public class PokerDiceTurnStartState : IState
     {
         private readonly PokerGameEvents pokerGameEvents;
-        private readonly PokerDiceGameManager pokerDiceGameManager;
+        private readonly PokerDiceGameController pokerDiceGameController;
         private readonly DiceRoller diceRoller;
         private readonly PokerGame pokerGame;
         
         private readonly float delayDuration = 1f;
     
-        public PokerDiceTurnStartState(PokerDiceGameManager manager)
+        public PokerDiceTurnStartState(PokerDiceGameController controller)
         {
-            pokerDiceGameManager = manager;
-            pokerGameEvents = pokerDiceGameManager.PokerGameEvents;
-            diceRoller = pokerDiceGameManager.DiceRoller;
-            pokerGame = pokerDiceGameManager.PokerGame;
+            pokerDiceGameController = controller;
+            pokerGameEvents = pokerDiceGameController.PokerGameEvents;
+            diceRoller = pokerDiceGameController.DiceRoller;
+            pokerGame = pokerDiceGameController.PokerGame;
         }
     
         public async UniTask OnEnter()
@@ -33,11 +33,11 @@ namespace StateMachine.PokerStateMachine
         
             if (pokerGame.CurrentPlayer.IsAI)
             {
-                await pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceAIRollingState(pokerDiceGameManager));    
+                await pokerDiceGameController.BaseStateMachine.ChangeState(new PokerDiceAIRollingState(pokerDiceGameController));    
             }
             else
             {
-                await pokerDiceGameManager.BaseStateMachine.ChangeState(new PokerDiceRollingState(pokerDiceGameManager));
+                await pokerDiceGameController.BaseStateMachine.ChangeState(new PokerDiceRollingState(pokerDiceGameController));
             }
         }
 

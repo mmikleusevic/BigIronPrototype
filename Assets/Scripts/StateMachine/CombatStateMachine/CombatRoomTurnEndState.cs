@@ -1,21 +1,22 @@
 ﻿using CombatRoom;
 using Cysharp.Threading.Tasks;
+using Managers;
 using StateMachine.PokerStateMachine;
 
 namespace StateMachine.CombatStateMachine
 {
     public class CombatRoomTurnEndState : IState
     {
-        private readonly CombatRoomManager combatRoomManager;
+        private readonly CombatRoomController combatRoomController;
 
-        public CombatRoomTurnEndState(CombatRoomManager manager)
+        public CombatRoomTurnEndState(CombatRoomController controller)
         {
-            combatRoomManager = manager;
+            combatRoomController = controller;
         }
 
         public async UniTask OnEnter()
         {
-            await combatRoomManager.BaseStateMachine.ChangeState(new CombatRoomCheckWinState(combatRoomManager));
+            await combatRoomController.BaseStateMachine.ChangeState(new CombatRoomCheckWinState(combatRoomController));
         }
 
         public void OnUpdate()

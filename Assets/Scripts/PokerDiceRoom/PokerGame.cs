@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Managers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -55,7 +56,7 @@ namespace PokerDiceRoom
 
         private void SetWager()
         { 
-            Wager = PokerDiceRoomManager.Instance.PlayerGoldToWager * Players.Length;
+            Wager = PokerDiceRoomController.Instance.PlayerGoldToWager * Players.Length;
             OnWagerChanged?.Invoke(Wager);
         }
         

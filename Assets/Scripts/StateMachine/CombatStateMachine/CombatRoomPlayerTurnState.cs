@@ -1,5 +1,6 @@
 ﻿using CombatRoom;
 using Cysharp.Threading.Tasks;
+using Managers;
 using StateMachine.PokerStateMachine;
 using UnityEngine;
 
@@ -7,15 +8,15 @@ namespace StateMachine.CombatStateMachine
 {
     public class CombatRoomPlayerTurnState : IState
     {
-        private readonly CombatRoomManager combatRoomManager;
+        private readonly CombatRoomController combatRoomController;
         private readonly CombatRoomEvents combatRoomEvents;
         private readonly CombatTargetInputs combatTargetInputs;
         
-        public CombatRoomPlayerTurnState(CombatRoomManager manager)
+        public CombatRoomPlayerTurnState(CombatRoomController controller)
         {
-            combatRoomManager = manager;
-            combatRoomEvents = combatRoomManager.CombatRoomEvents;
-            combatTargetInputs = combatRoomManager.CombatTargetInputs;
+            combatRoomController = controller;
+            combatRoomEvents = combatRoomController.CombatRoomEvents;
+            combatTargetInputs = combatRoomController.CombatTargetInputs;
         }        
         
         public UniTask OnEnter()
@@ -44,8 +45,8 @@ namespace StateMachine.CombatStateMachine
 
         private void ShootSelected()
         {
-            combatRoomManager.BaseStateMachine
-                .ChangeState(new CombatRoomPlayerTargetSelectingState(combatRoomManager)).Forget();
+            combatRoomController.BaseStateMachine
+                .ChangeState(new CombatRoomPlayerTargetSelectingState(combatRoomController)).Forget();
         }
     }
 }

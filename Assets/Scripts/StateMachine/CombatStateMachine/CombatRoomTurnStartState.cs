@@ -1,6 +1,7 @@
 ﻿using CombatRoom;
 using Cysharp.Threading.Tasks;
 using Enemies;
+using Managers;
 using PokerDiceRoom;
 using StateMachine.PokerStateMachine;
 
@@ -8,38 +9,37 @@ namespace StateMachine.CombatStateMachine
 {
     public class CombatRoomTurnStartState : IState
     {
-        private readonly CombatRoomManager combatRoomManager;
+        private readonly CombatRoomController combatRoomController;
         
-        public CombatRoomTurnStartState(CombatRoomManager manager)
+        public CombatRoomTurnStartState(CombatRoomController controller)
         {
-            combatRoomManager = manager;
+            combatRoomController = controller;
         }        
         
         public async UniTask OnEnter()
         {
-            if (combatRoomManager.TurnQueue.Count == 0)
+            if (combatRoomController.TurnQueue.Count == 0)
             {
-                combatRoomManager.CalculateTurnOrder();
+                combatRoomController.CalculateTurnOrder();
             }
 
-            combatRoomManager.GetNextAliveCombatant();
+            combatRoomController.GetNextAliveCombatant();
             
-            if (!combatRoomManager.CurrentCombatant)
+            if (!combatRoomController.CurrentCombatant)
             {
-
-                await combatRoomManager.BaseStateMachine.ChangeState(new CombatRoomCheckWinState(combatRoomManager));
+                await combatRoomController.BaseStateMachine.ChangeState(new CombatRoomCheckWinState(combatRoomController));
                 return;
             }
             
-            Combatant current = combatRoomManager.CurrentCombatant;
+            Combatant current = combatRoomController.CurrentCombatant;
     
             if (current.Type == CombatantType.Player)
             {
-                await combatRoomManager.BaseStateMachine.ChangeState(new CombatRoomPlayerTurnState(combatRoomManager));
+                await combatRoomController.BaseStateMachine.ChangeState(new CombatRoomPlayerTurnState(combatRoomController));
             }
             else
             {
-                await combatRoomManager.BaseStateMachine.ChangeState(new CombatRoomEnemyTurnState(combatRoomManager));
+                await combatRoomController.BaseStateMachine.ChangeState(new CombatRoomEnemyTurnState(combatRoomController));
             }
         }
 

@@ -1,27 +1,28 @@
 ﻿using CombatRoom;
 using Cysharp.Threading.Tasks;
+using Managers;
 using StateMachine.PokerStateMachine;
 
 namespace StateMachine.CombatStateMachine
 {
     public class CombatRoomSetupState : IState
     {
-        private readonly CombatRoomManager combatRoomManager;
+        private readonly CombatRoomController combatRoomController;
         
-        public CombatRoomSetupState(CombatRoomManager manager)
+        public CombatRoomSetupState(CombatRoomController controller)
         {
-            combatRoomManager = manager;
+            combatRoomController = controller;
         }
         
         public async UniTask OnEnter()
         {
-            combatRoomManager.SpawnEnemies();
+            combatRoomController.SpawnEnemies();
             
             await UniTask.Delay(1000);
             
-            combatRoomManager.CalculateTurnOrder();
+            combatRoomController.CalculateTurnOrder();
             
-            await combatRoomManager.BaseStateMachine.ChangeState(new CombatRoomTurnStartState(combatRoomManager));
+            await combatRoomController.BaseStateMachine.ChangeState(new CombatRoomTurnStartState(combatRoomController));
         }
 
         public void OnUpdate()

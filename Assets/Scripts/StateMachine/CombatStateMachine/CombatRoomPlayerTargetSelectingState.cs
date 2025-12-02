@@ -2,31 +2,32 @@
 using CombatRoom;
 using Cysharp.Threading.Tasks;
 using Enemies;
+using Managers;
 using UnityEngine;
 
 namespace StateMachine.CombatStateMachine
 {
     public class CombatRoomPlayerTargetSelectingState : IState
     {
-        private readonly CombatRoomManager combatRoomManager;
+        private readonly CombatRoomController combatRoomController;
         private readonly CombatTargetInputs combatTargetInputs;
         private readonly CombatRoomEvents combatRoomEvents;
         
         private List<EnemyCombatant> enemies;
         private int enemyIndex;
 
-        public CombatRoomPlayerTargetSelectingState(CombatRoomManager manager)
+        public CombatRoomPlayerTargetSelectingState(CombatRoomController controller)
         {
-            combatRoomManager = manager;
-            combatTargetInputs = combatRoomManager.CombatTargetInputs;
-            combatRoomEvents = combatRoomManager.CombatRoomEvents;
+            combatRoomController = controller;
+            combatTargetInputs = combatRoomController.CombatTargetInputs;
+            combatRoomEvents = combatRoomController.CombatRoomEvents;
         }
         
         public UniTask OnEnter()
         {
             combatRoomEvents.OnPlayerTargetSelectingStarted?.Invoke();
             
-            enemies = combatRoomManager.GetAliveEnemies();
+            enemies = combatRoomController.GetAliveEnemies();
             enemyIndex = 0;
 
             HighlightEnemy(enemies[enemyIndex]);
@@ -71,13 +72,13 @@ namespace StateMachine.CombatStateMachine
         
         private void Confirm()
         {
-            combatRoomManager.HandleTargetChosen(enemies[enemyIndex]);
-            combatRoomManager.BaseStateMachine.ChangeState(new CombatRoomPlayerAttackState(combatRoomManager)).Forget();
+            combatRoomController.HandleTargetChosen(enemies[enemyIndex]);
+            combatRoomController.BaseStateMachine.ChangeState(new CombatRoomPlayerAttackState(combatRoomController)).Forget();
         }
 
         private void Cancel()
         {
-            combatRoomManager.BaseStateMachine.ChangeState(new CombatRoomPlayerTurnState(combatRoomManager)).Forget();
+            combatRoomController.BaseStateMachine.ChangeState(new CombatRoomPlayerTurnState(combatRoomController)).Forget();
         }
         
         private void HighlightEnemy(EnemyCombatant enemyCombatant) => enemyCombatant?.EnemyUI?.Show();

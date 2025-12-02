@@ -18,13 +18,13 @@ namespace UI
         [SerializeField] private Button rollButton;
         [SerializeField] private Button holdButton;
         [SerializeField] private Button endButton;
-        [SerializeField] private PokerDiceGameManager pokerDiceGameManager;
+        [SerializeField] private PokerDiceGameController pokerDiceGameController;
         
-        private PokerInputs PokerInputs => pokerDiceGameManager.PokerInputs;
-        private PokerInputRules InputRules => pokerDiceGameManager.PokerInputRules;
-        private PokerGame PokerGame => pokerDiceGameManager.PokerGame;
-        private PokerGameEvents PokerGameEvents => pokerDiceGameManager.PokerGameEvents;
-        private DiceRoller DiceRoller => pokerDiceGameManager.DiceRoller;
+        private PokerInputs PokerInputs => pokerDiceGameController.PokerInputs;
+        private PokerInputRules InputRules => pokerDiceGameController.PokerInputRules;
+        private PokerGame PokerGame => pokerDiceGameController.PokerGame;
+        private PokerGameEvents PokerGameEvents => pokerDiceGameController.PokerGameEvents;
+        private DiceRoller DiceRoller => pokerDiceGameController.DiceRoller;
         
         private void Awake()
         {
@@ -137,8 +137,8 @@ namespace UI
         {
             EventSystem.current.SetSelectedGameObject(null);
             
-            LevelManager.Instance.UnloadSceneAsync(pokerDiceGameManager.PokerAssetReference.AssetGUID).Forget();
-            await LevelManager.Instance.LoadSceneAsync(pokerDiceGameManager.GameAssetReference);
+            LevelManager.Instance.UnloadSceneAsync(pokerDiceGameController.PokerAssetReference.AssetGUID).Forget();
+            await LevelManager.Instance.LoadSceneAsync(pokerDiceGameController.GameAssetReference);
             
             GameManager.Instance.RoomPassed();
         }

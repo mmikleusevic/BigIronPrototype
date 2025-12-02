@@ -26,14 +26,14 @@ namespace PokerDiceRoom
         {
             goldSlider.onValueChanged.AddListener(SetGoldText);
             continueButton.AddClickAsync(ContinueToPokerDiceRoom);
-            PokerDiceRoomManager.Instance.OnPokerDiceRoomPressed += Open;
+            PokerDiceRoomController.Instance.OnPokerDiceRoomPressed += Open;
         }
 
         private void OnDisable()
         {
             goldSlider.onValueChanged.RemoveListener(SetGoldText);
             continueButton.onClick.RemoveAllListeners();
-            PokerDiceRoomManager.Instance.OnPokerDiceRoomPressed -= Open;
+            PokerDiceRoomController.Instance.OnPokerDiceRoomPressed -= Open;
         }
         
         private void Open()
@@ -47,12 +47,12 @@ namespace PokerDiceRoom
         private void SetGoldText(float gold)
         {
             goldText.text = $"{gold} Gold";
-            PokerDiceRoomManager.Instance.SetWager((int)gold);
+            PokerDiceRoomController.Instance.SetWager((int)gold);
         }
         
         private async UniTask ContinueToPokerDiceRoom()
         {
-            int playerWageredGold = PokerDiceRoomManager.Instance.PlayerGoldToWager;
+            int playerWageredGold = PokerDiceRoomController.Instance.PlayerGoldToWager;
             GameManager.Instance.PlayerCombatant.LoseGoldAmount(playerWageredGold);
             
             await LevelManager.Instance.LoadSceneAsync(pokerDiceSceneReference);
