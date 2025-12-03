@@ -19,7 +19,7 @@ namespace Loading
             int index = Random.Range(0, possibleEvents.Length);
             EventSO chosenEvent = possibleEvents[index];
 
-            EventRoomManager.Instance?.DisplayCurrentEvent(chosenEvent);
+            if (EventRoomManager.Instance) EventRoomManager.Instance.DisplayCurrentEvent(chosenEvent);
 
             await UniTask.CompletedTask;
         }

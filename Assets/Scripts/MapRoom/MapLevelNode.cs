@@ -58,6 +58,7 @@ namespace MapRoom
         {
             try
             {
+                if (!LevelManager.Instance) return;
                 await LevelManager.Instance.LoadNode(LevelNode);
                 onClickCallback?.Invoke(this);
             }

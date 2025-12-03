@@ -25,7 +25,7 @@ namespace StateMachine.PokerStateMachine
     
         public async UniTask OnEnter()
         {
-            pokerGameEvents.OnDiceEvaluationStarted?.Invoke();
+            pokerGameEvents?.OnDiceEvaluationStarted?.Invoke();
             Debug.Log("=== Evaluating Hands ===");
 
             Dictionary<PokerPlayer, PokerDiceHandResult> results = new();

@@ -25,7 +25,7 @@ namespace StateMachine.PokerStateMachine
     
         public UniTask OnEnter()
         {
-            pokerGameEvents.OnGameOverStarted?.Invoke();
+            pokerGameEvents?.OnGameOverStarted?.Invoke();
             
             pokerInputs.EnablePlayerTurnInput();
             pokerInputs.OnEnd += EndWrapper;
@@ -38,9 +38,9 @@ namespace StateMachine.PokerStateMachine
                 Debug.Log($"🏆 Winner: {winners[0].PlayerName}");
                 
                 if (winners[0].PlayerName != GameStrings.PLAYER) return UniTask.CompletedTask;
-                
-                GameManager.Instance.PlayerCombatant.GainGoldAmount(pokerGame.Wager);
-                pokerGameEvents.OnGameOver?.Invoke();
+
+                if (GameManager.Instance) GameManager.Instance.PlayerCombatant.GainGoldAmount(pokerGame.Wager);
+                pokerGameEvents?.OnGameOver?.Invoke();
             }
             else
             {
@@ -65,9 +65,9 @@ namespace StateMachine.PokerStateMachine
         {
             pokerInputs.DisablePlayerTurnInput();
             pokerInputs.OnEnd -= EndWrapper;
-            
-            InputManager.Instance.EnableOnlyUIMap();
-            GameManager.Instance.RoomPassed();
+
+            if (InputManager.Instance) InputManager.Instance.EnableOnlyUIMap();
+            if (GameManager.Instance) GameManager.Instance.RoomPassed();
             
             return UniTask.CompletedTask;
         }
@@ -76,9 +76,12 @@ namespace StateMachine.PokerStateMachine
         {
             pokerInputs.DisablePlayerTurnInput();
             pokerInputs.OnEnd -= EndWrapper;
-            
-            LevelManager.Instance.UnloadSceneAsync(pokerDiceGameController.PokerAssetReference.AssetGUID).Forget();
-            await LevelManager.Instance.LoadSceneAsync(pokerDiceGameController.GameAssetReference);
+
+            if (LevelManager.Instance)
+            {
+                LevelManager.Instance.UnloadSceneAsync(pokerDiceGameController.PokerAssetReference.AssetGUID).Forget();
+                await LevelManager.Instance.LoadSceneAsync(pokerDiceGameController.GameAssetReference);
+            }
         }
     
         private List<PokerDiceHandResult> DetermineWinners()

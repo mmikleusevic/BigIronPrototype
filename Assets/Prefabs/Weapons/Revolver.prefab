@@ -127,11 +127,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Weapons.Revolver
   weaponName: Revolver
   <Damage>k__BackingField: 5
-  bulletPrefab: {fileID: 1751346236199794437, guid: 3efd132e4fac83645aaa517801f97401, type: 3}
   shootPoint: {fileID: 8938465881750403927}
   reloadTime: 1
   fireRate: 0.5
   maxAmmo: 6
+  raycastDistance: 30
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &5323916727293916108
 GameObject:
   m_ObjectHideFlags: 0

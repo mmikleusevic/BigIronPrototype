@@ -60,13 +60,20 @@ namespace UI
 
             if (isPaused)
             {
-                InputManager.Instance.EnableOnlyUIMap();
-                UIFocusManager.Instance.SaveFocus(EventSystem.current.currentSelectedGameObject?.GetComponent<Selectable>());
+                if (InputManager.Instance) InputManager.Instance.EnableOnlyUIMap();
+                if (!UIFocusManager.Instance) return;
+                
+                UIFocusManager.Instance
+                    .SaveFocus(EventSystem.current.currentSelectedGameObject
+                        ?.GetComponent<Selectable>(), Cursor.lockState);
                 selector.Select();
+                Cursor.lockState = CursorLockMode.None;
             }
             else
             {
-                InputManager.Instance.RestoreMaps();
+                if (InputManager.Instance) InputManager.Instance.RestoreMaps();
+                if (!UIFocusManager.Instance) return;
+                
                 UIFocusManager.Instance.RestoreBeforePause();
                 UIFocusManager.Instance.RestoreFocus();
             }
@@ -79,13 +86,16 @@ namespace UI
 
         private async UniTask BackToMainMenu()
         {
-            UIFocusManager.Instance.ClearFocus();
-            InputManager.Instance.StartingMapsSetup();
-            
-            LevelManager.Instance.UnloadAllButPersistentScenesAsync().Forget();
-            await LevelManager.Instance.LoadSceneAsync(mainMenuSceneReference);
+            if (UIFocusManager.Instance) UIFocusManager.Instance.ClearFocus();
+            if (InputManager.Instance) InputManager.Instance.StartingMapsSetup();
 
-            GameManager.Instance.TogglePause();
+            if (LevelManager.Instance)
+            {
+                LevelManager.Instance.UnloadAllButPersistentScenesAsync().Forget();
+                await LevelManager.Instance.LoadSceneAsync(mainMenuSceneReference);
+            }
+
+            if (GameManager.Instance) GameManager.Instance.TogglePause();
         }
     }
 }

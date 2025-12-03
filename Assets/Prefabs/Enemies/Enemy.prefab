@@ -161,6 +161,7 @@ MonoBehaviour:
   <Type>k__BackingField: 1
   enemyHealth: {fileID: 5997151282401117039}
   gold: {fileID: 2891574057460004659}
+  <TargetProfileSo>k__BackingField: {fileID: 0}
   <EnemyUI>k__BackingField: {fileID: 135854513061995731}
 --- !u!114 &2891574057460004659
 MonoBehaviour:

@@ -119,7 +119,7 @@ namespace UI
         {
             rollButton.gameObject.SetActive(false);
             holdButton.gameObject.SetActive(false);
-            EventSystem.current.SetSelectedGameObject(null);
+            if (EventSystem.current) EventSystem.current.SetSelectedGameObject(null);
             
             PokerInputs.TriggerRoll();
         }
@@ -128,19 +128,22 @@ namespace UI
         {
             rollButton.gameObject.SetActive(false);
             holdButton.gameObject.SetActive(false);
-            EventSystem.current.SetSelectedGameObject(null);
+            if (EventSystem.current) EventSystem.current.SetSelectedGameObject(null);
             
             PokerInputs.TriggerHold();
         }
         
         private async UniTask OnEndPressed()
         {
-            EventSystem.current.SetSelectedGameObject(null);
-            
-            LevelManager.Instance.UnloadSceneAsync(pokerDiceGameController.PokerAssetReference.AssetGUID).Forget();
-            await LevelManager.Instance.LoadSceneAsync(pokerDiceGameController.GameAssetReference);
-            
-            GameManager.Instance.RoomPassed();
+            if (EventSystem.current) EventSystem.current.SetSelectedGameObject(null);
+
+            if (LevelManager.Instance)
+            {
+                LevelManager.Instance.UnloadSceneAsync(pokerDiceGameController.PokerAssetReference.AssetGUID).Forget();
+                await LevelManager.Instance.LoadSceneAsync(pokerDiceGameController.GameAssetReference);
+            }
+
+            if (GameManager.Instance) GameManager.Instance.RoomPassed();
         }
 
         private void DisableGameButtons()

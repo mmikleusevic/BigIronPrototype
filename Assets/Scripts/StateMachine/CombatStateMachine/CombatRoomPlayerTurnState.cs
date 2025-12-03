@@ -21,7 +21,7 @@ namespace StateMachine.CombatStateMachine
         
         public UniTask OnEnter()
         {
-            combatRoomEvents.OnPlayerTurnStarted?.Invoke();
+            combatRoomEvents?.OnPlayerTurnStarted?.Invoke();
 
             combatTargetInputs.EnablePlayerTurnInput();
             combatTargetInputs.OnShootSelected += ShootSelected;
@@ -36,7 +36,7 @@ namespace StateMachine.CombatStateMachine
 
         public UniTask OnExit()
         {
-            combatRoomEvents.OnPlayerTurnEnded?.Invoke();
+            combatRoomEvents?.OnPlayerTurnEnded?.Invoke();
             
             combatTargetInputs.OnShootSelected -= ShootSelected;
             

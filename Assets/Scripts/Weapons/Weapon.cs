@@ -15,6 +15,6 @@ namespace Weapons
             OnWeaponNameChanged?.Invoke(weaponName);
         }
 
-        public abstract void Use();
+        public abstract void Use(Vector3 rayOrigin, Vector3 rayDirection);
     }
 }

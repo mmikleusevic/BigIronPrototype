@@ -95,7 +95,9 @@ namespace StateMachine.PokerStateMachine
         
         private void OnRoll()
         {
-            diceRoller?.RollDice(pokerGame.CurrentPlayer,rolls => 
+            if (!diceRoller) return;
+            
+            diceRoller.RollDice(pokerGame.CurrentPlayer,rolls => 
             {
                 pokerGame.SetPlayerRolls(rolls);
                 OnRollComplete();
@@ -117,7 +119,7 @@ namespace StateMachine.PokerStateMachine
         
         private void ToggleHighlight()
         {
-            CurrentDie?.DieVisual.ToggleHighlight();
+            CurrentDie?.DieVisual?.ToggleHighlight();
         }
     }
 }

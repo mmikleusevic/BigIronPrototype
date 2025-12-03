@@ -8,18 +8,20 @@ namespace CombatRoom
     public class CombatInputs : MonoBehaviour, ICombatInputSource
     {
         public event Action OnShoot;
-        public event Action<Vector2> OnAim;
         public event Action OnReload;
 
         [SerializeField] private InputActionAsset inputActionAsset;
         [SerializeField] private CombatRoomController combatRoomController;
-
+        
         private InputActionMap combatMap;
         private InputAction shootAction;
         private InputAction aimAction;
         private InputAction reloadAction;
 
         private CombatInputRules CombatInputRules => combatRoomController.CombatInputRules;
+
+        public bool IsAimingWithController => aimAction.activeControl?.device is Gamepad;
+        public Vector2 AimValue => aimAction.ReadValue<Vector2>();
 
         private void OnEnable()
         {
@@ -30,7 +32,6 @@ namespace CombatRoom
             reloadAction = combatMap.FindAction(GameStrings.RELOAD);
 
             shootAction.performed += OnShootPerformed;
-            aimAction.performed += OnAimPerformed;
             reloadAction.performed += OnReloadPerformed;
 
             DisablePlayerInput();
@@ -39,7 +40,6 @@ namespace CombatRoom
         private void OnDisable()
         {
             shootAction.performed -= OnShootPerformed;
-            aimAction.performed -= OnAimPerformed;
             reloadAction.performed -= OnReloadPerformed;
 
             DisablePlayerInput();
@@ -48,6 +48,11 @@ namespace CombatRoom
         public void EnablePlayerInput()
         {
             combatMap.Enable();
+        }
+        
+        public void EnableAiming()
+        {
+            aimAction.Enable();
         }
 
         public void DisablePlayerInput()
@@ -58,14 +63,6 @@ namespace CombatRoom
         private void OnShootPerformed(InputAction.CallbackContext ctx)
         {
             TriggerShoot();
-        }
-
-        private void OnAimPerformed(InputAction.CallbackContext ctx)
-        {
-            if (!CombatInputRules.CanAim) return;
-
-            Vector2 value = ctx.ReadValue<Vector2>();
-            OnAim?.Invoke(value);
         }
         
         private void OnReloadPerformed(InputAction.CallbackContext ctx)

@@ -55,8 +55,10 @@ namespace PokerDiceRoom
         }
 
         private void SetWager()
-        { 
-            Wager = PokerDiceRoomController.Instance.PlayerGoldToWager * Players.Length;
+        {
+            if (!PokerDiceRoomManager.Instance) return;
+            
+            Wager = PokerDiceRoomManager.Instance.PlayerGoldToWager * Players.Length;
             OnWagerChanged?.Invoke(Wager);
         }
         

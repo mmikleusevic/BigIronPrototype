@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Enemies;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,13 +16,13 @@ namespace CombatRoom
         private CombatRoomEvents combatRoomEvents;
         private Coroutine spawnTargetsCoroutine;
         private PlayerComboSystem comboSystem;
-        private Func<Vector3> getTargetPosition;
+        private Func<EnemyCombatant> getEnemy;
         
-        public void Initialize(CombatRoomEvents events, PlayerComboSystem comboSys, Func<Vector3> positionProvider)
+        public void Initialize(CombatRoomEvents events, PlayerComboSystem comboSystem, Func<EnemyCombatant> enemyProvider)
         {
             combatRoomEvents = events;
-            comboSystem = comboSys;
-            getTargetPosition = positionProvider;
+            this.comboSystem = comboSystem;
+            getEnemy = enemyProvider;
 
             combatRoomEvents.OnPlayerCanAttack += SpawnTargets;
             combatRoomEvents.OnPlayerAttackEnded += StopSpawningTargets;
@@ -56,14 +57,18 @@ namespace CombatRoom
             {
                 yield return new WaitForSeconds(spawnDelay);
 
-                if (getTargetPosition == null) continue;
-                
-                Vector3 origin = getTargetPosition.Invoke();
+                EnemyCombatant enemy = getEnemy?.Invoke();
+                if (!enemy) continue;
+
+                Vector3 origin = enemy.transform.position;
                 Vector3 position = origin + Random.insideUnitSphere * spawnRadius;
 
                 Target target = Instantiate(targetPrefab, position, Quaternion.identity);
                 
-                comboSystem.RegisterTarget(target);
+                target.Initialize(enemy.TargetProfileSo);
+                
+                target.OnTargetHit += comboSystem.OnTargetHitFromSpawner;
+                target.OnTargetExpired += comboSystem.OnTargetExpiredFromSpawner;
             }
         }
     }

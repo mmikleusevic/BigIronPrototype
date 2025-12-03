@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace PokerDiceRoom
 {
-    public class PokerDiceRoomController : MonoBehaviour
+    public class PokerDiceRoomManager : MonoBehaviour
     {
         public event Action OnPokerDiceRoomPressed;
         
-        public static PokerDiceRoomController Instance { get; private set; }
+        public static PokerDiceRoomManager Instance { get; private set; }
 
         public int PlayerGoldToWager { get; private set; }
         

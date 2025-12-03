@@ -12,6 +12,7 @@ namespace Managers
 
         private readonly Stack<Selectable> focusStack = new Stack<Selectable>();
         private Selectable lastFocusBeforePause;
+        private CursorLockMode lastCursoreModeBeforePause;
 
         private void Awake()
         {
@@ -38,14 +39,16 @@ namespace Managers
             if (top && top.interactable) EventSystem.current.SetSelectedGameObject(top.gameObject);
         }
 
-        public void SaveFocus(Selectable selectable)
+        public void SaveFocus(Selectable selectable, CursorLockMode cursorLockMode)
         {
             lastFocusBeforePause = selectable;
+            lastCursoreModeBeforePause = cursorLockMode;
         }
 
         public void RestoreBeforePause()
         {
             if (lastFocusBeforePause) EventSystem.current.SetSelectedGameObject(lastFocusBeforePause.gameObject);
+            Cursor.lockState = lastCursoreModeBeforePause;
         }
 
         public void ClearFocus()

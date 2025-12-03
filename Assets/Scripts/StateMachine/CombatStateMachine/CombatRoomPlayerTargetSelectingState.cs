@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using Enemies;
 using Managers;
 using UnityEngine;
+using CameraController = CombatRoom.CameraController;
 
 namespace StateMachine.CombatStateMachine
 {
@@ -25,7 +26,7 @@ namespace StateMachine.CombatStateMachine
         
         public UniTask OnEnter()
         {
-            combatRoomEvents.OnPlayerTargetSelectingStarted?.Invoke();
+            combatRoomEvents?.OnPlayerTargetSelectingStarted?.Invoke();
             
             enemies = combatRoomController.GetAliveEnemies();
             enemyIndex = 0;
@@ -46,7 +47,7 @@ namespace StateMachine.CombatStateMachine
 
         public UniTask OnExit()
         {
-            combatRoomEvents.OnPlayerTargetSelectingEnded?.Invoke();
+            combatRoomEvents?.OnPlayerTargetSelectingEnded?.Invoke();
             
             combatTargetInputs.DisablePlayerTurnInput();
             combatTargetInputs.OnMove -= Move;

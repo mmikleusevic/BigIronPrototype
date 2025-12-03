@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using CombatRoom;
 using UnityEngine;
 
 namespace Weapons
@@ -9,11 +10,12 @@ namespace Weapons
         public event Action<int, int> OnAmmoChanged;
         
         [field: SerializeField] public int Damage { get; private set; } 
-        [SerializeField] protected Bullet bulletPrefab;
         [SerializeField] protected Transform shootPoint;
         [SerializeField] protected float reloadTime = 1f;
         [SerializeField] protected float fireRate = 0.5f;
         [SerializeField] protected int maxAmmo;
+        [SerializeField] private float raycastDistance = 30f;
+        [SerializeField] private LayerMask hitMask;
         
         public int CurrentAmmo  => currentAmmo;
         public int MaxAmmo => maxAmmo;
@@ -34,24 +36,32 @@ namespace Weapons
             OnAmmoChanged?.Invoke(currentAmmo, maxAmmo);
         }
         
-        public override void Use() => Shoot();
+        public override void Use(Vector3 rayOrigin, Vector3 rayDirection) => Shoot(rayOrigin, rayDirection);
 
-        public virtual void Shoot()
+        public virtual void Shoot(Vector3 rayOrigin, Vector3 rayDirection)
         {
             if (!CanShoot) return;
 
             nextShootTime = Time.time + fireRate;
 
             currentAmmo--;
-            
-            SpawnBullet();
+
+            HitScan(rayOrigin, rayDirection);
             
             OnAmmoChanged?.Invoke(currentAmmo, maxAmmo);
         }
-        
-        private void SpawnBullet()
+
+        private void HitScan(Vector3 rayOrigin, Vector3 rayDirection)
         {
-            Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
+            RaycastHit hit;
+            
+            if (Physics.Raycast(rayOrigin, rayDirection, out hit, raycastDistance, hitMask))
+            {
+                if (hit.collider.TryGetComponent(out Target target))
+                {
+                    target.Hit();
+                }
+            }
         }
         
         protected void InvokeAmmoChanged() => OnAmmoChanged?.Invoke(currentAmmo, maxAmmo);

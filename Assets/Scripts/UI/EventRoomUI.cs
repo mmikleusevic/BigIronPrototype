@@ -81,8 +81,8 @@ namespace UI
             eventRoomPanel.SetActive(true);
 
             if (!firstSelectable) return;
-            
-            UIFocusManager.Instance.PushFocus(firstSelectable);
+
+            if (UIFocusManager.Instance) UIFocusManager.Instance.PushFocus(firstSelectable);
             firstSelectable.Select();
         }
         
@@ -91,7 +91,7 @@ namespace UI
             continueButton.gameObject.SetActive(false);
             eventRoomPanel.SetActive(false);
             
-            UIFocusManager.Instance.PopFocus();
+            if (UIFocusManager.Instance) UIFocusManager.Instance.PopFocus();
             firstSelectable = null;
         }
         
@@ -105,10 +105,10 @@ namespace UI
 
         private void RegisterContinueButton(EventChoice eventChoice)
         {
-            UIFocusManager.Instance.PopFocus();
+            if (UIFocusManager.Instance) UIFocusManager.Instance.PopFocus();
             continueButton.Initialize(eventChoice);
             continueButton.Select();
-            UIFocusManager.Instance.PushFocus(continueButton);
+            if (UIFocusManager.Instance) UIFocusManager.Instance.PushFocus(continueButton);
         }
 
         private void SetDescriptionText(EventChoice choice, bool conditionsMet)

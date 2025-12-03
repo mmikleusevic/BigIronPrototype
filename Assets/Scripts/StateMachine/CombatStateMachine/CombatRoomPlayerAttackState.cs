@@ -5,6 +5,7 @@ using Player;
 using UnityEngine;
 using UnityEngine.Rendering;
 using Weapons;
+using CameraController = CombatRoom.CameraController;
 
 namespace StateMachine.CombatStateMachine
 {
@@ -14,12 +15,14 @@ namespace StateMachine.CombatStateMachine
         private readonly CombatRoomEvents combatRoomEvents;
         private readonly CombatInputs combatInputs;
         private readonly PlayerCombatant playerCombatant;
-
-        private Gun gun;
-        private bool countdownFinished;
+        private readonly CameraController cameraController;
         
         private const int InitialCountdownTime = 5;
         private const int AttackDurationSeconds = 15;
+        
+        private Gun gun;
+        
+        private bool countdownFinished;
         
         public CombatRoomPlayerAttackState(CombatRoomController controller)
         {
@@ -27,15 +30,20 @@ namespace StateMachine.CombatStateMachine
             combatRoomEvents = combatRoomController.CombatRoomEvents;
             combatInputs = combatRoomController.CombatInputs;
             playerCombatant = combatRoomController.CurrentCombatant as PlayerCombatant;
+            cameraController = combatRoomController.CameraController;
         }
         
         public async UniTask OnEnter()
         {
-            combatRoomEvents.OnPlayerAttackStarted?.Invoke();
-            
-            countdownFinished = false;
+            combatRoomEvents?.OnPlayerAttackStarted?.Invoke();
 
+            countdownFinished = false;
             gun = playerCombatant.Gun;
+            
+            Cursor.lockState = CursorLockMode.Locked;
+            cameraController.SwitchToPlayerCamera();
+            
+            combatInputs.EnableAiming();
             
             await StartCountdown(InitialCountdownTime);
             
@@ -47,17 +55,42 @@ namespace StateMachine.CombatStateMachine
 
         public void OnUpdate()
         {
+            Vector2 rawLookInput = combatInputs.AimValue;
+            Vector2 finalLookInput = Vector2.zero;
             
+            Debug.Log(rawLookInput);
+
+            if (rawLookInput == Vector2.zero) return;
+
+            float sensitivity = 0;
+
+            if (CameraManager.Instance) sensitivity = CameraManager.Instance.GetAimSensitivity();
+                
+            if (combatInputs.IsAimingWithController)
+            {
+                finalLookInput = rawLookInput * (sensitivity * Time.deltaTime * 100f);
+            }
+            else
+            {
+                finalLookInput = rawLookInput * sensitivity;
+            }
+                
+            playerCombatant.HandleLook(finalLookInput);
         }
 
         public UniTask OnExit()
         {
-            combatRoomEvents.OnPlayerAttackEnded?.Invoke();
+            combatRoomEvents?.OnPlayerAttackEnded?.Invoke();
+            
+            cameraController.SwitchToOverviewCamera();
+            
+            Cursor.lockState = CursorLockMode.None;
             
             combatInputs.OnShoot -= Shoot;
-            combatInputs.OnAim -= Aim;
             combatInputs.OnReload -= Reload;
             combatInputs.DisablePlayerInput();
+            
+            playerCombatant.ResetAim();
             
             return UniTask.CompletedTask;
         }
@@ -66,20 +99,19 @@ namespace StateMachine.CombatStateMachine
         {
             for (int i = seconds; i > 0; i--)
             {
-                combatRoomEvents.OnCountdownTick?.Invoke(i);
+                combatRoomEvents?.OnCountdownTick?.Invoke(i);
                 await UniTask.Delay(1000);
             }
 
-            combatRoomEvents.OnCountdownTick?.Invoke(0);
+            combatRoomEvents?.OnCountdownTick?.Invoke(0);
             countdownFinished = true;
         }
 
         private void EnablePlayerControls()
         {
-            combatRoomEvents.OnPlayerCanAttack?.Invoke();
+            combatRoomEvents?.OnPlayerCanAttack?.Invoke();
             
             combatInputs.OnShoot += Shoot;
-            combatInputs.OnAim += Aim;
             combatInputs.OnReload += Reload;
             combatInputs.EnablePlayerInput();
         }
@@ -88,12 +120,7 @@ namespace StateMachine.CombatStateMachine
         {
             if (!countdownFinished) return;
             
-            gun?.Shoot();
-        }
-
-        private void Aim(Vector2 move)
-        {
-            if (!countdownFinished) return;
+            playerCombatant.ExecuteShoot();
         }
 
         private void Reload()

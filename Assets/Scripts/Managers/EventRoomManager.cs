@@ -23,7 +23,10 @@ namespace Managers
 
         public void OnChoiceSelected(EventChoice choice)
         {
-            PlayerCombatant player = GameManager.Instance?.PlayerCombatant;
+            PlayerCombatant player = null;
+            
+            if (GameManager.Instance) player = GameManager.Instance.PlayerCombatant;
+            if (!player) return;
 
             bool conditionsMet = CheckConditions(choice, player);
             TriggerEffects(choice, player,conditionsMet);
@@ -84,7 +87,7 @@ namespace Managers
         {
             Debug.Log("Event chain finished!");
             OnEventEnded?.Invoke();
-            GameManager.Instance.RoomPassed();
+            if (GameManager.Instance) GameManager.Instance.RoomPassed();
         }
     }
 }

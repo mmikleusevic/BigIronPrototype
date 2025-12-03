@@ -6,6 +6,6 @@ public class GameInitializer : SceneInitializer
 {
     protected override void Initialize()
     {
-        GameManager.Instance.InitializeGame();
+        if (GameManager.Instance) GameManager.Instance.InitializeGame();
     }
 }

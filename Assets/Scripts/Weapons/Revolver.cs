@@ -5,11 +5,11 @@ namespace Weapons
 {
     public class Revolver : Gun
     {
-        public override void Shoot()
+        public override void Shoot(Vector3 rayOrigin, Vector3 rayDirection)
         {
             if (!CanShoot) return;
 
-            base.Shoot();
+            base.Shoot(rayOrigin, rayDirection);
             // spawn bullet, animations, etc.
         }
 

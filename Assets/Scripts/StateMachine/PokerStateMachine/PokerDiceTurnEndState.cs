@@ -22,7 +22,7 @@ namespace StateMachine.PokerStateMachine
     
         public async UniTask OnEnter()
         {
-            pokerGameEvents.OnTurnEndStarted?.Invoke();
+            pokerGameEvents?.OnTurnEndStarted?.Invoke();
 
             diceRoller.TryAdvanceRollPhase();
             

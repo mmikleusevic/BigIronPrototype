@@ -38,7 +38,7 @@ namespace StateMachine.PokerStateMachine
             diceRoller.SetPlayerRolls(player);
             int playerRolls = diceRoller.GetNumberOfPlayerRolls(player);
             
-            pokerGameEvents.OnDiceRollingStarted?.Invoke(playerRolls, diceRoller.MaxRolls);
+            pokerGameEvents?.OnDiceRollingStarted?.Invoke(playerRolls, diceRoller.MaxRolls);
             
             ToggleHighlight();
             
@@ -56,7 +56,7 @@ namespace StateMachine.PokerStateMachine
         {
             UnsubscribeInputs();
             
-            pokerGameEvents.OnDiceRollingEnded?.Invoke();
+            pokerGameEvents?.OnDiceRollingEnded?.Invoke();
 
             return UniTask.CompletedTask;
         }
@@ -83,12 +83,14 @@ namespace StateMachine.PokerStateMachine
 
             hasDoneAction = true;
             
-            pokerGameEvents.OnRoll?.Invoke();
+            pokerGameEvents?.OnRoll?.Invoke();
             
             ToggleHighlight();
             pokerInputSource.DisablePlayerTurnInput();
+
+            if (!diceRoller) return;
             
-            diceRoller?.RollDice(pokerGame.CurrentPlayer,rolls => 
+            diceRoller.RollDice(pokerGame.CurrentPlayer,rolls => 
             {
                 pokerGame.SetPlayerRolls(rolls);
                 RollComplete();
@@ -101,7 +103,7 @@ namespace StateMachine.PokerStateMachine
 
             hasDoneAction = true;
             
-            pokerGameEvents.OnHold?.Invoke();
+            pokerGameEvents?.OnHold?.Invoke();
             pokerInputSource.DisablePlayerTurnInput();
             
             ToggleHighlight();

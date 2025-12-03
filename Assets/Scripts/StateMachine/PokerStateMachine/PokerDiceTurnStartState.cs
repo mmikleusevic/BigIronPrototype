@@ -27,7 +27,7 @@ namespace StateMachine.PokerStateMachine
             Debug.Log($"=== {pokerGame.CurrentPlayer}'s Turn ===");
             
             diceRoller.ResetDiceHolds(pokerGame.CurrentPlayer);
-            pokerGameEvents.OnTurnStart?.Invoke(pokerGame.CurrentPlayer);
+            pokerGameEvents?.OnTurnStart?.Invoke(pokerGame.CurrentPlayer);
             
             await UniTask.Delay(TimeSpan.FromSeconds(delayDuration));
         

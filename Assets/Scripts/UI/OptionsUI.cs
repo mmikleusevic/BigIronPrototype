@@ -45,34 +45,41 @@ namespace UI
 
         private void Start()
         {
-            float volume = SoundManager.Instance.GetVolume();
-            volumeSlider.value = volume;
-        
-            float sfxVolume = SoundManager.Instance.GetSfxVolume();
-            sfxVolumeSlider.value = sfxVolume;
+            float volume = 0;
+            float sfxVolume = 0;
+            float aimSensitivity = 0;
 
-            float aimSensitivity = CameraManager.Instance.GetAimSensitivity();
+            if (!SoundManager.Instance) return;
+            
+            SoundManager.Instance.GetVolume();
+            volumeSlider.value = volume;
+                
+            SoundManager.Instance.GetSfxVolume();
+            sfxVolumeSlider.value = sfxVolume;
+                
+            CameraManager.Instance.GetAimSensitivity();
             aimSensitivitySlider.value = aimSensitivity;
         }
     
         private void VolumeChanged(float value)
         {
-            SoundManager.Instance?.SetVolume(value);
+            if (SoundManager.Instance) SoundManager.Instance.SetVolume(value);
             string text = GetSliderText(value);
             volumeValueText.text = text;
         }
     
         private void SfxVolumeChanged(float value)
         {
-            SoundManager.Instance?.SetSfxVolume(value);
+            if (SoundManager.Instance) SoundManager.Instance.SetSfxVolume(value);
             string text = GetSliderText(value);
             sfxVolumeValueText.text = text;
         }
         
         private void AimSensitivityChanged(float value)
         {
-            CameraManager.Instance.SetAimSensitivity(value);
-            aimSensitivityValueText.text = value.ToString();
+            if (CameraManager.Instance) CameraManager.Instance.SetAimSensitivity(value);
+            string text = GetSliderText(value);
+            aimSensitivityValueText.text = text;
         }
 
         private void BackToMainMenu()

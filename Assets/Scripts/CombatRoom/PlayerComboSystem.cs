@@ -34,12 +34,6 @@ namespace CombatRoom
             UnregisterAndDestroyAllTargets();
         }
 
-        public void RegisterTarget(Target target)
-        {
-            target.OnTargetHit += OnTargetHit;
-            activeTargets.Add(target);
-        }
-
         private void OnTargetHit(Target target)
         {
             target.OnTargetHit -= OnTargetHit;
@@ -50,7 +44,7 @@ namespace CombatRoom
             activeTargets.Remove(target);
         }
 
-        public void OnMiss()
+        private void OnMiss()
         {
             currentHitStreak = 0;
         }
@@ -76,6 +70,27 @@ namespace CombatRoom
             }
             
             activeTargets.Clear();
+        }
+        
+        public void OnTargetHitFromSpawner(Target target)
+        {
+            target.OnTargetHit -= OnTargetHitFromSpawner;
+            target.OnTargetExpired -= OnTargetExpiredFromSpawner;
+
+            currentHitStreak++;
+            if (currentHitStreak > hitStreak) hitStreak = currentHitStreak;
+
+            activeTargets.Remove(target);
+        }
+
+        public void OnTargetExpiredFromSpawner(Target target)
+        {
+            target.OnTargetHit -= OnTargetHitFromSpawner;
+            target.OnTargetExpired -= OnTargetExpiredFromSpawner;
+            
+            OnMiss();
+
+            activeTargets.Remove(target);
         }
     }
 }

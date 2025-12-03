@@ -26,14 +26,14 @@ namespace PokerDiceRoom
         {
             goldSlider.onValueChanged.AddListener(SetGoldText);
             continueButton.AddClickAsync(ContinueToPokerDiceRoom);
-            PokerDiceRoomController.Instance.OnPokerDiceRoomPressed += Open;
+            if (PokerDiceRoomManager.Instance) PokerDiceRoomManager.Instance.OnPokerDiceRoomPressed += Open;
         }
 
         private void OnDisable()
         {
             goldSlider.onValueChanged.RemoveListener(SetGoldText);
             continueButton.onClick.RemoveAllListeners();
-            PokerDiceRoomController.Instance.OnPokerDiceRoomPressed -= Open;
+            if (PokerDiceRoomManager.Instance) PokerDiceRoomManager.Instance.OnPokerDiceRoomPressed -= Open;
         }
         
         private void Open()
@@ -41,18 +41,22 @@ namespace PokerDiceRoom
             pokerDiceRoomPanel.SetActive(true);
             
             goldSlider.minValue = 0;
+
+            if (!GameManager.Instance) return;
             goldSlider.maxValue = GameManager.Instance.PlayerCombatant.Gold.GoldAmount;
         }
 
         private void SetGoldText(float gold)
         {
             goldText.text = $"{gold} Gold";
-            PokerDiceRoomController.Instance.SetWager((int)gold);
+            if (PokerDiceRoomManager.Instance) PokerDiceRoomManager.Instance.SetWager((int)gold);
         }
         
         private async UniTask ContinueToPokerDiceRoom()
         {
-            int playerWageredGold = PokerDiceRoomController.Instance.PlayerGoldToWager;
+            if (!PokerDiceRoomManager.Instance) return;
+            
+            int playerWageredGold = PokerDiceRoomManager.Instance.PlayerGoldToWager;
             GameManager.Instance.PlayerCombatant.LoseGoldAmount(playerWageredGold);
             
             await LevelManager.Instance.LoadSceneAsync(pokerDiceSceneReference);

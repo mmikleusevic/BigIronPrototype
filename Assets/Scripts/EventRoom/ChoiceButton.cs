@@ -21,7 +21,7 @@ namespace EventRoom
         {
             onClick.AddListener(() =>
             {
-                EventRoomManager.Instance.OnChoiceSelected(eventChoice);
+                if (EventRoomManager.Instance) EventRoomManager.Instance.OnChoiceSelected(eventChoice);
             });
         }
     }

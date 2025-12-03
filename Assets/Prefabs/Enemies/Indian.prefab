@@ -40,6 +40,10 @@ PrefabInstance:
       propertyPath: <GoldDropAmount>k__BackingField
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: <TargetProfileSo>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 9446308dc70f9434ba5fe5cd9442caab, type: 2}
     - target: {fileID: 1571615170333215887, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -83,6 +87,22 @@ PrefabInstance:
     - target: {fileID: 5997151282401117039, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
       propertyPath: maxHealth
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7298214019526611955, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: radius
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7298214019526611955, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: lifetime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7298214019526611955, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: <Radius>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7298214019526611955, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: <Lifetime>k__BackingField
+      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

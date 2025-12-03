@@ -18,7 +18,7 @@ namespace EventRoom
             onClick.AddListener(() =>
             {
                 gameObject.SetActive(false);
-                EventRoomManager.Instance?.ContinueAfterResult(eventChoice);
+                if (EventRoomManager.Instance) EventRoomManager.Instance.ContinueAfterResult(eventChoice);
                 onClick.RemoveAllListeners();
             });
         }

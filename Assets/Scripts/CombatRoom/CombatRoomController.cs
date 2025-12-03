@@ -21,16 +21,18 @@ namespace CombatRoom
         [field: SerializeField] public CombatInputRules CombatInputRules { get; private set; }
         [field: SerializeField] public GunUIController GunUIController { get; private set; }
         [field: SerializeField] public PlayerComboSystem PlayerComboSystem { get; private set; }
+        [field: SerializeField] public CameraController CameraController { get; private set; }
         
         [SerializeField] private TargetSpawner targetSpawner;
         [SerializeField] private Vector3[] enemyPositions;
+        
         private List<Combatant> ActiveCombatants { get; } = new List<Combatant>();
         public Queue<Combatant> TurnQueue { get; private set; } = new Queue<Combatant>();
         public Combatant CurrentCombatant { get; private set; }
         public CombatRoomEvents CombatRoomEvents { get; private set; } = new CombatRoomEvents();
-        public EnemyCombatant SelectedEnemy { get; private set; }
         
         private readonly Dictionary<Combatant, Action> deathActions = new Dictionary<Combatant, Action>();
+        private EnemyCombatant selectedEnemy;
         
         private void Start()
         {
@@ -44,12 +46,8 @@ namespace CombatRoom
             PlayerComboSystem.Initialize(CombatRoomEvents);
             
             PlayerComboSystem.OnComboFinished += HandleComboFinished;
-            
-            targetSpawner.Initialize(
-                CombatRoomEvents, 
-                PlayerComboSystem, 
-                () => SelectedEnemy ? SelectedEnemy.transform.position : Vector3.zero
-            );
+
+            targetSpawner.Initialize(CombatRoomEvents, PlayerComboSystem, () => selectedEnemy);
         }
         
         private void OnDestroy()
@@ -69,18 +67,21 @@ namespace CombatRoom
             int totalDamage = (int)(player.Gun.Damage * damageMultiplier);
             Debug.Log($"Dealt {totalDamage} damage (Mult: {damageMultiplier})");
 
-            if (SelectedEnemy) SelectedEnemy.Health.TakeDamage(totalDamage);
+            if (selectedEnemy) selectedEnemy.Health.TakeDamage(totalDamage);
         }
 
         public void SpawnEnemies()
         {
-            EncounterSO encounterSO = EncounterManager.Instance.EncounterSO;
+            EncounterSO encounterSo = null;
+
+            if (EncounterManager.Instance) encounterSo = EncounterManager.Instance.EncounterSO;
+            if (!encounterSo) return;
             
-            for (int i = 0; i < encounterSO.enemies.Length; i++)
+            for (int i = 0; i < encounterSo.enemies.Length; i++)
             {
                 if (i >= enemyPositions.Length) break;
 
-                EnemyCombatant enemyPrefab = encounterSO.enemies[i];
+                EnemyCombatant enemyPrefab = encounterSo.enemies[i];
                 EnemyCombatant enemy = Instantiate(enemyPrefab, enemyPositions[i], Quaternion.identity);
                 
                 SceneManager.MoveGameObjectToScene(enemy.gameObject, gameObject.scene);
@@ -99,15 +100,19 @@ namespace CombatRoom
 
         public void HandleTargetChosen(EnemyCombatant target)
         {
-            SelectedEnemy = target;
+            selectedEnemy = target;
         }
 
         private void SetupPlayer()
         {
-            GameObject playerGameObject = GameManager.Instance.PlayerCombatant.gameObject;
+            GameObject playerGameObject = null;
+            if (GameManager.Instance) playerGameObject = GameManager.Instance.PlayerCombatant.gameObject;
+            if (!playerGameObject) return;
+            
             SceneManager.MoveGameObjectToScene(playerGameObject, gameObject.scene);
             PlayerCombatant playerCombatant = playerGameObject.GetComponent<PlayerCombatant>();
             
+            CameraController.SetPlayerCamera(playerCombatant.PlayerCamera);
             GunUIController.SetGun(playerCombatant.Gun);
             
             RegisterPlayer(playerCombatant);

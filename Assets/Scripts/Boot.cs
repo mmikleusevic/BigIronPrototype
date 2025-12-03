@@ -22,8 +22,12 @@ public class Boot : MonoBehaviour
 
     private async UniTask LoadScene()
     {
-        await LevelManager.Instance.LoadSceneAsync(loaderScene, false);
-        await LevelManager.Instance.LoadSceneAsync(mainMenuScene);
+        if (LevelManager.Instance)
+        {
+            await LevelManager.Instance.LoadSceneAsync(loaderScene, false);
+            await LevelManager.Instance.LoadSceneAsync(mainMenuScene);
+        }
+
         await SceneManager.UnloadSceneAsync(0);
     }
 }

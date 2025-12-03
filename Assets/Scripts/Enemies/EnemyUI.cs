@@ -31,12 +31,12 @@ namespace Enemies
 
         public void Show()
         {
-            enemyUIPanel.SetActive(true);
+            if (enemyUIPanel) enemyUIPanel.SetActive(true);
         }
 
         public void Hide()
         {
-            enemyUIPanel?.SetActive(false);
+            if (enemyUIPanel) enemyUIPanel.SetActive(false);
         }
 
         private void UpdateHealthBar(int current, int max)

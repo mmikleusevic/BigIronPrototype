@@ -26,13 +26,13 @@ namespace MapRoom
         private void OnEnable()
         {
             levelNodeGenerator.OnLevelNodesGenerated += OnNodesGenerated;
-            GameManager.Instance.OnRoomPassed += SetInteractableButtons;
+            if (GameManager.Instance) GameManager.Instance.OnRoomPassed += SetInteractableButtons;
         }
 
         private void OnDisable()
         {
             levelNodeGenerator.OnLevelNodesGenerated -= OnNodesGenerated;
-            GameManager.Instance.OnRoomPassed -= SetInteractableButtons;
+            if (GameManager.Instance) GameManager.Instance.OnRoomPassed -= SetInteractableButtons;
         }
 
         private void OnNodesGenerated()
@@ -61,12 +61,12 @@ namespace MapRoom
         
             currentLevelNode = mapLevelNodes.GetNodeByLevelType(LevelNodeType.Start);
             SetInteractableButtons();
-            currentLevelNode?.Highlight(true);
+            if (currentLevelNode) currentLevelNode.Highlight(true);
         }
         
         private void HandleNodeSelected(MapLevelNode node)
         {
-            UIFocusManager.Instance.PopFocus();
+            if (UIFocusManager.Instance) UIFocusManager.Instance.PopFocus();
             SetLastSelectedNode(node);
         }
 
@@ -78,7 +78,9 @@ namespace MapRoom
             currentLevelNode.SetInteractable(false);
             currentLevelNode = clickedNode;
             currentLevelNode.Highlight(true);
-            UIFocusManager.Instance.PopFocus();
+            
+            if (UIFocusManager.Instance) UIFocusManager.Instance.PopFocus();
+            
             lastSelectedNode = null;
             
             DisableOtherButtons();
@@ -146,7 +148,7 @@ namespace MapRoom
         private void SetLastSelectedNode(MapLevelNode mapLevelNode)
         {
             lastSelectedNode = mapLevelNode;
-            UIFocusManager.Instance.PushFocus(lastSelectedNode.NodeButton);
+            if (UIFocusManager.Instance) UIFocusManager.Instance.PushFocus(lastSelectedNode.NodeButton);
         }
     }
 }
