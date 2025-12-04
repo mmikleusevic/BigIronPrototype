@@ -40,13 +40,19 @@ namespace StateMachine.PokerStateMachine
                 if (winners[0].PlayerName != GameStrings.PLAYER) return UniTask.CompletedTask;
 
                 if (GameManager.Instance) GameManager.Instance.PlayerCombatant.GainGoldAmount(pokerGame.Wager);
-                pokerGameEvents?.OnGameOver?.Invoke();
             }
             else
             {
                 string tiedNames = string.Join(", ", winners.Select(w => w.PlayerName));
                 Debug.Log($"🤝 It's a tie between {tiedNames}!");
+
+                if (!winners.Select(a => a.PlayerName).Contains(GameStrings.PLAYER)) return UniTask.CompletedTask;
+
+                int numberOfTiedPlayers = winners.Count;
+                if (GameManager.Instance) GameManager.Instance.PlayerCombatant.GainGoldAmount(pokerGame.Wager / numberOfTiedPlayers);
             }
+            
+            pokerGameEvents?.OnGameOver?.Invoke();
 
             return UniTask.CompletedTask;
         }

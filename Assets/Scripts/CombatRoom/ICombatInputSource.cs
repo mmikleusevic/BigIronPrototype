@@ -7,5 +7,6 @@ namespace CombatRoom
     {
         public event Action OnShoot;
         public event Action OnReload;
+        public event Action OnEnd;
     }
 }

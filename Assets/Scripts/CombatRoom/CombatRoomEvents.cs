@@ -12,5 +12,7 @@ namespace CombatRoom
         public Action OnPlayerCanAttack;
         public Action OnPlayerAttackEnded;
         public Action<int> OnCountdownTick;
+        public Action OnVictoryStarted;
+        public Action OnDefeatStarted;
     }
 }

@@ -143,6 +143,7 @@ namespace UI
                 await LevelManager.Instance.LoadSceneAsync(pokerDiceGameController.GameAssetReference);
             }
 
+            if (InputManager.Instance) InputManager.Instance.EnableOnlyUIMap();
             if (GameManager.Instance) GameManager.Instance.RoomPassed();
         }
 

@@ -9,6 +9,7 @@ namespace CombatRoom
     {
         public event Action OnShoot;
         public event Action OnReload;
+        public event Action OnEnd;
 
         [SerializeField] private InputActionAsset inputActionAsset;
         [SerializeField] private CombatRoomController combatRoomController;
@@ -17,6 +18,7 @@ namespace CombatRoom
         private InputAction shootAction;
         private InputAction aimAction;
         private InputAction reloadAction;
+        private InputAction endAction;
 
         private CombatInputRules CombatInputRules => combatRoomController.CombatInputRules;
 
@@ -30,9 +32,11 @@ namespace CombatRoom
             shootAction = combatMap.FindAction(GameStrings.SHOOT);
             aimAction = combatMap.FindAction(GameStrings.AIM);
             reloadAction = combatMap.FindAction(GameStrings.RELOAD);
-
+            endAction = combatMap.FindAction(GameStrings.END);
+            
             shootAction.performed += OnShootPerformed;
             reloadAction.performed += OnReloadPerformed;
+            endAction.performed += OnEndPerformed;
 
             DisablePlayerInput();
         }
@@ -41,6 +45,7 @@ namespace CombatRoom
         {
             shootAction.performed -= OnShootPerformed;
             reloadAction.performed -= OnReloadPerformed;
+            endAction.performed -= OnEndPerformed;
 
             DisablePlayerInput();
         }
@@ -53,6 +58,11 @@ namespace CombatRoom
         public void EnableAiming()
         {
             aimAction.Enable();
+        }
+
+        public void EnableEnd()
+        {
+            endAction.Enable();
         }
 
         public void DisablePlayerInput()
@@ -69,6 +79,11 @@ namespace CombatRoom
         {
             TriggerReload();
         }
+        
+        private void OnEndPerformed(InputAction.CallbackContext ctx)
+        {
+            TriggerContinue();
+        }
 
         private void TriggerReload()
         {
@@ -82,6 +97,13 @@ namespace CombatRoom
             if (!CombatInputRules.CanShoot) return;
 
             OnShoot?.Invoke();
+        }
+
+        private void TriggerContinue()
+        {
+            if (!CombatInputRules.CanEnd) return;
+
+            OnEnd?.Invoke();
         }
     }
 }

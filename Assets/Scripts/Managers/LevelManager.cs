@@ -49,6 +49,9 @@ namespace Managers
             }
             
             if (setActive) SceneManager.SetActiveScene(sceneInstance.Scene);
+
+            GameObject playerGameObject = GameManager.Instance?.PlayerCombatant?.gameObject;
+            if (playerGameObject) SceneManager.MoveGameObjectToScene(playerGameObject, gameObject.scene);
         }
         
         public async UniTask UnloadSceneAsync(string sceneGUID)

@@ -9,7 +9,6 @@ namespace Weapons
     {
         public event Action<int, int> OnAmmoChanged;
         
-        [field: SerializeField] public int Damage { get; private set; } 
         [SerializeField] protected Transform shootPoint;
         [SerializeField] protected float reloadTime = 1f;
         [SerializeField] protected float fireRate = 0.5f;

@@ -14,8 +14,8 @@ namespace StateMachine.CombatStateMachine
         private readonly CombatRoomController combatRoomController;
         private readonly CombatRoomEvents combatRoomEvents;
         private readonly CombatInputs combatInputs;
-        private readonly PlayerCombatant playerCombatant;
         private readonly CameraController cameraController;
+        private readonly PlayerCombatant playerCombatant;
         
         private const int InitialCountdownTime = 5;
         private const int AttackDurationSeconds = 15;
@@ -29,8 +29,8 @@ namespace StateMachine.CombatStateMachine
             combatRoomController = controller;
             combatRoomEvents = combatRoomController.CombatRoomEvents;
             combatInputs = combatRoomController.CombatInputs;
-            playerCombatant = combatRoomController.CurrentCombatant as PlayerCombatant;
             cameraController = combatRoomController.CameraController;
+            if (GameManager.Instance) playerCombatant = GameManager.Instance.PlayerCombatant;
         }
         
         public async UniTask OnEnter()

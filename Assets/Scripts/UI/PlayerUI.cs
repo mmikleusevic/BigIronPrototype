@@ -15,14 +15,14 @@ namespace UI
         {
             if (GameManager.Instance) GameManager.Instance.OnPlayerInitialized -= OnPlayerInitialized;
             
-            Unsubscribe(GameManager.Instance.PlayerCombatant);
+            Unsubscribe(GameManager.Instance?.PlayerCombatant);
         }
 
         private void OnPlayerInitialized()
         {
-            Subscribe(GameManager.Instance.PlayerCombatant);
-            
-            GameManager.Instance.PlayerCombatant.RefreshState();
+            Subscribe(GameManager.Instance?.PlayerCombatant);
+
+            if (GameManager.Instance) GameManager.Instance.PlayerCombatant.RefreshState();
         }
 
         protected abstract void Subscribe(PlayerCombatant playerCombatant);

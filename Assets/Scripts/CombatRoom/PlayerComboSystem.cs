@@ -7,6 +7,8 @@ namespace CombatRoom
 {
     public class PlayerComboSystem : MonoBehaviour
     {
+        [SerializeField] private Combo comboPrefab;
+        
         private CombatRoomEvents combatRoomEvents;
         
         public event Action<float> OnComboFinished;
@@ -78,6 +80,12 @@ namespace CombatRoom
             target.OnTargetExpired -= OnTargetExpiredFromSpawner;
 
             currentHitStreak++;
+
+            if (currentHitStreak > 1)
+            {
+                Combo combo = Instantiate(comboPrefab, target.transform.position, Quaternion.identity);
+                combo.Initialize(currentHitStreak);
+            }
             if (currentHitStreak > hitStreak) hitStreak = currentHitStreak;
 
             activeTargets.Remove(target);

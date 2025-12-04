@@ -158,9 +158,9 @@ MonoBehaviour:
   <Name>k__BackingField: Player
   <Speed>k__BackingField: 10
   <Type>k__BackingField: 0
+  <Damage>k__BackingField: 10
   <Gun>k__BackingField: {fileID: 7420099517383029312}
   <PlayerCamera>k__BackingField: {fileID: 7458384380385471689}
-  mainCamera: {fileID: 0}
   playerHealth: {fileID: 739255252842885961}
   gold: {fileID: 4117786208091181389}
   targetLayerMask:

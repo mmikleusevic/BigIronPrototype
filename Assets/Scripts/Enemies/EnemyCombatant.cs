@@ -16,14 +16,9 @@ namespace Enemies
         public override Health Health => enemyHealth;
         public override Gold Gold => gold;
 
-        public void PerformAttack()
+        public void AttackEnemy(PlayerCombatant playerCombatant)
         {
-            // Logic to attack the Player
-        }
-
-        public void SelectEnemy()
-        {
-            EnemyUI.Show();
+            playerCombatant.TakeDamage(Damage);
         }
 
         public void HandleDeathEffects(Combatant killer)

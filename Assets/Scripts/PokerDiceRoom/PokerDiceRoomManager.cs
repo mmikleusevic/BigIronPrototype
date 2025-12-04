@@ -6,6 +6,7 @@ namespace PokerDiceRoom
     public class PokerDiceRoomManager : MonoBehaviour
     {
         public event Action OnPokerDiceRoomPressed;
+        public event Action OnPokerDiceRoomLoaded;
         
         public static PokerDiceRoomManager Instance { get; private set; }
 
@@ -24,6 +25,11 @@ namespace PokerDiceRoom
         public void SetWager(int gold)
         {
             PlayerGoldToWager = gold;
+        }
+        
+        public void PokerDiceRoomLoaded()
+        {
+            OnPokerDiceRoomLoaded?.Invoke();
         }
     }
 }

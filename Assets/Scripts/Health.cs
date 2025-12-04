@@ -39,6 +39,8 @@ public class Health : MonoBehaviour
     protected virtual void Die()
     {
         OnDied?.Invoke();
+        
+        Destroy(gameObject);
     }
     
     public void RefreshState()

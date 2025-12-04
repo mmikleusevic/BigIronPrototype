@@ -8,6 +8,7 @@ using Player;
 using StateMachine;
 using StateMachine.CombatStateMachine;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using Weapons;
 
@@ -22,6 +23,8 @@ namespace CombatRoom
         [field: SerializeField] public GunUIController GunUIController { get; private set; }
         [field: SerializeField] public PlayerComboSystem PlayerComboSystem { get; private set; }
         [field: SerializeField] public CameraController CameraController { get; private set; }
+        [field: SerializeField] public AssetReference CombatRoomAssetReference { get; private set; }
+        [field: SerializeField] public AssetReference GameAssetReference { get; private set; }
         
         [SerializeField] private TargetSpawner targetSpawner;
         [SerializeField] private Vector3[] enemyPositions;
@@ -64,7 +67,7 @@ namespace CombatRoom
         {
             if (CurrentCombatant is not PlayerCombatant player || !player.Gun) return;
 
-            int totalDamage = (int)(player.Gun.Damage * damageMultiplier);
+            int totalDamage = (int)(player.Damage * damageMultiplier);
             Debug.Log($"Dealt {totalDamage} damage (Mult: {damageMultiplier})");
 
             if (selectedEnemy) selectedEnemy.Health.TakeDamage(totalDamage);
@@ -109,8 +112,9 @@ namespace CombatRoom
             if (GameManager.Instance) playerGameObject = GameManager.Instance.PlayerCombatant.gameObject;
             if (!playerGameObject) return;
             
-            SceneManager.MoveGameObjectToScene(playerGameObject, gameObject.scene);
-            PlayerCombatant playerCombatant = playerGameObject.GetComponent<PlayerCombatant>();
+            PlayerCombatant playerCombatant = null;
+            if (GameManager.Instance) playerCombatant = GameManager.Instance.PlayerCombatant;
+            if (!playerCombatant) return;
             
             CameraController.SetPlayerCamera(playerCombatant.PlayerCamera);
             GunUIController.SetGun(playerCombatant.Gun);

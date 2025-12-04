@@ -21,24 +21,21 @@ namespace PokerDiceRoom
         public PokerGameEvents PokerGameEvents { get; private set; } = new PokerGameEvents();
         
         public bool IsGameOver { get; private set; }
-
-        private void Start()
+        
+        private void InitializeGame()
         {
-            InitializeGame().Forget();
-        }
-
-        private async UniTask InitializeGame()
-        {
-            await BaseStateMachine.ChangeState(new PokerDiceSetupState(this));
+            BaseStateMachine.ChangeState(new PokerDiceSetupState(this)).Forget();
         }
 
         private void OnEnable()
         {
+            if (PokerDiceRoomManager.Instance) PokerDiceRoomManager.Instance.OnPokerDiceRoomLoaded += InitializeGame;
             PokerGameEvents.OnGameOverStarted += SetGameOver;
         }
 
         private void OnDisable()
         {
+            if (PokerDiceRoomManager.Instance) PokerDiceRoomManager.Instance.OnPokerDiceRoomLoaded -= InitializeGame;
             PokerGameEvents.OnGameOverStarted -= SetGameOver;
         }
 
