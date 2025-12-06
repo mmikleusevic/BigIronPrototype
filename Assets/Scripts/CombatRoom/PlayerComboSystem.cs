@@ -35,6 +35,13 @@ namespace CombatRoom
             
             UnregisterAndDestroyAllTargets();
         }
+        
+        public void RegisterTarget(Target target)
+        {
+            activeTargets.Add(target);
+            target.OnTargetHit += OnTargetHitFromSpawner;
+            target.OnTargetExpired += OnTargetExpiredFromSpawner;
+        }
 
         private void OnTargetHit(Target target)
         {

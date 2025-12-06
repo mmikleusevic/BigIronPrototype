@@ -25,7 +25,7 @@ namespace StateMachine.CombatStateMachine
             await UniTask.Delay(1000);
             
             //TODO maybe try to await the attack back
-            currentEnemy.AttackEnemy(playerCombatant);
+            currentEnemy.Attack(playerCombatant);
             
             await UniTask.Delay(1000);
             

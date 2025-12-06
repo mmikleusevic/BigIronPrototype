@@ -28,7 +28,6 @@ namespace UI
         [SerializeField] private string uiActionMapName;
         [SerializeField] private InputActionAsset inputActionAsset;
         [SerializeField] private Button backToMainMenuButton;
-        [SerializeField] private AssetReference mainMenuSceneReference;
         
         public Selector selector;
         
@@ -72,6 +71,7 @@ namespace UI
             else
             {
                 if (InputManager.Instance) InputManager.Instance.RestoreMaps();
+                
                 if (!UIFocusManager.Instance) return;
                 
                 UIFocusManager.Instance.RestoreBeforePause();
@@ -86,16 +86,7 @@ namespace UI
 
         private async UniTask BackToMainMenu()
         {
-            if (UIFocusManager.Instance) UIFocusManager.Instance.ClearFocus();
-            if (InputManager.Instance) InputManager.Instance.StartingMapsSetup();
-
-            if (LevelManager.Instance)
-            {
-                LevelManager.Instance.UnloadAllButPersistentScenesAsync().Forget();
-                await LevelManager.Instance.LoadSceneAsync(mainMenuSceneReference);
-            }
-
-            if (GameManager.Instance) GameManager.Instance.TogglePause();
+            if (LevelManager.Instance) await LevelManager.Instance.LoadMainMenu();
         }
     }
 }

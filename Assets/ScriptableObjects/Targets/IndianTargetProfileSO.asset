@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53644500b432459dbfa76cdc46ff2402, type: 3}
   m_Name: IndianTargetProfileSO
   m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.TargetProfileSO
-  radius: 2
+  scale: 2.5
   lifetime: 2
+  speed: 2
+  orbitRadius: 3

@@ -33,7 +33,7 @@ namespace StateMachine.CombatStateMachine
             
             Combatant current = combatRoomController.CurrentCombatant;
     
-            if (current.Type == CombatantType.Player)
+            if (current.Data.combatantType == CombatantType.Player)
             {
                 await combatRoomController.BaseStateMachine.ChangeState(new CombatRoomPlayerTurnState(combatRoomController));
             }

@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8316449995388762605, guid: 9a292c7bd478b2e45ac9114ac75347ef, type: 3}
+      propertyPath: mainMenuSceneReference.m_AssetGUID
+      value: 0a64b82745e5ce549b159e5493e0d415
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -232,10 +236,6 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
-  inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  mapsToDisableAtStart:
-  - Gameplay
-  - PokerGame
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

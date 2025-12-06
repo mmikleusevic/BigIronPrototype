@@ -6,7 +6,6 @@ namespace Enemies
     {
         [field: SerializeField] public Health Health { get; private set; }
         
-        public bool IsDead { get; private set; }
         
         public void PerformAttack()
         {

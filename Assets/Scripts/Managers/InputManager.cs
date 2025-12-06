@@ -44,12 +44,12 @@ namespace Managers
                 map.Disable();
             }
             
-            inputActionAsset.FindActionMap("UI").Enable();
+            inputActionAsset.FindActionMap(GameStrings.UI).Enable();
         }
         
         public void RestoreMaps()
         {
-            inputActionAsset.FindActionMap("UI").Disable();
+            inputActionAsset.FindActionMap(GameStrings.UI).Disable();
             
             foreach (var mapName in enabledMapsBeforePause)
             {

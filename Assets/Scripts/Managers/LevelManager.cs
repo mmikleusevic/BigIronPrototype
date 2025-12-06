@@ -21,6 +21,7 @@ namespace Managers
         
         [SerializeField] private List<SceneReferenceSO> persistentScenes;
         [SerializeField] private List<MapNodeLoaderSO> nodeLoaders;
+        [SerializeField] private AssetReference mainMenuSceneReference;
         
         private readonly Dictionary<string, AsyncOperationHandle<SceneInstance>> loadedScenes = new Dictionary<string, AsyncOperationHandle<SceneInstance>>();
 
@@ -91,6 +92,18 @@ namespace Managers
             MapNodeLoaderSO mapNodeLoaderSO = nodeLoaders.FirstOrDefault(a => a.LevelNodeType == node.LevelNodeType);
             
             if (mapNodeLoaderSO) await mapNodeLoaderSO.LoadAsync(node, this);
+        }
+
+        public async UniTask LoadMainMenu()
+        {
+            if (UIFocusManager.Instance) UIFocusManager.Instance.ClearFocus();
+            if (InputManager.Instance) InputManager.Instance.StartingMapsSetup();
+            
+            UnloadAllButPersistentScenesAsync().Forget();
+            await LoadSceneAsync(mainMenuSceneReference);
+
+            if (GameManager.Instance) GameManager.Instance.TogglePause();
+            if (GameManager.Instance) Destroy(GameManager.Instance.PlayerCombatant.gameObject);
         }
     }
 }

@@ -6,18 +6,18 @@ namespace StateMachine.CombatStateMachine
 {
     public class CombatRoomDefeatState : IState
     {
-        private readonly CombatRoomController combatRoomController;
         private readonly CombatRoomEvents combatRoomEvents;
         
         public CombatRoomDefeatState(CombatRoomController controller)
         {
-            combatRoomController = controller;
-            combatRoomEvents = combatRoomController.CombatRoomEvents;
+            combatRoomEvents = controller.CombatRoomEvents;
         }
         
         public UniTask OnEnter()
         {
             combatRoomEvents.OnDefeatStarted?.Invoke();
+            
+            GameManager.Instance.GameOver(false);
             
             return UniTask.CompletedTask;
         }

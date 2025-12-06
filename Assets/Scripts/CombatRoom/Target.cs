@@ -10,26 +10,22 @@ namespace CombatRoom
         public event Action<Target> OnTargetHit;
         public event Action<Target> OnTargetExpired;
 
-        [SerializeField] private float orbitRadius = 2;
-        [SerializeField] private float orbitSpeed = 1f;
+        private TargetProfileSO targetProfileSO;
         
-        private Vector3 startPos;
-        private float lifetime;
+        private Vector3 enemyPosition;
+        private Vector3 startScale;
+        private float orbitAngle;
         private float timer;
         private bool isHit;
 
-        private Vector3 startScale;
-        private float orbitAngle;
-
-        public void Initialize(TargetProfileSO targetProfileSo)
+        public void Initialize(TargetProfileSO targetProfileSO, Vector3 enemyPosition, float initialAngle)
         {
-            lifetime = targetProfileSo.lifetime;
-            startScale = Vector3.one * targetProfileSo.radius;
-            transform.localScale = startScale;
+            this.targetProfileSO = targetProfileSO;
 
-            startPos = transform.position;
-            
-            orbitAngle = Random.Range(0f, Mathf.PI * 2f);
+            startScale = Vector3.one * targetProfileSO.scale;
+            transform.localScale = startScale;
+            orbitAngle = initialAngle;
+            this.enemyPosition = enemyPosition;
 
             StartCoroutine(LifetimeCountdown());
         }
@@ -44,7 +40,7 @@ namespace CombatRoom
 
         private IEnumerator LifetimeCountdown()
         {
-            yield return new WaitForSeconds(lifetime);
+            yield return new WaitForSeconds(targetProfileSO.lifetime);
 
             if (!isHit) OnTargetExpired?.Invoke(this);
             Destroy(gameObject);
@@ -52,17 +48,18 @@ namespace CombatRoom
 
         private void Orbit()
         {
-            orbitAngle += orbitSpeed * Time.deltaTime;
-            
-            float x = Mathf.Cos(orbitAngle) * orbitRadius;
-            float z = Mathf.Sin(orbitAngle) * orbitRadius;
+            orbitAngle += targetProfileSO.speed * Time.deltaTime;
 
-            transform.position = startPos + new Vector3(x, 0, z);
+            float x = Mathf.Cos(orbitAngle) * targetProfileSO.orbitRadius;
+            float z = Mathf.Sin(orbitAngle) * targetProfileSO.orbitRadius;
+            float y = Mathf.Sin(orbitAngle * targetProfileSO.speed) * 0.5f;
+
+            transform.position = enemyPosition + new Vector3(x, y, z);
         }
 
         private void ScaleDownOverTime()
         {
-            float t = Mathf.Clamp01(timer / lifetime);
+            float t = Mathf.Clamp01(timer / targetProfileSO.lifetime);
             transform.localScale = Vector3.Lerp(startScale, Vector3.zero, t);
         }
 

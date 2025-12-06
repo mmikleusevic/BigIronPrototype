@@ -13,6 +13,10 @@ PrefabInstance:
       value: Death
       objectReference: {fileID: 0}
     - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: <Data>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: bf518df28f3fbdb41821e337734fb43a, type: 2}
+    - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
       propertyPath: <Name>k__BackingField
       value: Death
       objectReference: {fileID: 0}
@@ -26,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
       propertyPath: <Damage>k__BackingField
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
       propertyPath: <EnemyHealth>k__BackingField
@@ -36,6 +40,10 @@ PrefabInstance:
       propertyPath: <GoldDropAmount>k__BackingField
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: <TargetProfileSO>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: cbcac7f6d32beb54c809d08e0107296f, type: 2}
     - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
       propertyPath: <TargetProfileSo>k__BackingField
       value: 
@@ -83,6 +91,10 @@ PrefabInstance:
     - target: {fileID: 2891574057460004659, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
       propertyPath: goldAmount
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5997151282401117039, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: maxHealth
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7298214019526611955, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
       propertyPath: radius

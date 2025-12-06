@@ -1,10 +1,10 @@
 ﻿using System;
+using CombatRoom;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
     public Action<int, int> OnHealthChanged;
-    public Action OnDied;
     
     [SerializeField] protected int maxHealth = 100;
 
@@ -17,30 +17,36 @@ public class Health : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    public virtual void TakeDamage(int amount)
+    public virtual int TakeDamage(Combatant damager, Combatant receiver, int healthToLose)
     {
-        currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
+        int actualLoss = Mathf.Min(CurrentHealth, healthToLose);
+
+        currentHealth -= actualLoss;
 
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
 
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-    }
-
-    public virtual void Heal(int amount)
-    {
-        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
-
-        OnHealthChanged?.Invoke(currentHealth, maxHealth);
-    }
-
-    protected virtual void Die()
-    {
-        OnDied?.Invoke();
+        if (currentHealth <= 0) Die(damager, receiver);
         
-        Destroy(gameObject);
+        return actualLoss;
+    }
+
+    public int Heal(int healAmount)
+    {
+        int missingHealth = maxHealth - currentHealth;
+        int actualHeal = Mathf.Clamp(healAmount, 0, missingHealth);
+
+        currentHealth += actualHeal;
+
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+
+        return actualHeal;
+    }
+
+    protected virtual void Die(Combatant damager, Combatant receiver)
+    {
+        if (!damager && !receiver) return;
+        
+        damager.GainGoldAmount(receiver.Gold.GoldAmount);
     }
     
     public void RefreshState()

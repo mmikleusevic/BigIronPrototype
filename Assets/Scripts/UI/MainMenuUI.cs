@@ -18,8 +18,6 @@ namespace UI
         
         [SerializeField] private AssetReference mainMenuAssetReference;
         [SerializeField] private AssetReference gameAssetReference;
-    
-        public Selector selector;
         
         private void OnEnable()
         {

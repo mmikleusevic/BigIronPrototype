@@ -43,8 +43,6 @@ namespace PokerDiceRoom
             holdAction.performed += OnHoldPerformed;
             endAction.performed += OnEndPerformed;
             
-            Debug.Log(pokerDiceMap.enabled);
-            
             DisablePlayerTurnInput();
         }
 

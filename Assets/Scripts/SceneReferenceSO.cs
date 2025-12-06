@@ -18,7 +18,7 @@ public class SceneReferenceSO : ScriptableObject
         assetGUID = SceneReference.AssetGUID;
         
 #if UNITY_EDITOR
-        assetName = SceneReference.editorAsset != null ? SceneReference.editorAsset.name : "";
+        assetName = SceneReference.editorAsset ? SceneReference.editorAsset.name : "";
         EditorUtility.SetDirty(this);
 #endif
     }

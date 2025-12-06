@@ -8,7 +8,6 @@ namespace Weapons
         public event Action<string> OnWeaponNameChanged;
 
         [SerializeField] protected string weaponName;
-        public string WeaponName => weaponName;
 
         protected virtual void Awake()
         {

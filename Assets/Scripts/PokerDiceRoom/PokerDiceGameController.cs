@@ -18,7 +18,7 @@ namespace PokerDiceRoom
         [field: SerializeField] public AssetReference PokerAssetReference { get; private set; }
         [field: SerializeField] public AssetReference GameAssetReference { get; private set; }
         
-        public PokerGameEvents PokerGameEvents { get; private set; } = new PokerGameEvents();
+        public PokerGameEvents PokerGameEvents { get; } = new PokerGameEvents();
         
         public bool IsGameOver { get; private set; }
         

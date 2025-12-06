@@ -30,11 +30,10 @@ namespace CombatRoom
         [SerializeField] private Vector3[] enemyPositions;
         
         private List<Combatant> ActiveCombatants { get; } = new List<Combatant>();
-        public Queue<Combatant> TurnQueue { get; private set; } = new Queue<Combatant>();
+        public Queue<Combatant> TurnQueue { get; } = new Queue<Combatant>();
         public Combatant CurrentCombatant { get; private set; }
-        public CombatRoomEvents CombatRoomEvents { get; private set; } = new CombatRoomEvents();
+        public CombatRoomEvents CombatRoomEvents { get; } = new CombatRoomEvents();
         
-        private readonly Dictionary<Combatant, Action> deathActions = new Dictionary<Combatant, Action>();
         private EnemyCombatant selectedEnemy;
         
         private void Start()
@@ -67,10 +66,10 @@ namespace CombatRoom
         {
             if (CurrentCombatant is not PlayerCombatant player || !player.Gun) return;
 
-            int totalDamage = (int)(player.Damage * damageMultiplier);
+            int totalDamage = (int)(player.Data.damage * damageMultiplier);
             Debug.Log($"Dealt {totalDamage} damage (Mult: {damageMultiplier})");
 
-            if (selectedEnemy) selectedEnemy.Health.TakeDamage(totalDamage);
+            if (selectedEnemy) selectedEnemy.TakeDamage(player, selectedEnemy, totalDamage);
         }
 
         public void SpawnEnemies()
@@ -96,7 +95,7 @@ namespace CombatRoom
         public List<EnemyCombatant> GetAliveEnemies()
         {
             return ActiveCombatants
-                .Where(c => c.Type == CombatantType.Enemy && !c.IsDead)
+                .Where(c => c.Data.combatantType == CombatantType.Enemy && !c.IsDead)
                 .Cast<EnemyCombatant>()
                 .ToList();
         }
@@ -125,17 +124,13 @@ namespace CombatRoom
         private void RegisterPlayer(PlayerCombatant player)
         {
             ActiveCombatants.Add(player);
-            
-            //TODO set gun
-
-            SubscribeToDeath(player);
         }
         
         public void CalculateTurnOrder()
         {
             List<Combatant> sortedList = ActiveCombatants
                 .Where(c => !c.IsDead)
-                .OrderByDescending(c => c.Speed)
+                .OrderByDescending(c => c.Data.speed)
                 .ToList();
             
             TurnQueue.Clear();
@@ -144,23 +139,7 @@ namespace CombatRoom
                 TurnQueue.Enqueue(combatant);
             }
     
-            Debug.Log("Turn Order: " + string.Join(" -> ", TurnQueue.Select(c => c.Name)));
-        }
-        
-        public void HandleDeathCleanup(Combatant combatant)
-        {
-            ActiveCombatants.Remove(combatant);
-        }
-        
-        private void SubscribeToDeath(Combatant combatant)
-        {
-            if (deathActions.ContainsKey(combatant)) return;
-            
-            DeathEventHandler handler = new DeathEventHandler(combatant, this);
-            
-            deathActions.Add(combatant, handler.DeathDelegate);
-            
-            combatant.Health.OnDied += handler.DeathDelegate;
+            Debug.Log("Turn Order: " + string.Join(" -> ", TurnQueue.Select(c => c.Data.name)));
         }
 
         public void GetNextAliveCombatant()
@@ -179,17 +158,12 @@ namespace CombatRoom
         
         public bool CheckWinCondition()
         {
-            return ActiveCombatants.Where(c => c.Type == CombatantType.Enemy).All(e => e.IsDead);
+            return ActiveCombatants.Where(c => c.Data.combatantType == CombatantType.Enemy).All(e => e.IsDead);
         }
 
         public bool CheckLossCondition()
         {
-            return ActiveCombatants.Where(c => c.Type == CombatantType.Player).All(p => p.IsDead);
-        }
-        
-        public void UnsubscribeFromDeath(Combatant combatant)
-        {
-            deathActions.Remove(combatant);
+            return ActiveCombatants.Where(c => c.Data.combatantType == CombatantType.Player).All(p => p.IsDead);
         }
     }
 }

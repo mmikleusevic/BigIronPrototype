@@ -10,7 +10,6 @@ namespace CombatRoom
     public class TargetSpawner : MonoBehaviour
     {
         [SerializeField] private Target targetPrefab;
-        [SerializeField] private float spawnRadius = 2f;
         [SerializeField] private float spawnDelay = 0.5f;
 
         private CombatRoomEvents combatRoomEvents;
@@ -59,16 +58,25 @@ namespace CombatRoom
 
                 EnemyCombatant enemy = getEnemy?.Invoke();
                 if (!enemy) continue;
+                
+                transform.localScale = Vector3.one * enemy.TargetProfileSO.scale;
+                
+                float minAngle = Mathf.PI * 0.25f;
+                float maxAngle = Mathf.PI * 1.75f;
+                
+                float orbitAngle = Random.Range(minAngle, maxAngle); 
 
+                float x = Mathf.Cos(orbitAngle) * enemy.TargetProfileSO.orbitRadius;
+                float z = Mathf.Sin(orbitAngle) * enemy.TargetProfileSO.orbitRadius;
+                float y = Mathf.Sin(orbitAngle * enemy.TargetProfileSO.speed) * 0.5f;
+        
                 Vector3 origin = enemy.transform.position;
-                Vector3 position = origin + Random.insideUnitSphere * spawnRadius;
-
-                Target target = Instantiate(targetPrefab, position, Quaternion.identity);
-                
-                target.Initialize(enemy.TargetProfileSo);
-                
-                target.OnTargetHit += comboSystem.OnTargetHitFromSpawner;
-                target.OnTargetExpired += comboSystem.OnTargetExpiredFromSpawner;
+                Vector3 startPosition = origin + new Vector3(x, y, z);
+        
+                Target target = Instantiate(targetPrefab, startPosition, Quaternion.identity);
+                target.Initialize(enemy.TargetProfileSO, origin, orbitAngle);
+        
+                comboSystem.RegisterTarget(target);
             }
         }
     }

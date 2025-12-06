@@ -13,6 +13,10 @@ PrefabInstance:
       value: Cowboy
       objectReference: {fileID: 0}
     - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: <Data>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 251a8e9d30e52b244b31a4e462ff7b24, type: 2}
+    - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
       propertyPath: <Name>k__BackingField
       value: Cowboy
       objectReference: {fileID: 0}
@@ -32,6 +36,10 @@ PrefabInstance:
       propertyPath: <EnemyHealth>k__BackingField
       value: 
       objectReference: {fileID: 2550229565555743858}
+    - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: <TargetProfileSO>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 7dcd9c4e3c4106f40ab9549475676ca0, type: 2}
     - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
       propertyPath: <TargetProfileSo>k__BackingField
       value: 

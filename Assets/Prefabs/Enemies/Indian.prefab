@@ -21,6 +21,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2101912788984685481}
     - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: <Data>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: e36f8503fb9ba784f94d037707c12933, type: 2}
+    - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
       propertyPath: <Name>k__BackingField
       value: Indian
       objectReference: {fileID: 0}
@@ -44,6 +48,10 @@ PrefabInstance:
       propertyPath: <GoldDropAmount>k__BackingField
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: <TargetProfileSO>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 9446308dc70f9434ba5fe5cd9442caab, type: 2}
     - target: {fileID: 476071579847495146, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
       propertyPath: <TargetProfileSo>k__BackingField
       value: 
@@ -108,7 +116,8 @@ PrefabInstance:
       propertyPath: <Lifetime>k__BackingField
       value: 2.5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2891574057460004659, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

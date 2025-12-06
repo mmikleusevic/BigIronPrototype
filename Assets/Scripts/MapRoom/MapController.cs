@@ -22,6 +22,7 @@ namespace MapRoom
         private readonly MapLevelNodes mapLevelNodes = new MapLevelNodes();
         private MapLevelNode currentLevelNode;
         private MapLevelNode lastSelectedNode;
+        private MapLevelNode lastNode;
 
         private void OnEnable()
         {
@@ -60,6 +61,7 @@ namespace MapRoom
             mapLevelNodeDrawer.DrawConnections(mapLevelNodes);
         
             currentLevelNode = mapLevelNodes.GetNodeByLevelType(LevelNodeType.Start);
+            lastNode = mapLevelNodes.GetNodeByLevelType(LevelNodeType.Boss);
             SetInteractableButtons();
             if (currentLevelNode) currentLevelNode.Highlight(true);
         }
@@ -117,6 +119,12 @@ namespace MapRoom
                 if (lastSelectedNode) continue;
 
                 SetLastSelectedNode(mapLevelNode);
+            }
+            
+            if (currentLevelNode == lastNode)
+            {
+                GameManager.Instance.GameOver(true);
+                return;
             }
 
             int count = nextNodes.Count;

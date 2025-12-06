@@ -17,8 +17,8 @@ namespace UI
         [SerializeField] private Button endButton;
         [SerializeField] private CombatRoomController combatRoomController;
         
-        private CombatRoomEvents combatRoomEvents => combatRoomController.CombatRoomEvents;
-        private CombatTargetInputs combatTargetInputs => combatRoomController.CombatTargetInputs;
+        private CombatRoomEvents CombatRoomEvents => combatRoomController.CombatRoomEvents;
+        private CombatTargetInputs CombatTargetInputs => combatRoomController.CombatTargetInputs;
         
         private void Awake()
         {
@@ -32,11 +32,12 @@ namespace UI
             confirmButton.onClick.AddListener(Confirm);
             cancelButton.onClick.AddListener(Cancel);
             endButton.AddClickAsync(End);
-            combatRoomEvents.OnPlayerTurnStarted += Show;
-            combatRoomEvents.OnPlayerTurnEnded += HideShootButton;
-            combatRoomEvents.OnPlayerTargetSelectingStarted += ShowTargetSelectingButtons;
-            combatRoomEvents.OnPlayerAttackStarted += Hide;
-            combatRoomEvents.OnVictoryStarted += ShowContinueButton;
+            CombatRoomEvents.OnPlayerTurnStarted += Show;
+            CombatRoomEvents.OnPlayerTurnEnded += HideShootButton;
+            CombatRoomEvents.OnPlayerTargetSelectingStarted += ShowTargetSelectingButtons;
+            CombatRoomEvents.OnPlayerAttackStarted += Hide;
+            CombatRoomEvents.OnVictoryStarted += ShowContinueButton;
+            CombatRoomEvents.OnDefeatStarted += Hide;
         }
 
         private void OnDisable()
@@ -45,26 +46,27 @@ namespace UI
             confirmButton.onClick.RemoveListener(Confirm);
             cancelButton.onClick.RemoveListener(Cancel);
             endButton.onClick.RemoveAllListeners();
-            combatRoomEvents.OnPlayerTurnStarted -= Show;
-            combatRoomEvents.OnPlayerTurnEnded -= HideShootButton;
-            combatRoomEvents.OnPlayerTargetSelectingStarted -= ShowTargetSelectingButtons;
-            combatRoomEvents.OnPlayerAttackStarted -= Hide;
-            combatRoomEvents.OnVictoryStarted -= ShowContinueButton;
+            CombatRoomEvents.OnPlayerTurnStarted -= Show;
+            CombatRoomEvents.OnPlayerTurnEnded -= HideShootButton;
+            CombatRoomEvents.OnPlayerTargetSelectingStarted -= ShowTargetSelectingButtons;
+            CombatRoomEvents.OnPlayerAttackStarted -= Hide;
+            CombatRoomEvents.OnVictoryStarted -= ShowContinueButton;
+            CombatRoomEvents.OnDefeatStarted -= Hide;
         }
 
         private void Shoot()
         {
-            combatTargetInputs.TriggerShootSelected();
+            CombatTargetInputs.TriggerShootSelected();
         }
 
         private void Confirm()
         {
-            combatTargetInputs.TriggerConfirm();
+            CombatTargetInputs.TriggerConfirm();
         }
 
         private void Cancel()
         {
-            combatTargetInputs.TriggerCancel();
+            CombatTargetInputs.TriggerCancel();
         }
 
         private async UniTask End()

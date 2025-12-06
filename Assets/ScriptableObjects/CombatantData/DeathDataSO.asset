@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53644500b432459dbfa76cdc46ff2402, type: 3}
-  m_Name: CowboyTargetProfileSO
-  m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.TargetProfileSO
-  scale: 2.5
-  lifetime: 3
-  speed: 1.5
-  orbitRadius: 3
+  m_Script: {fileID: 11500000, guid: 851ad27c85494df1b136a6344cebc90f, type: 3}
+  m_Name: DeathDataSO
+  m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.CombatantDataSO
+  combatantName: Death
+  speed: 11
+  combatantType: 1
+  damage: 10

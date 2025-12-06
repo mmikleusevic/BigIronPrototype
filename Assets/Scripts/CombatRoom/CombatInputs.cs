@@ -23,7 +23,7 @@ namespace CombatRoom
         private CombatInputRules CombatInputRules => combatRoomController.CombatInputRules;
 
         public bool IsAimingWithController => aimAction.activeControl?.device is Gamepad;
-        public Vector2 AimValue => aimAction.ReadValue<Vector2>();
+        public Vector2 AimValue => CombatInputRules.CanAim ? aimAction.ReadValue<Vector2>() : Vector2.zero;
 
         private void OnEnable()
         {

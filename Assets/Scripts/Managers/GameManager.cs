@@ -12,6 +12,7 @@ namespace Managers
     {
         public event Action OnPlayerInitialized;
         public event Action OnRoomPassed;
+        public event Action<bool> OnGameOver;
         
         public static GameManager Instance { get; private set; }
 
@@ -45,6 +46,11 @@ namespace Managers
         public void RoomPassed()
         {
             OnRoomPassed?.Invoke();
+        }
+
+        public void GameOver(bool hasWon)
+        {
+            OnGameOver?.Invoke(hasWon);
         }
     }
 }

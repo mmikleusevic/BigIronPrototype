@@ -20,5 +20,5 @@ public static class GameStrings
     public const string AIM = "Aim";
     public const string AIM_SENSITIVITY = "AimSensitivity";
     public const string RELOAD = "Reload";
-    public const string CONTINUE = "Continue";
+    public const string UI = "UI";
 }

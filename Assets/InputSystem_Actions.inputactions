@@ -1108,17 +1108,6 @@
                 },
                 {
                     "name": "",
-                    "id": "1bc409f1-95b6-45b0-b1cd-76e1f95e6da2",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "End",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "4de4552c-5ac9-4a80-8e7a-d0860dc9db4f",
                     "path": "<Joystick>/trigger",
                     "interactions": "",

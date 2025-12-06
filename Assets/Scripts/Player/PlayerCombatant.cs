@@ -1,5 +1,6 @@
 ﻿using System;
 using CombatRoom;
+using Enemies;
 using Managers;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -29,21 +30,6 @@ namespace Player
         {
             initialGunRotation = Gun.transform.localRotation;
             initialCameraRotation = PlayerCamera.transform.localRotation;
-        }
-        
-        public void GainGoldAmount(int amount)
-        {
-            Gold.GainGoldAmount(amount);
-        }
-
-        public int LoseGoldAmount(int amount)
-        {
-            return Gold.LoseGoldAmount(amount);
-        }
-
-        public void TakeDamage(int amount)
-        {
-            Health.TakeDamage(amount);
         }
 
         public void HandleLook(Vector2 input)

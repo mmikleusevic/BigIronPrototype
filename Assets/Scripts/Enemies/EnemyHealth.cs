@@ -1,12 +1,14 @@
-﻿namespace Enemies
+﻿using CombatRoom;
+
+namespace Enemies
 {
     public class EnemyHealth : Health
     {
-        protected override void Die()
+        protected override void Die(Combatant damager, Combatant receiver)
         {
-            base.Die();
+            Destroy(gameObject);
             
-            //TODO kill off enemy
+            base.Die(damager, receiver);
         }
     }
 }
