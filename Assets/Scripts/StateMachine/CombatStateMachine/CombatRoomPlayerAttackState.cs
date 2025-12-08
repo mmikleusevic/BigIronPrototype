@@ -1,4 +1,6 @@
-﻿using CombatRoom;
+﻿using System;
+using System.Threading;
+using CombatRoom;
 using Cysharp.Threading.Tasks;
 using Managers;
 using Player;
@@ -21,7 +23,6 @@ namespace StateMachine.CombatStateMachine
         private const int AttackDurationSeconds = 15;
         
         private Gun gun;
-        
         private bool countdownFinished;
         
         public CombatRoomPlayerAttackState(CombatRoomController controller)
@@ -33,57 +34,61 @@ namespace StateMachine.CombatStateMachine
             if (GameManager.Instance) playerCombatant = GameManager.Instance.PlayerCombatant;
         }
         
-        public async UniTask OnEnter()
+        public async UniTask OnEnter(CancellationToken externalToken)
         {
-            combatRoomEvents?.OnPlayerAttackStarted?.Invoke();
-
-            countdownFinished = false;
-            gun = playerCombatant.Gun;
-            
-            Cursor.lockState = CursorLockMode.Locked;
-            cameraController.SwitchToPlayerCamera();
-            
-            combatInputs.EnableAiming();
-            
-            await StartCountdown(InitialCountdownTime);
-            
+            SetupAttackPhase();
+                
+            await StartCountdown(InitialCountdownTime, externalToken);
+                
             EnablePlayerControls();
-            
-            await UniTask.Delay(AttackDurationSeconds * 1000);
+                
+            await UniTask.Delay(AttackDurationSeconds * 1000, cancellationToken: externalToken);
             await combatRoomController.BaseStateMachine.ChangeState(new CombatRoomTurnEndState(combatRoomController));
         }
 
         public void OnUpdate()
         {
-            Vector2 rawLookInput = combatInputs.AimValue;
-            Vector2 finalLookInput = Vector2.zero;
+            if (!countdownFinished) return;
             
-            Debug.Log(rawLookInput);
-
+            var rawLookInput = combatInputs.AimValue;
             if (rawLookInput == Vector2.zero) return;
 
-            float sensitivity = 0;
-
-            if (CameraManager.Instance) sensitivity = CameraManager.Instance.GetAimSensitivity();
-                
-            if (combatInputs.IsAimingWithController)
-            {
-                finalLookInput = rawLookInput * (sensitivity * Time.deltaTime * 100f);
-            }
-            else
-            {
-                finalLookInput = rawLookInput * sensitivity;
-            }
+            float sensitivity = CameraManager.Instance?.GetAimSensitivity() ?? 1f;
+            
+            var finalLookInput = combatInputs.IsAimingWithController
+                ? rawLookInput * (sensitivity * Time.deltaTime * 100f)
+                : rawLookInput * sensitivity;
                 
             playerCombatant.HandleLook(finalLookInput);
         }
 
         public UniTask OnExit()
         {
+            CleanupAttackPhase();
+            
+            return UniTask.CompletedTask;
+        }
+        
+        private void SetupAttackPhase()
+        {
+            combatRoomEvents?.OnPlayerAttackStarted?.Invoke();
+            combatRoomController?.ToggleEnemyVisibility(false);
+            
+            countdownFinished = false;
+            gun = playerCombatant.Gun;
+            
+            Cursor.lockState = CursorLockMode.Locked;
+            cameraController.SwitchToPlayerCamera();
+            combatInputs.EnableAiming();
+        }
+        
+        private void CleanupAttackPhase()
+        {
             combatRoomEvents?.OnPlayerAttackEnded?.Invoke();
+            combatRoomController?.SelectedEnemy?.StopSpawningTargets();
+            combatRoomController?.ToggleEnemyVisibility(true);
             
             cameraController.SwitchToOverviewCamera();
-            
             Cursor.lockState = CursorLockMode.None;
             
             combatInputs.OnShoot -= Shoot;
@@ -91,16 +96,14 @@ namespace StateMachine.CombatStateMachine
             combatInputs.DisablePlayerInput();
             
             playerCombatant.ResetAim();
-            
-            return UniTask.CompletedTask;
         }
         
-        private async UniTask StartCountdown(int seconds)
+        private async UniTask StartCountdown(int seconds, CancellationToken token)
         {
             for (int i = seconds; i > 0; i--)
             {
                 combatRoomEvents?.OnCountdownTick?.Invoke(i);
-                await UniTask.Delay(1000);
+                await UniTask.Delay(1000, cancellationToken: token);
             }
 
             combatRoomEvents?.OnCountdownTick?.Invoke(0);
@@ -109,7 +112,7 @@ namespace StateMachine.CombatStateMachine
 
         private void EnablePlayerControls()
         {
-            combatRoomEvents?.OnPlayerCanAttack?.Invoke();
+            combatRoomController?.SelectedEnemy?.SpawnTargets();
             
             combatInputs.OnShoot += Shoot;
             combatInputs.OnReload += Reload;
@@ -119,14 +122,12 @@ namespace StateMachine.CombatStateMachine
         private void Shoot()
         {
             if (!countdownFinished) return;
-            
             playerCombatant.ExecuteShoot();
         }
 
         private void Reload()
         {
             if (!countdownFinished) return;
-            
             gun?.Reload();
         }
     }

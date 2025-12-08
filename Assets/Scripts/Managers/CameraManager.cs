@@ -12,12 +12,8 @@ namespace Managers
         private void Awake()
         {
             Instance = this;
-        }
-
-        private void Start()
-        {
-            float aimSensitivity = PlayerPrefs.GetFloat(GameStrings.AIM_SENSITIVITY);
-            this.aimSensitivity = aimSensitivity;
+            
+            aimSensitivity = PlayerPrefs.GetFloat(GameStrings.AIM_SENSITIVITY, 0.01f);
         }
         
         public void SetAimSensitivity(float aimSensitivity)

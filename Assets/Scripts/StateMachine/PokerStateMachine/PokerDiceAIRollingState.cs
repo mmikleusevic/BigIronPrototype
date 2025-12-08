@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using PokerDiceRoom;
 using UnityEngine;
@@ -22,27 +23,27 @@ namespace StateMachine.PokerStateMachine
             pokerGame = pokerDiceGameController.PokerGame;
         }
         
-        public async UniTask OnEnter()
+        public async UniTask OnEnter(CancellationToken externalToken)
         {
             PokerPlayer player = pokerGame.CurrentPlayer;
             diceRoller.SetPlayerRolls(player);
 
-            await StartAIRollRoutine();
+            await StartAIRollRoutine(externalToken);
         }
         
-        private async UniTask StartAIRollRoutine()
+        private async UniTask StartAIRollRoutine(CancellationToken externalToken)
         {
             Debug.Log($"{pokerGame.CurrentPlayer} (AI) is thinking...");
 
-            await UniTask.Delay(1000);
+            await UniTask.Delay(1000, cancellationToken: externalToken);
             
             Debug.Log(diceRoller.CurrentRollNumber);
             
-            if (diceRoller.CurrentRollNumber > 0) await SelectSmartDiceToRoll();
+            if (diceRoller.CurrentRollNumber > 0) await SelectSmartDiceToRoll(externalToken);
             
             OnRoll();
             
-            await UniTask.Delay(1500);
+            await UniTask.Delay(1500, cancellationToken: externalToken);
         }
         
         public void OnUpdate()
@@ -55,7 +56,7 @@ namespace StateMachine.PokerStateMachine
             return UniTask.CompletedTask;
         }
         
-        private async UniTask SelectSmartDiceToRoll()
+        private async UniTask SelectSmartDiceToRoll(CancellationToken externalToken)
         {
             PokerPlayer player = pokerGame.CurrentPlayer;
 
@@ -88,7 +89,7 @@ namespace StateMachine.PokerStateMachine
                     CurrentDie.ToggleDie();
                 }
 
-                await UniTask.Delay(500);
+                await UniTask.Delay(500, cancellationToken: externalToken);
                 ToggleHighlight();
             }
         }

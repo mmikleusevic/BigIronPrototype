@@ -112,6 +112,26 @@ PrefabInstance:
       propertyPath: <Lifetime>k__BackingField
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9018778482707547298, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: targetPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9018778482707547298, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: 'targetPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2231729006324708229, guid: 8bbea62443f550b49bcdf2dd6fdbd25a, type: 3}
+    - target: {fileID: 9018778482707547298, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: 'targetPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 7678620887190787069, guid: 3d8770ddef3d60a448c86ac993887d37, type: 3}
+    - target: {fileID: 9018778482707547298, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: 'targetPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 7678620887190787069, guid: 3d8770ddef3d60a448c86ac993887d37, type: 3}
+    - target: {fileID: 9018778482707547298, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: 'targetPrefabs.Array.data[3]'
+      value: 
+      objectReference: {fileID: 7678620887190787069, guid: 3d8770ddef3d60a448c86ac993887d37, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

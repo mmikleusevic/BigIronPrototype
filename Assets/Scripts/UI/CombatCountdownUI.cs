@@ -14,9 +14,9 @@ namespace UI
         [SerializeField] private float hideDelayAfterCountdown = 0.5f;
         
         private Tween scaleTween;
+        private Coroutine hideRoutine;
         
         private CombatRoomEvents CombatRoomEvents => combatRoomController.CombatRoomEvents;
-        private Coroutine hideRoutine;
         
         private void Awake()
         {
@@ -31,6 +31,12 @@ namespace UI
         private void OnDisable()
         {
             CombatRoomEvents.OnCountdownTick -= UpdateCountdown;
+            CleanupAnimations();
+        }
+        
+        private void OnDestroy()
+        {
+            CleanupAnimations();
         }
 
         private void UpdateCountdown(int value)
@@ -42,7 +48,6 @@ namespace UI
                 countdownText.text = "SHOOT!";
                 
                 if (hideRoutine != null) StopCoroutine(hideRoutine);
-
                 hideRoutine = StartCoroutine(HidePanelAfterDelay());
             }
             else
@@ -57,17 +62,34 @@ namespace UI
         {
             scaleTween?.Kill();
             
+            if (!countdownText || !countdownText.transform) return;
+            
             countdownText.transform.localScale = Vector3.one;
             
             scaleTween = countdownText.transform
                 .DOScale(0, 1f)
-                .SetEase(Ease.OutQuad);
+                .SetEase(Ease.OutQuad)
+                .SetLink(gameObject);
         }
         
         private IEnumerator HidePanelAfterDelay()
         {
             yield return new WaitForSeconds(hideDelayAfterCountdown);
-            combatCountdownPanel.SetActive(false);
+            
+            if (combatCountdownPanel) combatCountdownPanel.SetActive(false);
+            
+            hideRoutine = null;
+        }
+        
+        private void CleanupAnimations()
+        {
+            scaleTween?.Kill();
+            scaleTween = null;
+
+            if (hideRoutine == null) return;
+            
+            StopCoroutine(hideRoutine);
+            hideRoutine = null;
         }
     }
 }

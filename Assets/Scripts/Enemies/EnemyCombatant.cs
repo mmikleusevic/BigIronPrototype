@@ -11,6 +11,7 @@ namespace Enemies
         [SerializeField] private EnemyHealth enemyHealth;
         [SerializeField] private Gold gold;
         
+        [field: SerializeField] public TargetSpawner TargetSpawner { get; private set; }
         [field: SerializeField] public TargetProfileSO TargetProfileSO { get; private set; }
         [field: SerializeField] public EnemyUI EnemyUI { get; private set; }
         
@@ -22,15 +23,19 @@ namespace Enemies
             playerCombatant.TakeDamage(this, playerCombatant, Data.damage);
         }
 
-        public void TakeDamage(Combatant damager, Combatant receiver, int damage)
+        public void SpawnTargets()
         {
-            Health.TakeDamage(damager, receiver, damage);
+            TargetSpawner?.SpawnTargets();
+        }
+        
+        public void StopSpawningTargets()
+        {
+            TargetSpawner?.StopSpawningTargets();
         }
 
-        public void HandleDeathEffects(Combatant killer)
+        public void InitializeTargetSpawner(PlayerComboSystem playerComboSystem)
         {
-            PlayerCombatant playerCombatant = killer as PlayerCombatant;
-            if (playerCombatant) playerCombatant.Gold.GainGoldAmount(gold.GoldAmount);
+            TargetSpawner?.Initialize(playerComboSystem);
         }
     }
 }

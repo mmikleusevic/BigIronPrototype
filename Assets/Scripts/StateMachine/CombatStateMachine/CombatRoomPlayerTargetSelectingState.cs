@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using CombatRoom;
 using Cysharp.Threading.Tasks;
 using Enemies;
@@ -24,7 +25,7 @@ namespace StateMachine.CombatStateMachine
             combatRoomEvents = combatRoomController.CombatRoomEvents;
         }
         
-        public UniTask OnEnter()
+        public UniTask OnEnter(CancellationToken externalToken)
         {
             combatRoomEvents?.OnPlayerTargetSelectingStarted?.Invoke();
             

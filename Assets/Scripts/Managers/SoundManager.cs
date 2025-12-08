@@ -23,8 +23,7 @@ namespace Managers
             float volume = PlayerPrefs.GetFloat(GameStrings.VOLUME);
             SetVolume(volume);
             
-            float sfxVolume = PlayerPrefs.GetFloat(GameStrings.SFX_VOLUME);
-            this.sfxVolume = sfxVolume;
+            sfxVolume = PlayerPrefs.GetFloat(GameStrings.SFX_VOLUME);
         }
 
         public void SetVolume(float volume)

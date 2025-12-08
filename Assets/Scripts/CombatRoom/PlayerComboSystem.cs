@@ -15,7 +15,7 @@ namespace CombatRoom
         
         private float DamageMultiplier => hitStreak * 0.5f;
         
-        private readonly List<Target> activeTargets = new List<Target>();
+        private readonly List<BaseTarget> activeTargets = new List<BaseTarget>();
         
         private int currentHitStreak;
         private int hitStreak;
@@ -24,33 +24,37 @@ namespace CombatRoom
         {
             combatRoomEvents = events;
             
+            if (combatRoomEvents == null) return;
+            
             combatRoomEvents.OnPlayerAttackStarted += ResetStreaks;
             combatRoomEvents.OnPlayerAttackEnded += FinalizeCombo;
         }
 
         private void OnDisable()
         {
+            if (combatRoomEvents == null) return;
+            
             combatRoomEvents.OnPlayerAttackStarted -= ResetStreaks;
             combatRoomEvents.OnPlayerAttackEnded -= FinalizeCombo;
             
             UnregisterAndDestroyAllTargets();
         }
         
-        public void RegisterTarget(Target target)
+        public void RegisterTarget(BaseTarget baseTarget)
         {
-            activeTargets.Add(target);
-            target.OnTargetHit += OnTargetHitFromSpawner;
-            target.OnTargetExpired += OnTargetExpiredFromSpawner;
+            activeTargets.Add(baseTarget);
+            baseTarget.OnTargetHit += OnTargetHitFromSpawner;
+            baseTarget.OnTargetExpired += OnTargetExpiredFromSpawner;
         }
 
-        private void OnTargetHit(Target target)
+        private void OnTargetHit(BaseTarget baseTarget)
         {
-            target.OnTargetHit -= OnTargetHit;
+            baseTarget.OnTargetHit -= OnTargetHit;
             currentHitStreak++;
 
             if (currentHitStreak > hitStreak) hitStreak = currentHitStreak;
 
-            activeTargets.Remove(target);
+            activeTargets.Remove(baseTarget);
         }
 
         private void OnMiss()
@@ -72,40 +76,42 @@ namespace CombatRoom
 
         private void UnregisterAndDestroyAllTargets()
         {
-            foreach (Target target in activeTargets)
+            foreach (BaseTarget baseTarget in activeTargets)
             {
-                target.OnTargetHit -= OnTargetHit;
-                Destroy(target.gameObject);
+                if (!baseTarget) continue;
+                
+                baseTarget.OnTargetHit -= OnTargetHit;
+                Destroy(baseTarget.gameObject);
             }
             
             activeTargets.Clear();
         }
         
-        public void OnTargetHitFromSpawner(Target target)
+        private void OnTargetHitFromSpawner(BaseTarget baseTarget)
         {
-            target.OnTargetHit -= OnTargetHitFromSpawner;
-            target.OnTargetExpired -= OnTargetExpiredFromSpawner;
+            baseTarget.OnTargetHit -= OnTargetHitFromSpawner;
+            baseTarget.OnTargetExpired -= OnTargetExpiredFromSpawner;
 
             currentHitStreak++;
 
             if (currentHitStreak > 1)
             {
-                Combo combo = Instantiate(comboPrefab, target.transform.position, Quaternion.identity);
+                Combo combo = Instantiate(comboPrefab, baseTarget.transform.position, Quaternion.identity);
                 combo.Initialize(currentHitStreak);
             }
             if (currentHitStreak > hitStreak) hitStreak = currentHitStreak;
 
-            activeTargets.Remove(target);
+            activeTargets.Remove(baseTarget);
         }
 
-        public void OnTargetExpiredFromSpawner(Target target)
+        private void OnTargetExpiredFromSpawner(BaseTarget baseTarget)
         {
-            target.OnTargetHit -= OnTargetHitFromSpawner;
-            target.OnTargetExpired -= OnTargetExpiredFromSpawner;
+            baseTarget.OnTargetHit -= OnTargetHitFromSpawner;
+            baseTarget.OnTargetExpired -= OnTargetExpiredFromSpawner;
             
             OnMiss();
 
-            activeTargets.Remove(target);
+            activeTargets.Remove(baseTarget);
         }
     }
 }

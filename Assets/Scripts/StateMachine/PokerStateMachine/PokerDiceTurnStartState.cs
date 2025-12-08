@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using PokerDiceRoom;
 using UnityEngine;
@@ -22,14 +23,14 @@ namespace StateMachine.PokerStateMachine
             pokerGame = pokerDiceGameController.PokerGame;
         }
     
-        public async UniTask OnEnter()
+        public async UniTask OnEnter(CancellationToken externalToken)
         {
             Debug.Log($"=== {pokerGame.CurrentPlayer}'s Turn ===");
             
             diceRoller.ResetDiceHolds(pokerGame.CurrentPlayer);
             pokerGameEvents?.OnTurnStart?.Invoke(pokerGame.CurrentPlayer);
             
-            await UniTask.Delay(TimeSpan.FromSeconds(delayDuration));
+            await UniTask.Delay(TimeSpan.FromSeconds(delayDuration), cancellationToken: externalToken);
         
             if (pokerGame.CurrentPlayer.IsAI)
             {

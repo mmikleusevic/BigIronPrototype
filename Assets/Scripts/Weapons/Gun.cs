@@ -56,9 +56,9 @@ namespace Weapons
             
             if (Physics.Raycast(rayOrigin, rayDirection, out hit, raycastDistance, hitMask))
             {
-                if (hit.collider.TryGetComponent(out Target target))
+                if (hit.collider.TryGetComponent(out BaseTarget baseTarget))
                 {
-                    target.Hit();
+                    baseTarget.Hit();
                 }
             }
         }

@@ -26,15 +26,13 @@ namespace CombatRoom
         [field: SerializeField] public AssetReference CombatRoomAssetReference { get; private set; }
         [field: SerializeField] public AssetReference GameAssetReference { get; private set; }
         
-        [SerializeField] private TargetSpawner targetSpawner;
         [SerializeField] private Vector3[] enemyPositions;
         
         private List<Combatant> ActiveCombatants { get; } = new List<Combatant>();
         public Queue<Combatant> TurnQueue { get; } = new Queue<Combatant>();
         public Combatant CurrentCombatant { get; private set; }
         public CombatRoomEvents CombatRoomEvents { get; } = new CombatRoomEvents();
-        
-        private EnemyCombatant selectedEnemy;
+        public EnemyCombatant SelectedEnemy { get; private set; }
         
         private void Start()
         {
@@ -48,8 +46,6 @@ namespace CombatRoom
             PlayerComboSystem.Initialize(CombatRoomEvents);
             
             PlayerComboSystem.OnComboFinished += HandleComboFinished;
-
-            targetSpawner.Initialize(CombatRoomEvents, PlayerComboSystem, () => selectedEnemy);
         }
         
         private void OnDestroy()
@@ -69,7 +65,7 @@ namespace CombatRoom
             int totalDamage = (int)(player.Data.damage * damageMultiplier);
             Debug.Log($"Dealt {totalDamage} damage (Mult: {damageMultiplier})");
 
-            if (selectedEnemy) selectedEnemy.TakeDamage(player, selectedEnemy, totalDamage);
+            if (SelectedEnemy) SelectedEnemy.TakeDamage(player, SelectedEnemy, totalDamage);
         }
 
         public void SpawnEnemies()
@@ -85,6 +81,7 @@ namespace CombatRoom
 
                 EnemyCombatant enemyPrefab = encounterSo.enemies[i];
                 EnemyCombatant enemy = Instantiate(enemyPrefab, enemyPositions[i], Quaternion.identity);
+                enemy.InitializeTargetSpawner(PlayerComboSystem);
                 
                 SceneManager.MoveGameObjectToScene(enemy.gameObject, gameObject.scene);
                 
@@ -102,7 +99,7 @@ namespace CombatRoom
 
         public void HandleTargetChosen(EnemyCombatant target)
         {
-            selectedEnemy = target;
+            SelectedEnemy = target;
         }
 
         private void SetupPlayer()
@@ -153,6 +150,16 @@ namespace CombatRoom
                 if (next.IsDead) continue;
                 
                 CurrentCombatant = next;
+            }
+        }
+
+        public void ToggleEnemyVisibility(bool isVisible)
+        {
+            foreach (Combatant combatant in ActiveCombatants)
+            {
+                if (combatant == CurrentCombatant) continue;
+
+                combatant?.ToggleVisibility(isVisible);
             }
         }
         

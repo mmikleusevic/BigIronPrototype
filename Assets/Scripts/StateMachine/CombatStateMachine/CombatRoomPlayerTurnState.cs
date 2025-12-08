@@ -1,4 +1,5 @@
-﻿using CombatRoom;
+﻿using System.Threading;
+using CombatRoom;
 using Cysharp.Threading.Tasks;
 using Managers;
 using StateMachine.PokerStateMachine;
@@ -19,7 +20,7 @@ namespace StateMachine.CombatStateMachine
             combatTargetInputs = combatRoomController.CombatTargetInputs;
         }        
         
-        public UniTask OnEnter()
+        public UniTask OnEnter(CancellationToken externalToken)
         {
             combatRoomEvents?.OnPlayerTurnStarted?.Invoke();
 

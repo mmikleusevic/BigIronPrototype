@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using PokerDiceRoom;
 using UnityEngine;
@@ -20,7 +21,7 @@ namespace StateMachine.PokerStateMachine
             pokerGame = pokerDiceGameController.PokerGame;
         }
     
-        public async UniTask OnEnter()
+        public async UniTask OnEnter(CancellationToken externalToken)
         {
             pokerGameEvents?.OnTurnEndStarted?.Invoke();
 

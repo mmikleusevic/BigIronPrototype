@@ -9,45 +9,36 @@ namespace CombatRoom
 {
     public class TargetSpawner : MonoBehaviour
     {
-        [SerializeField] private Target targetPrefab;
-        [SerializeField] private float spawnDelay = 0.5f;
-
-        private CombatRoomEvents combatRoomEvents;
+        [SerializeField] private BaseTarget[] targetPrefabs;
+        [SerializeField] private float spawnDelay = 1f;
+        
         private Coroutine spawnTargetsCoroutine;
         private PlayerComboSystem comboSystem;
-        private Func<EnemyCombatant> getEnemy;
-        
-        public void Initialize(CombatRoomEvents events, PlayerComboSystem comboSystem, Func<EnemyCombatant> enemyProvider)
+        private EnemyCombatant enemy;
+
+        private void Start()
         {
-            combatRoomEvents = events;
+            enemy = GetComponent<EnemyCombatant>();
+        }
+
+        public void Initialize(PlayerComboSystem comboSystem)
+        {
             this.comboSystem = comboSystem;
-            getEnemy = enemyProvider;
-
-            combatRoomEvents.OnPlayerCanAttack += SpawnTargets;
-            combatRoomEvents.OnPlayerAttackEnded += StopSpawningTargets;
         }
 
-        private void OnDisable()
-        {
-            if (combatRoomEvents != null)
-            {
-                combatRoomEvents.OnPlayerCanAttack -= SpawnTargets;
-                combatRoomEvents.OnPlayerAttackEnded -= StopSpawningTargets;
-            }
-
-            StopSpawningTargets();
-        }
-
-        private void SpawnTargets()
+        public void SpawnTargets()
         {
             StopSpawningTargets();
             
             spawnTargetsCoroutine = StartCoroutine(SpawnTargetsCoroutine());
         }
 
-        private void StopSpawningTargets()
+        public void StopSpawningTargets()
         {
-            if (spawnTargetsCoroutine != null) StopCoroutine(spawnTargetsCoroutine);
+            if (spawnTargetsCoroutine == null) return;
+            
+            StopCoroutine(spawnTargetsCoroutine);
+            spawnTargetsCoroutine = null;
         }
 
         private IEnumerator SpawnTargetsCoroutine()
@@ -55,27 +46,34 @@ namespace CombatRoom
             while (true)
             {
                 yield return new WaitForSeconds(spawnDelay);
+                
+                if (!enemy) yield break;
 
-                EnemyCombatant enemy = getEnemy?.Invoke();
-                if (!enemy) continue;
-                
-                transform.localScale = Vector3.one * enemy.TargetProfileSO.scale;
-                
                 float minAngle = Mathf.PI * 0.25f;
                 float maxAngle = Mathf.PI * 1.75f;
-                
-                float orbitAngle = Random.Range(minAngle, maxAngle); 
 
-                float x = Mathf.Cos(orbitAngle) * enemy.TargetProfileSO.orbitRadius;
-                float z = Mathf.Sin(orbitAngle) * enemy.TargetProfileSO.orbitRadius;
-                float y = Mathf.Sin(orbitAngle * enemy.TargetProfileSO.speed) * 0.5f;
-        
-                Vector3 origin = enemy.transform.position;
-                Vector3 startPosition = origin + new Vector3(x, y, z);
-        
-                Target target = Instantiate(targetPrefab, startPosition, Quaternion.identity);
-                target.Initialize(enemy.TargetProfileSO, origin, orbitAngle);
-        
+                float xOffset = Random.Range(1f, 6f) * (Random.value > 0.5f ? 1f : -1f);
+                float zOffset = Random.Range(1f, 3f) * (Random.value > 0.5f ? 1f : -1f);
+
+                Vector3 spawnOffset = new Vector3(xOffset, 0, zOffset);
+                Vector3 spawnOrigin = enemy.transform.position + spawnOffset;
+                
+                MovementAxis axis = (MovementAxis)Random.Range(0, Enum.GetNames(typeof(MovementAxis)).Length);
+
+                TargetSpawnContext ctx = new TargetSpawnContext
+                {
+                    profile = enemy.TargetProfileSO,
+                    initialAngle = Random.Range(minAngle, maxAngle),
+                    origin = spawnOrigin,
+                    movementAxis = axis,
+                    movementDistance = 2f,
+                };
+
+                BaseTarget prefab = targetPrefabs[Random.Range(0, targetPrefabs.Length)];
+
+                BaseTarget target = Instantiate(prefab, ctx.origin, Quaternion.identity);
+                target.Initialize(ctx);
+
                 comboSystem.RegisterTarget(target);
             }
         }

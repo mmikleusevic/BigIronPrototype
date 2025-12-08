@@ -1,4 +1,5 @@
-﻿using CombatRoom;
+﻿using System.Threading;
+using CombatRoom;
 using Cysharp.Threading.Tasks;
 using Managers;
 using StateMachine.PokerStateMachine;
@@ -14,7 +15,7 @@ namespace StateMachine.CombatStateMachine
             combatRoomController = controller;
         }
 
-        public async UniTask OnEnter()
+        public async UniTask OnEnter(CancellationToken externalToken)
         {
             await combatRoomController.BaseStateMachine.ChangeState(new CombatRoomCheckWinState(combatRoomController));
         }

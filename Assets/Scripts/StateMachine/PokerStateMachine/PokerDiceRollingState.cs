@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using EventRoom;
 using PokerDiceRoom;
@@ -30,7 +31,7 @@ namespace StateMachine.PokerStateMachine
             pokerGameEvents = pokerDiceGameController.PokerGameEvents;
         }
         
-        public UniTask OnEnter()
+        public UniTask OnEnter(CancellationToken externalToken)
         {
             SubscribeInputs();
          

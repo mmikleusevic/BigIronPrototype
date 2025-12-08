@@ -22,13 +22,13 @@ namespace UI
 
         private void OnEnable()
         {
-            GameManager.Instance.OnGameOver += GameOver;
+            if (GameManager.Instance) GameManager.Instance.OnGameOver += GameOver;
             mainMenuButton.AddClickAsync(BackToMainMenu);
         }
         
         private void OnDisable()
         {
-            GameManager.Instance.OnGameOver -= GameOver;
+            if (GameManager.Instance) GameManager.Instance.OnGameOver -= GameOver;
             mainMenuButton.onClick.RemoveAllListeners();
         }
         

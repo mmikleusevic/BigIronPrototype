@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using PokerDiceRoom;
 using UnityEngine;
@@ -23,7 +24,7 @@ namespace StateMachine.PokerStateMachine
             pokerGameEvents = pokerDiceGameController.PokerGameEvents;
         }
     
-        public async UniTask OnEnter()
+        public async UniTask OnEnter(CancellationToken externalToken)
         {
             pokerGameEvents?.OnDiceEvaluationStarted?.Invoke();
             Debug.Log("=== Evaluating Hands ===");
@@ -40,7 +41,7 @@ namespace StateMachine.PokerStateMachine
             List<PokerDiceHandResult> winners = DetermineWinners(results);
             DisplayEvaluationReport(results, winners);
 
-            await UniTask.Delay(TimeSpan.FromSeconds(displayDuration));
+            await UniTask.Delay(TimeSpan.FromSeconds(displayDuration), cancellationToken: externalToken);
             
             if (pokerGame.AllPlayersFinished())
             {

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 334877662318913158}
   - component: {fileID: 476071579847495146}
   - component: {fileID: 2891574057460004659}
+  - component: {fileID: 9018778482707547298}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -94,6 +95,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &3848035230145826988
 CapsuleCollider:
@@ -156,12 +158,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e80be468d4b4f15a873713489f03e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemyCombatant
-  <Name>k__BackingField: 
-  <Speed>k__BackingField: 0
-  <Type>k__BackingField: 1
+  <Data>k__BackingField: {fileID: 0}
+  meshRenderer: {fileID: 7193657763561590430}
   enemyHealth: {fileID: 5997151282401117039}
   gold: {fileID: 2891574057460004659}
-  <TargetProfileSo>k__BackingField: {fileID: 0}
+  <TargetSpawner>k__BackingField: {fileID: 9018778482707547298}
+  <TargetProfileSO>k__BackingField: {fileID: 0}
   <EnemyUI>k__BackingField: {fileID: 135854513061995731}
 --- !u!114 &2891574057460004659
 MonoBehaviour:
@@ -176,6 +178,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.Gold
   goldAmount: 0
+--- !u!114 &9018778482707547298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303186955438294661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fe8211ee97044a7aed02300f760b6ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.TargetSpawner
+  targetPrefabs: []
+  spawnDelay: 1
 --- !u!1 &2649809330358826043
 GameObject:
   m_ObjectHideFlags: 0

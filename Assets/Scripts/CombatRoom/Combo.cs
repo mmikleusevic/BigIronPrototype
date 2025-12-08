@@ -6,7 +6,6 @@ namespace CombatRoom
     public class Combo : MonoBehaviour
     {
         [SerializeField] private float fadeDuration = 1f;
-        [SerializeField] private float moveUpDistance = 1f;
         [SerializeField] private float moveUpSpeed = 1f;
         
         [SerializeField] private TextMeshProUGUI comboText;

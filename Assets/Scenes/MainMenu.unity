@@ -593,7 +593,6 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
-  selector: {fileID: 1873867780}
 --- !u!114 &1873867780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -753,6 +752,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1873867778}
     m_Modifications:
     - target: {fileID: 356371048439663975, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 356371048439663975, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -849,12 +852,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2504862541148089923, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2504862541148089923, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2504862541148089923, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3509955391327650086, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437644783602913034, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
+      propertyPath: m_Value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5085771949957453951, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
       propertyPath: m_Name
@@ -874,7 +889,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9207922786509168119, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
       propertyPath: m_Value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9207922786509168119, guid: 4e0853775f0ad8447a6ccb6f8dd1a907, type: 3}
       propertyPath: m_MaxValue

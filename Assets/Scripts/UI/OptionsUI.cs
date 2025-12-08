@@ -45,20 +45,22 @@ namespace UI
 
         private void Start()
         {
-            float volume = 0;
-            float sfxVolume = 0;
-            float aimSensitivity = 0;
+            if (SoundManager.Instance)
+            {
+                float volume = SoundManager.Instance.GetVolume();
+                volumeSlider.value = volume;
+                VolumeChanged(volume);
+                
+                float sfxVolume = SoundManager.Instance.GetSfxVolume();
+                sfxVolumeSlider.value = sfxVolume;
+                SfxVolumeChanged(sfxVolume);
+            }
 
-            if (!SoundManager.Instance) return;
+            if (!CameraManager.Instance) return;
             
-            SoundManager.Instance.GetVolume();
-            volumeSlider.value = volume;
-                
-            SoundManager.Instance.GetSfxVolume();
-            sfxVolumeSlider.value = sfxVolume;
-                
-            CameraManager.Instance.GetAimSensitivity();
+            float aimSensitivity = CameraManager.Instance.GetAimSensitivity();
             aimSensitivitySlider.value = aimSensitivity;
+            AimSensitivityChanged(aimSensitivity);
         }
     
         private void VolumeChanged(float value)
@@ -90,7 +92,7 @@ namespace UI
     
         private string GetSliderText(float value)
         {
-            return ((int)(value * 100)).ToString();
+            return Mathf.RoundToInt(value * 100).ToString();
         }
     }
 }

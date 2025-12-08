@@ -1,4 +1,5 @@
-﻿using CombatRoom;
+﻿using System.Threading;
+using CombatRoom;
 using Cysharp.Threading.Tasks;
 using Enemies;
 using Managers;
@@ -20,14 +21,14 @@ namespace StateMachine.CombatStateMachine
             if (GameManager.Instance) playerCombatant = GameManager.Instance.PlayerCombatant;
         }
 
-        public async UniTask OnEnter()
+        public async UniTask OnEnter(CancellationToken externalToken)
         {
-            await UniTask.Delay(1000);
+            await UniTask.Delay(1000, cancellationToken: externalToken);
             
             //TODO maybe try to await the attack back
             currentEnemy.Attack(playerCombatant);
             
-            await UniTask.Delay(1000);
+            await UniTask.Delay(1000, cancellationToken: externalToken);
             
             await combatRoomController.BaseStateMachine.ChangeState(new CombatRoomTurnEndState(combatRoomController));
         }

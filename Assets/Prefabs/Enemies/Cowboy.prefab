@@ -100,6 +100,14 @@ PrefabInstance:
       propertyPath: <Lifetime>k__BackingField
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 9018778482707547298, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: targetPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9018778482707547298, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
+      propertyPath: 'targetPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2231729006324708229, guid: 8bbea62443f550b49bcdf2dd6fdbd25a, type: 3}
     m_RemovedComponents:
     - {fileID: 4585155165451189736, guid: 40236fda04536f246adbf99b5f32c249, type: 3}
     m_RemovedGameObjects: []

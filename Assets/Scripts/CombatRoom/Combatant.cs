@@ -7,6 +7,8 @@ namespace CombatRoom
     {
         [field: SerializeField] public CombatantDataSO Data { get; protected set; }
         
+        [SerializeField] private MeshRenderer meshRenderer;
+        
         public abstract Health Health { get; }
         public abstract Gold Gold { get; }
         public bool IsDead => Health && Health.CurrentHealth <= 0;
@@ -29,6 +31,11 @@ namespace CombatRoom
         public int Heal(int healAmount)
         {
             return Health.Heal(healAmount);
+        }
+        
+        public void ToggleVisibility(bool visible)
+        {
+            if (meshRenderer) meshRenderer.enabled = visible;
         }
     }
 }
