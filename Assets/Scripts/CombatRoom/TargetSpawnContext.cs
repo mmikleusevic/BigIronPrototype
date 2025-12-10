@@ -8,8 +8,5 @@ namespace CombatRoom
 
         public Vector3 origin;
         public MovementAxis movementAxis;
-
-        public float initialAngle;
-        public float movementDistance;
     }
 }

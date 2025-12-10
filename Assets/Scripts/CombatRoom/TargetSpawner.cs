@@ -49,9 +49,6 @@ namespace CombatRoom
                 
                 if (!enemy) yield break;
 
-                float minAngle = Mathf.PI * 0.25f;
-                float maxAngle = Mathf.PI * 1.75f;
-
                 float xOffset = Random.Range(1f, 6f) * (Random.value > 0.5f ? 1f : -1f);
                 float zOffset = Random.Range(1f, 3f) * (Random.value > 0.5f ? 1f : -1f);
 
@@ -63,10 +60,8 @@ namespace CombatRoom
                 TargetSpawnContext ctx = new TargetSpawnContext
                 {
                     profile = enemy.TargetProfileSO,
-                    initialAngle = Random.Range(minAngle, maxAngle),
                     origin = spawnOrigin,
                     movementAxis = axis,
-                    movementDistance = 2f,
                 };
 
                 BaseTarget prefab = targetPrefabs[Random.Range(0, targetPrefabs.Length)];

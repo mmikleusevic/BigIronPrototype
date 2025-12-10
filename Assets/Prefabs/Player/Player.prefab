@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4117786208091181389}
   - component: {fileID: 739255252842885961}
   - component: {fileID: 4380643922054356488}
+  - component: {fileID: 8817980665959025099}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -93,6 +94,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &7672301557396174479
 CapsuleCollider:
@@ -156,6 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerCombatant
   <Data>k__BackingField: {fileID: 11400000, guid: cbb1ed24ac631d54a85db60a99e14281, type: 2}
+  meshRenderer: {fileID: 6431855475848164698}
   <Gun>k__BackingField: {fileID: 8370131968409320431}
   <PlayerCamera>k__BackingField: {fileID: 7458384380385471689}
   playerHealth: {fileID: 739255252842885961}
@@ -163,6 +166,33 @@ MonoBehaviour:
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 512
+--- !u!54 &8817980665959025099
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7473559536041415719}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &8639599659307946552
 GameObject:
   m_ObjectHideFlags: 0

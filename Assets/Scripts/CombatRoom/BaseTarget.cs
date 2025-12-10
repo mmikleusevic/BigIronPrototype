@@ -8,6 +8,8 @@ namespace CombatRoom
     {
         protected const float MIN_Y_HEIGHT = 1f; 
         protected const float MAX_Y_HEIGHT = 5.0f;
+
+        [SerializeField] protected Rigidbody rb;
         
         public event Action<BaseTarget> OnTargetHit;
         public event Action<BaseTarget> OnTargetExpired;

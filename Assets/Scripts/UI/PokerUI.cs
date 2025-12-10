@@ -12,9 +12,11 @@ namespace UI
 {
     public class PokerUI : MonoBehaviour
     {
+        [SerializeField] private GameObject playerPanel;
+        [SerializeField] private GameObject rollsPanel;
         [SerializeField] private TextMeshProUGUI playerNameText;
         [SerializeField] private TextMeshProUGUI wagerText;
-        [SerializeField] private TextMeshProUGUI numberOfRoles;
+        [SerializeField] private TextMeshProUGUI numberOfRolls;
         [SerializeField] private Button rollButton;
         [SerializeField] private Button holdButton;
         [SerializeField] private Button endButton;
@@ -29,7 +31,7 @@ namespace UI
         private void Awake()
         {
             playerNameText.gameObject.SetActive(false);
-            numberOfRoles.gameObject.SetActive(false);
+            numberOfRolls.gameObject.SetActive(false);
             rollButton.gameObject.SetActive(false);
             holdButton.gameObject.SetActive(false);
             endButton.gameObject.SetActive(false);
@@ -71,7 +73,7 @@ namespace UI
 
         private void SetWagerText(int wager)
         {
-            wagerText.text = $"Wager: {wager}";
+            wagerText.text = wager.ToString();
         }
         
         private void OnDiceRollStarted(int numberOfRolls, int maxNumberOfRolls)
@@ -89,19 +91,21 @@ namespace UI
         private void SetCurrentPlayerText(PokerPlayer player)
         {
             playerNameText.gameObject.SetActive(true);
-            playerNameText.text = "Currently playing: " + player.PlayerName;
+            playerNameText.text = player.PlayerName;
         }
 
         private void SetNumberOfRolls(int currentNumberOfRolls, int maxNumberOfRolls)
         {
-            numberOfRoles.gameObject.SetActive(true);
-            numberOfRoles.text = "Rolls: " + currentNumberOfRolls + "/" + maxNumberOfRolls;
+            numberOfRolls.gameObject.SetActive(true);
+            numberOfRolls.text = currentNumberOfRolls + "/" + maxNumberOfRolls;
         }
 
         private void OnDiceEvaluationStarted()
         {
+            playerPanel.gameObject.SetActive(false);
+            rollsPanel.gameObject.SetActive(false);
             playerNameText.gameObject.SetActive(false);
-            numberOfRoles.gameObject.SetActive(false);
+            numberOfRolls.gameObject.SetActive(false);
         }
         
         private void OnGameOver()

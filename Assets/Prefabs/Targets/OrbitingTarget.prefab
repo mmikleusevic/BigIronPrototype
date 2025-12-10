@@ -48,9 +48,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4011821006584519177, guid: 9b337f4442fe9a247a36448f3c53f299, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4812758836148781610, guid: 9b337f4442fe9a247a36448f3c53f299, type: 3}
       propertyPath: m_Name
-      value: Target
+      value: OrbitingTarget
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

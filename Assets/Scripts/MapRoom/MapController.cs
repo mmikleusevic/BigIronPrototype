@@ -145,11 +145,11 @@ namespace MapRoom
             if (!lastSelectedNode || !lastSelectedNode.NodeButton.interactable)
             {
                 int defaultIndex = count / 2; 
-                EventSystem.current.SetSelectedGameObject(nextNodes[defaultIndex].gameObject);
+                EventSystem.current.SetSelectedGameObject(nextNodes[defaultIndex].NodeButton.gameObject);
             }
             else
             {
-                EventSystem.current.SetSelectedGameObject(lastSelectedNode.gameObject);
+                EventSystem.current.SetSelectedGameObject(lastSelectedNode.NodeButton.gameObject);
             }
         }
 

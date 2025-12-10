@@ -31,15 +31,21 @@ namespace CombatRoom
                     transform.position = startPosition; 
                     break;
             }
+            
+            rb.linearVelocity = (endPosition - startPosition) / halfLifetime;
         }
 
         protected override void TickBehavior()
         {
-            float t = Mathf.PingPong(lifetimeTimer / halfLifetime, 1f);
-            
-            Vector3 linearPos = Vector3.Lerp(startPosition, endPosition, t);
-            
-            transform.position = linearPos;
+            if (lifetimeTimer >= halfLifetime && lifetimeTimer - Time.deltaTime < halfLifetime)
+            {
+                rb.linearVelocity = -rb.linearVelocity;
+            }
+
+            if (lifetimeTimer >= profile.lifetime)
+            {
+                rb.linearVelocity = Vector3.zero;
+            }
         }
     }
 }

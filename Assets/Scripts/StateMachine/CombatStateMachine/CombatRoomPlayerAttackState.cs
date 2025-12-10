@@ -79,7 +79,6 @@ namespace StateMachine.CombatStateMachine
             
             Cursor.lockState = CursorLockMode.Locked;
             cameraController.SwitchToPlayerCamera();
-            combatInputs.EnableAiming();
         }
         
         private void CleanupAttackPhase()

@@ -22,22 +22,22 @@ namespace CombatRoom
         private void OnEnable()
         {
             CombatRoomEvents.OnPlayerTurnStarted += SetPlayerTurnState;
-            CombatRoomEvents.OnPlayerTurnEnded += ResetPlayerTurnState;
+            CombatRoomEvents.OnPlayerTurnEnded += Reset;
             CombatRoomEvents.OnPlayerTargetSelectingStarted += SetTargetSelecting;
-            CombatRoomEvents.OnPlayerTargetSelectingEnded += ResetTargetSelection;
+            CombatRoomEvents.OnPlayerTargetSelectingEnded += Reset;
             CombatRoomEvents.OnPlayerAttackStarted += SetPlayerAttack;
-            CombatRoomEvents.OnPlayerAttackEnded += ResetPlayerAttack;
+            CombatRoomEvents.OnPlayerAttackEnded += Reset;
             CombatRoomEvents.OnVictoryStarted += SetPlayerWon;
         }
 
         private void OnDisable()
         {
             CombatRoomEvents.OnPlayerTurnStarted -= SetPlayerTurnState;
-            CombatRoomEvents.OnPlayerTurnEnded -= ResetPlayerTurnState;
+            CombatRoomEvents.OnPlayerTurnEnded -= Reset;
             CombatRoomEvents.OnPlayerTargetSelectingStarted -= SetTargetSelecting;
-            CombatRoomEvents.OnPlayerTargetSelectingEnded -= ResetTargetSelection;
+            CombatRoomEvents.OnPlayerTargetSelectingEnded -= Reset;
             CombatRoomEvents.OnPlayerAttackStarted -= SetPlayerAttack;
-            CombatRoomEvents.OnPlayerAttackEnded -= ResetPlayerAttack;
+            CombatRoomEvents.OnPlayerAttackEnded -= Reset;
             CombatRoomEvents.OnVictoryStarted += SetPlayerWon;
         }
 
@@ -45,24 +45,12 @@ namespace CombatRoom
         {
             CanConfirm = false;
             CanMoveSelection = false;
-            CanEnd = false;
-            CanAim = false;
-            CanReload = false;
-            CanShoot = false;
             CanSelectShoot = true;
-            CanCancel = false;
-        }
-
-        private void ResetPlayerTurnState()
-        {
-            CanConfirm = false;
-            CanMoveSelection = false;
-            CanEnd = false;
-            CanAim = false;
-            CanReload = false;
             CanShoot = false;
-            CanSelectShoot = false;
+            CanAim = false;
             CanCancel = false;
+            CanReload = false;
+            CanEnd = false;
         }
         
         private void SetTargetSelecting()
@@ -75,18 +63,6 @@ namespace CombatRoom
             CanShoot = false;
             CanSelectShoot = false;
             CanCancel = true;
-        }
-
-        private void ResetTargetSelection()
-        {
-            CanConfirm = false;
-            CanMoveSelection = false;
-            CanEnd = false;
-            CanAim = false;
-            CanReload = false;
-            CanShoot = false;
-            CanSelectShoot = false;
-            CanCancel = false;
         }
 
         private void SetPlayerAttack()
@@ -113,7 +89,7 @@ namespace CombatRoom
             CanCancel = false;
         }
 
-        private void ResetPlayerAttack()
+        private void Reset()
         {
             CanConfirm = false;
             CanMoveSelection = false;

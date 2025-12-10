@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 10f84544be16ae74c9e9cf426210d320
+timeCreated: 1539125246
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 130564
+  packageName: POLYGON Western Frontier - Low Poly 3D Art by Synty
+  packageVersion: 1.6.2
+  assetPath: Assets/PolygonWesternFrontier/Prefabs/Characters/Character_Mexican_Female_01.prefab
+  uploadId: 736245

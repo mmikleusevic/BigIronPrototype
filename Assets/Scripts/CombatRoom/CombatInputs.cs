@@ -54,11 +54,6 @@ namespace CombatRoom
         {
             combatMap.Enable();
         }
-        
-        public void EnableAiming()
-        {
-            aimAction.Enable();
-        }
 
         public void EnableEnd()
         {
@@ -82,7 +77,7 @@ namespace CombatRoom
         
         private void OnEndPerformed(InputAction.CallbackContext ctx)
         {
-            TriggerContinue();
+            TriggerEnd();
         }
 
         private void TriggerReload()
@@ -99,7 +94,7 @@ namespace CombatRoom
             OnShoot?.Invoke();
         }
 
-        private void TriggerContinue()
+        private void TriggerEnd()
         {
             if (!CombatInputRules.CanEnd) return;
 

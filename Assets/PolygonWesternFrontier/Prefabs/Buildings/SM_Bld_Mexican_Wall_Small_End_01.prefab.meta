@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: aae16948e1c1de4479cbd14c826ea072
+timeCreated: 1538600986
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 130564
+  packageName: POLYGON Western Frontier - Low Poly 3D Art by Synty
+  packageVersion: 1.6.2
+  assetPath: Assets/PolygonWesternFrontier/Prefabs/Buildings/SM_Bld_Mexican_Wall_Small_End_01.prefab
+  uploadId: 736245

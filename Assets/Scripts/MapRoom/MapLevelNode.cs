@@ -11,8 +11,8 @@ namespace MapRoom
         public event Action<MapLevelNode> OnNodeSelected;
         
         [SerializeField] private Button nodeButton;
+        [SerializeField] private Image nodeBackgroundImage;
         [SerializeField] private Image nodeImage;
-        [SerializeField] private RectTransform rectTransform;
     
         public Button NodeButton => nodeButton;
         
@@ -71,6 +71,8 @@ namespace MapRoom
         public void SetInteractable(bool isInteractable)
         {
             nodeButton.interactable = isInteractable;
+            nodeBackgroundImage.raycastTarget = isInteractable;
+            nodeImage.raycastTarget = isInteractable;
 
             if (isInteractable) return;
             

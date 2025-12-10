@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Managers;
-using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;

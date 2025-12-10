@@ -7,6 +7,7 @@ using Managers;
 using Player;
 using StateMachine;
 using StateMachine.CombatStateMachine;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
@@ -26,7 +27,9 @@ namespace CombatRoom
         [field: SerializeField] public AssetReference CombatRoomAssetReference { get; private set; }
         [field: SerializeField] public AssetReference GameAssetReference { get; private set; }
         
-        [SerializeField] private Vector3[] enemyPositions;
+        [SerializeField] private Transform[] enemyTransforms;
+        [SerializeField] private Transform playerTransforms;
+        [SerializeField] private Transform overviewCameraTransform;
         
         private List<Combatant> ActiveCombatants { get; } = new List<Combatant>();
         public Queue<Combatant> TurnQueue { get; } = new Queue<Combatant>();
@@ -77,10 +80,10 @@ namespace CombatRoom
             
             for (int i = 0; i < encounterSo.enemies.Length; i++)
             {
-                if (i >= enemyPositions.Length) break;
+                if (i >= enemyTransforms.Length) break;
 
                 EnemyCombatant enemyPrefab = encounterSo.enemies[i];
-                EnemyCombatant enemy = Instantiate(enemyPrefab, enemyPositions[i], Quaternion.identity);
+                EnemyCombatant enemy = Instantiate(enemyPrefab, enemyTransforms[i].position, enemyTransforms[i].rotation);
                 enemy.InitializeTargetSpawner(PlayerComboSystem);
                 
                 SceneManager.MoveGameObjectToScene(enemy.gameObject, gameObject.scene);
@@ -107,12 +110,15 @@ namespace CombatRoom
             GameObject playerGameObject = null;
             if (GameManager.Instance) playerGameObject = GameManager.Instance.PlayerCombatant.gameObject;
             if (!playerGameObject) return;
+
+            playerGameObject.transform.position = playerTransforms.position;
+            playerGameObject.transform.rotation = playerTransforms.rotation;
             
             PlayerCombatant playerCombatant = null;
             if (GameManager.Instance) playerCombatant = GameManager.Instance.PlayerCombatant;
             if (!playerCombatant) return;
             
-            CameraController.SetPlayerCamera(playerCombatant.PlayerCamera);
+            CameraController.SetPlayerCamera(playerCombatant.PlayerCamera, playerTransforms, overviewCameraTransform);
             GunUIController.SetGun(playerCombatant.Gun);
             
             RegisterPlayer(playerCombatant);

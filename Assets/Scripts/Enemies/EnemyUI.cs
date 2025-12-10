@@ -8,9 +8,8 @@ namespace Enemies
     public class EnemyUI : MonoBehaviour
     {
         [SerializeField] private GameObject enemyUIPanel;
-        [SerializeField] private Image healthBar;
+        [SerializeField] private Slider healthBar;
         [SerializeField] private EnemyHealth health;
-        [SerializeField] private TextMeshProUGUI healthText;
 
         private void Start()
         {
@@ -41,8 +40,7 @@ namespace Enemies
 
         private void UpdateHealthBar(int current, int max)
         {
-            healthBar.fillAmount = (float)current / max;
-            healthText.text = current.ToString();
+            healthBar.value = (float)current / max;
         }
     }
 }

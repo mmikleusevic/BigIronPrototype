@@ -300,6 +300,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &5876505402481540895
 GameObject:
@@ -391,6 +392,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &5347188944980553857
 MonoBehaviour:
@@ -409,7 +411,7 @@ MonoBehaviour:
   dieImage: {fileID: 1962277036181862827}
   dieOutline: {fileID: 6757409341199356900}
   highlightDie: {fileID: 5656774479684529050}
-  textureSize: 256
+  textureSize: 512
 --- !u!1 &7629119347560362765
 GameObject:
   m_ObjectHideFlags: 0
