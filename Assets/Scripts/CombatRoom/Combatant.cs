@@ -7,7 +7,7 @@ namespace CombatRoom
     {
         [field: SerializeField] public CombatantDataSO Data { get; protected set; }
         
-        [SerializeField] private MeshRenderer meshRenderer;
+        [SerializeField] private Renderer combatantRenderer;
         
         public abstract Health Health { get; }
         public abstract Gold Gold { get; }
@@ -35,7 +35,7 @@ namespace CombatRoom
         
         public void ToggleVisibility(bool visible)
         {
-            if (meshRenderer) meshRenderer.enabled = visible;
+            if (combatantRenderer) combatantRenderer.enabled = visible;
         }
     }
 }

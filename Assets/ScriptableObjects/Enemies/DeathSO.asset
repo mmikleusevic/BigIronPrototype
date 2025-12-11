@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7ce7713ef004fe594a9c9a1530d691f, type: 3}
   m_Name: DeathSO
   m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.EnemySO
-  prefab: {fileID: 8486328969687354107, guid: 8257900f5a8aa8040a7f914daf3caf73, type: 3}
+  prefab: {fileID: 2759923406896723273, guid: da2376eb2fd74b8499b7e05dcd6b16f5, type: 3}

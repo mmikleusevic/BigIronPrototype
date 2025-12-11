@@ -11,10 +11,10 @@ namespace CombatRoom
         [SerializeField] private CinemachineCamera overviewCamera;
         private CinemachineCamera playerCamera;
 
-        public void SetPlayerCamera(CinemachineCamera playerCamera, Transform playerTransform, Transform overviewTransform)
+        public void SetPlayerCamera(CinemachineCamera playerCamera, Transform overviewTransform)
         {
             this.playerCamera = playerCamera;
-            overviewCamera.transform.position = playerTransform.position + overviewTransform.position;
+            overviewCamera.transform.position = overviewTransform.position;
             overviewCamera.transform.rotation = overviewTransform.rotation;
         }
         

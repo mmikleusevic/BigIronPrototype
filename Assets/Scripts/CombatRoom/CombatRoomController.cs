@@ -28,7 +28,7 @@ namespace CombatRoom
         [field: SerializeField] public AssetReference GameAssetReference { get; private set; }
         
         [SerializeField] private Transform[] enemyTransforms;
-        [SerializeField] private Transform playerTransforms;
+        [SerializeField] private Transform playerTransform;
         [SerializeField] private Transform overviewCameraTransform;
         
         private List<Combatant> ActiveCombatants { get; } = new List<Combatant>();
@@ -111,14 +111,15 @@ namespace CombatRoom
             if (GameManager.Instance) playerGameObject = GameManager.Instance.PlayerCombatant.gameObject;
             if (!playerGameObject) return;
 
-            playerGameObject.transform.position = playerTransforms.position;
-            playerGameObject.transform.rotation = playerTransforms.rotation;
+            playerGameObject.transform.position = Vector3.zero;
+            playerGameObject.transform.position = playerTransform.position;
+            playerGameObject.transform.rotation = playerTransform.rotation;
             
             PlayerCombatant playerCombatant = null;
             if (GameManager.Instance) playerCombatant = GameManager.Instance.PlayerCombatant;
             if (!playerCombatant) return;
             
-            CameraController.SetPlayerCamera(playerCombatant.PlayerCamera, playerTransforms, overviewCameraTransform);
+            CameraController.SetPlayerCamera(playerCombatant.PlayerCamera, overviewCameraTransform);
             GunUIController.SetGun(playerCombatant.Gun);
             
             RegisterPlayer(playerCombatant);

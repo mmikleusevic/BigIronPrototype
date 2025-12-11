@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7ce7713ef004fe594a9c9a1530d691f, type: 3}
   m_Name: CowboySO
   m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.EnemySO
-  prefab: {fileID: 8429520671789382043, guid: 5753c066a84c0db49964d2c5843549ee, type: 3}
+  prefab: {fileID: 4933363114779794354, guid: c59ec6945afe3f04ea953e2cd857271d, type: 3}

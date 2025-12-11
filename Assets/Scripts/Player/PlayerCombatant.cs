@@ -39,6 +39,14 @@ namespace Player
 
             PlayerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
             transform.Rotate(Vector3.up * input.x);
+            
+            Vector3 lookDir = PlayerCamera.transform.forward;
+            Quaternion targetRot = Quaternion.LookRotation(lookDir);
+            Gun.transform.rotation = Quaternion.Slerp(
+                Gun.transform.rotation,
+                targetRot,
+                10f * Time.deltaTime
+            );
         }
         
         public void ExecuteShoot()

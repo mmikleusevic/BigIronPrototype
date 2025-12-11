@@ -19,18 +19,15 @@ namespace CombatRoom
             float maxAngle = Mathf.PI * 1.75f;
 
             initialAngle = Random.Range(minAngle, maxAngle);
-
-            // Set first orbit position
+            
             float x = Mathf.Cos(initialAngle) * profile.orbitRadius;
             float z = Mathf.Sin(initialAngle) * profile.orbitRadius;
             float y = Mathf.Sin(initialAngle * profile.speed) * 0.5f;
 
             Vector3 startPos = enemyPos + new Vector3(x, y, z);
-
-            // Move rigidbody instantly to orbit start
+            
             rb.position = startPos;
 
-            // Start orbit from that angle
             orbitAngle = initialAngle;
         }
 

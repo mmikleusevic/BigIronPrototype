@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7ce7713ef004fe594a9c9a1530d691f, type: 3}
   m_Name: IndianSO
   m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.EnemySO
-  prefab: {fileID: 5383189890307393088, guid: edd132580d80121469c1fbd3ae391d50, type: 3}
+  prefab: {fileID: 1277213870577208346, guid: e66e4cc29bad8ef44ab75718406c3b8e, type: 3}

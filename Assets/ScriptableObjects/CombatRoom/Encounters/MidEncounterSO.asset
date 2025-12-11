@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: MidEncounterSO
   m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.EncounterSO
   enemies:
-  - {fileID: 5227007149090827564, guid: edd132580d80121469c1fbd3ae391d50, type: 3}
+  - {fileID: 1277213870577208346, guid: e66e4cc29bad8ef44ab75718406c3b8e, type: 3}

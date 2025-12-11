@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: HardEncounterSO
   m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.EncounterSO
   enemies:
-  - {fileID: 8645678584655061399, guid: 8257900f5a8aa8040a7f914daf3caf73, type: 3}
+  - {fileID: 2759923406896723273, guid: da2376eb2fd74b8499b7e05dcd6b16f5, type: 3}

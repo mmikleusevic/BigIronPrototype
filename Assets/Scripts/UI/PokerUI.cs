@@ -17,10 +17,14 @@ namespace UI
         [SerializeField] private TextMeshProUGUI playerNameText;
         [SerializeField] private TextMeshProUGUI wagerText;
         [SerializeField] private TextMeshProUGUI numberOfRolls;
+        [SerializeField] private Image wagerImage;
         [SerializeField] private Button rollButton;
         [SerializeField] private Button holdButton;
         [SerializeField] private Button endButton;
         [SerializeField] private PokerDiceGameController pokerDiceGameController;
+        [SerializeField] private Sprite noWagerSprite;
+        [SerializeField] private Sprite midWagerSprite;
+        [SerializeField] private Sprite highWagerSprite;
         
         private PokerInputs PokerInputs => pokerDiceGameController.PokerInputs;
         private PokerInputRules InputRules => pokerDiceGameController.PokerInputRules;
@@ -73,6 +77,13 @@ namespace UI
 
         private void SetWagerText(int wager)
         {
+            wagerImage.sprite = wager switch
+            {
+                0 => noWagerSprite,
+                > 0 and < 20 => midWagerSprite,
+                _ => highWagerSprite
+            };
+
             wagerText.text = wager.ToString();
         }
         
