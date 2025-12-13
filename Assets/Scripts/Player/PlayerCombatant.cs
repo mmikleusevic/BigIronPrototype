@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using CombatRoom;
 using Enemies;
 using Managers;
@@ -16,6 +17,7 @@ namespace Player
         [SerializeField] private PlayerHealth playerHealth;
         [SerializeField] private Gold gold;
         [SerializeField] LayerMask targetLayerMask;
+        [SerializeField] private float rotationSpeed = 5f;
         
         public override Health Health => playerHealth;
         public override Gold Gold => gold;
@@ -71,6 +73,30 @@ namespace Player
             xRotation = 0f;
             if (Gun) Gun.transform.rotation = initialGunRotation;
             if (PlayerCamera) PlayerCamera.transform.rotation = initialCameraRotation;
+        }
+        
+        public void PlayAnimation(string state)
+        {
+            CombatantAnimator.Play(state, 0, 0f);
+            CombatantAnimator.speed = 1f;
+        }
+
+        public void RotateBy(float degrees)
+        {
+            StartCoroutine(Rotate(degrees));
+        }
+
+        private IEnumerator Rotate(float degrees)
+        {
+            Quaternion targetRotation = Quaternion.Euler(0, degrees, 0);
+
+            while (Quaternion.Angle(transform.rotation, targetRotation) > 1f)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                yield return null;
+            }
+
+            transform.rotation = targetRotation;
         }
     }
 }

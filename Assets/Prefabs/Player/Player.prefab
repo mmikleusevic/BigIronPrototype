@@ -588,10 +588,10 @@ Animator:
   m_GameObject: {fileID: 2551468750515271776}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 72b83be23d80d604bbe50cdfeebcf552, type: 3}
-  m_Controller: {fileID: 9100000, guid: 1de385df2ff713a41adfcbbb63b8af91, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7527ac19a1bfaa84fa3e36353fbe986f, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
@@ -613,6 +613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerCombatant
   <Data>k__BackingField: {fileID: 11400000, guid: cbb1ed24ac631d54a85db60a99e14281, type: 2}
+  <CombatantAnimator>k__BackingField: {fileID: 8544992832679064831}
   combatantRenderer: {fileID: 8255106943513785402}
   <Gun>k__BackingField: {fileID: 1132450193789923678}
   <PlayerCamera>k__BackingField: {fileID: 4957669935821055205}

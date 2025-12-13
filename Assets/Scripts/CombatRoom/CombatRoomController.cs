@@ -118,6 +118,8 @@ namespace CombatRoom
             PlayerCombatant playerCombatant = null;
             if (GameManager.Instance) playerCombatant = GameManager.Instance.PlayerCombatant;
             if (!playerCombatant) return;
+
+            playerCombatant.RotateBy(90);
             
             CameraController.SetPlayerCamera(playerCombatant.PlayerCamera, overviewCameraTransform);
             GunUIController.SetGun(playerCombatant.Gun);

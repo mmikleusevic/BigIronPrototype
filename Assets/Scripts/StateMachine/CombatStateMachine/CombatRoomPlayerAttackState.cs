@@ -66,6 +66,8 @@ namespace StateMachine.CombatStateMachine
         {
             CleanupAttackPhase();
             
+            playerCombatant.RotateBy(90);
+            
             return UniTask.CompletedTask;
         }
         
@@ -73,6 +75,8 @@ namespace StateMachine.CombatStateMachine
         {
             combatRoomEvents?.OnPlayerAttackStarted?.Invoke();
             combatRoomController?.ToggleEnemyVisibility(false);
+            
+            playerCombatant.RotateBy(0);
             
             countdownFinished = false;
             gun = playerCombatant.Gun;

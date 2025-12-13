@@ -4,6 +4,7 @@ using CombatRoom;
 using Cysharp.Threading.Tasks;
 using Enemies;
 using Managers;
+using Player;
 using UnityEngine;
 using CameraController = CombatRoom.CameraController;
 
@@ -15,6 +16,7 @@ namespace StateMachine.CombatStateMachine
         private readonly CombatTargetInputs combatTargetInputs;
         private readonly CombatRoomEvents combatRoomEvents;
         
+        private PlayerCombatant playerCombatant;
         private List<EnemyCombatant> enemies;
         private int enemyIndex;
 
@@ -28,9 +30,13 @@ namespace StateMachine.CombatStateMachine
         public UniTask OnEnter(CancellationToken externalToken)
         {
             combatRoomEvents?.OnPlayerTargetSelectingStarted?.Invoke();
+
+            if (GameManager.Instance) playerCombatant = GameManager.Instance.PlayerCombatant;
             
             enemies = combatRoomController.GetAliveEnemies();
             enemyIndex = 0;
+            
+            playerCombatant.PlayAnimation(GameStrings.AIM);
 
             HighlightEnemy(enemies[enemyIndex]);
             
@@ -68,7 +74,7 @@ namespace StateMachine.CombatStateMachine
             else if (move.x < -0.5f) enemyIndex--;
 
             enemyIndex = (enemyIndex + enemies.Count) % enemies.Count;
-
+            
             HighlightEnemy(enemies[enemyIndex]);
         }
         
@@ -80,6 +86,7 @@ namespace StateMachine.CombatStateMachine
 
         private void Cancel()
         {
+            playerCombatant.PlayAnimation(GameStrings.IDLE);
             combatRoomController.BaseStateMachine.ChangeState(new CombatRoomPlayerTurnState(combatRoomController)).Forget();
         }
         

@@ -821,7 +821,7 @@ Animator:
   m_GameObject: {fileID: 2688652300181546140}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 72b83be23d80d604bbe50cdfeebcf552, type: 3}
-  m_Controller: {fileID: 9100000, guid: 1de385df2ff713a41adfcbbb63b8af91, type: 2}
+  m_Controller: {fileID: 9100000, guid: 22f139f2d6a9d264eb6dbf82df4bcb08, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -859,6 +859,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemyCombatant
   <Data>k__BackingField: {fileID: 0}
+  <CombatantAnimator>k__BackingField: {fileID: 2738624267401765722}
   combatantRenderer: {fileID: 3055448653826279392}
   enemyHealth: {fileID: 9222821320600146550}
   gold: {fileID: 672219950538625477}
@@ -2014,7 +2015,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -1}
+  m_AnchoredPosition: {x: 0, y: -0.95}
   m_SizeDelta: {x: 1.5, y: 1.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1910134127248631560
