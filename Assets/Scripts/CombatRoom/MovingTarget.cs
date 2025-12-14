@@ -21,7 +21,6 @@ namespace CombatRoom
                     moveDirection = Vector3.right * Mathf.Sign(-startPosition.x);
                     break;
                 case MovementAxis.Y:
-                    startPosition.y = Mathf.Clamp(startPosition.y, MIN_Y_HEIGHT, MAX_Y_HEIGHT);
                     moveDirection = startPosition.y < (MAX_Y_HEIGHT + MIN_Y_HEIGHT) * 0.5f ? Vector3.up : Vector3.down;
                     if (moveDirection == Vector3.up)
                     {
@@ -33,7 +32,6 @@ namespace CombatRoom
                         float maxDownDistance = startPosition.y - MIN_Y_HEIGHT;
                         effectiveTravelDistance = Mathf.Min(profile.travelDistance, maxDownDistance);
                         
-                        startPosition -= moveDirection * effectiveTravelDistance;
                         moveDirection = Vector3.up;
                     }
                     break;
