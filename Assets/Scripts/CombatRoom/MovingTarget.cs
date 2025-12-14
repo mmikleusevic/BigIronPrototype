@@ -6,46 +6,51 @@ namespace CombatRoom
     public class MovingTarget : BaseTarget
     {
         private Vector3 startPosition;
-        private Vector3 endPosition;
-        private MovementAxis movementAxis;
-        private float halfLifetime;
+        private Vector3 moveDirection;
+        private float effectiveTravelDistance;
+        private float speed;
 
         protected override void OnInitialize(TargetSpawnContext ctx)
         {
             startPosition = ctx.origin;
-            halfLifetime = profile.lifetime * 0.5f;
-            movementAxis = ctx.movementAxis;
-            endPosition = startPosition;
-
-            switch (movementAxis)
+            effectiveTravelDistance = profile.travelDistance;
+            
+            switch (ctx.movementAxis)
             {
                 case MovementAxis.X:
-                    endPosition.x = -startPosition.x; 
+                    moveDirection = Vector3.right * Mathf.Sign(-startPosition.x);
                     break;
-
                 case MovementAxis.Y:
-                    startPosition.y = Mathf.Max(startPosition.y, MIN_Y_HEIGHT);
-            
-                    endPosition.y = Math.Abs(startPosition.y - MAX_Y_HEIGHT) < 0.01f ? MIN_Y_HEIGHT : MAX_Y_HEIGHT;
-            
-                    transform.position = startPosition; 
+                    startPosition.y = Mathf.Clamp(startPosition.y, MIN_Y_HEIGHT, MAX_Y_HEIGHT);
+                    moveDirection = startPosition.y < (MAX_Y_HEIGHT + MIN_Y_HEIGHT) * 0.5f ? Vector3.up : Vector3.down;
+                    if (moveDirection == Vector3.up)
+                    {
+                        float maxUpDistance = MAX_Y_HEIGHT - startPosition.y;
+                        effectiveTravelDistance = Mathf.Min(profile.travelDistance, maxUpDistance);
+                    }
+                    else
+                    {
+                        float maxDownDistance = startPosition.y - MIN_Y_HEIGHT;
+                        effectiveTravelDistance = Mathf.Min(profile.travelDistance, maxDownDistance);
+                        
+                        startPosition -= moveDirection * effectiveTravelDistance;
+                        moveDirection = Vector3.up;
+                    }
                     break;
             }
+            transform.position = startPosition; 
             
-            rb.linearVelocity = (endPosition - startPosition) / halfLifetime;
+            float halfLife = profile.lifetime * 0.5f;
+            speed = effectiveTravelDistance / halfLife;
         }
 
         protected override void TickBehavior()
         {
-            if (lifetimeTimer >= halfLifetime && lifetimeTimer - Time.deltaTime < halfLifetime)
-            {
-                rb.linearVelocity = -rb.linearVelocity;
-            }
-
-            if (lifetimeTimer >= profile.lifetime)
-            {
-                rb.linearVelocity = Vector3.zero;
-            }
+            float currentDist = Mathf.PingPong(lifetimeTimer * speed, effectiveTravelDistance);
+            
+            Vector3 nextPos = startPosition + (moveDirection * currentDist);
+            
+            rb.MovePosition(nextPos);
         }
     }
 }

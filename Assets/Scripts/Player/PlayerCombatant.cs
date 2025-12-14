@@ -18,47 +18,103 @@ namespace Player
         [SerializeField] private Gold gold;
         [SerializeField] LayerMask targetLayerMask;
         [SerializeField] private float rotationSpeed = 5f;
+        [SerializeField] private float gunRotationSpeed = 10f;
+        [SerializeField] private float maxAimDistance = 1000f;
+        [SerializeField] private float maxHorizontalAngle = 45f;
+        [SerializeField] private float maxVerticalAngle = 45f;
         
         public override Health Health => playerHealth;
         public override Gold Gold => gold;
 
+        private Camera mainCamera;
+        
         private Quaternion initialGunRotation;
         private Quaternion initialCameraRotation;
+        private Quaternion initialPlayerRotation;
         
         private float xRotation;
-        private bool isAimingActive; 
+        private float yRotation; 
+        private bool isAiming;
 
         private void Awake()
         {
             initialGunRotation = Gun.transform.localRotation;
             initialCameraRotation = PlayerCamera.transform.localRotation;
+            initialPlayerRotation = transform.localRotation;
         }
 
+        private void LateUpdate()
+        {
+            if (!isAiming) return;
+            
+            AimGunAtCrosshair();
+        }
+
+        public void Aim()
+        {
+            if (!combatantAnimator) return;
+            
+            isAiming = true;
+            
+            combatantAnimator.Play(GameStrings.AIM);
+            combatantAnimator.SetLayerWeight(1, 1f);
+        }
+
+        private void StopAiming()
+        {
+            if (!combatantAnimator) return;
+            
+            isAiming = false;
+            
+            combatantAnimator.SetLayerWeight(1, 0f);
+            combatantAnimator.Play(GameStrings.IDLE);
+        }
+        
         public void HandleLook(Vector2 input)
         {
             xRotation -= input.y;
-            xRotation = Mathf.Clamp(xRotation, -60f, 60f);
-
-            PlayerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-            transform.Rotate(Vector3.up * input.x);
+            xRotation = Mathf.Clamp(xRotation, -maxVerticalAngle, maxVerticalAngle);
             
-            Vector3 lookDir = PlayerCamera.transform.forward;
-            Quaternion targetRot = Quaternion.LookRotation(lookDir);
-            Gun.transform.rotation = Quaternion.Slerp(
-                Gun.transform.rotation,
-                targetRot,
-                10f * Time.deltaTime
-            );
+            yRotation += input.x;
+            yRotation = Mathf.Clamp(yRotation, -maxHorizontalAngle, maxHorizontalAngle);
+            
+            transform.localRotation = initialPlayerRotation * Quaternion.Euler(0f, yRotation, 0f);
+            PlayerCamera.transform.localRotation = initialCameraRotation * Quaternion.Euler(xRotation, 0f, 0f);
+        }
+        
+        private void AimGunAtCrosshair()
+        {
+            if (!Gun || !mainCamera) return; 
+            
+            Vector3 targetPoint = GetCrosshairWorldPosition(); 
+            Vector3 directionToTarget = (targetPoint - Gun.transform.position).normalized; 
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+
+            Gun.transform.rotation =
+                Quaternion.Slerp(Gun.transform.rotation, targetRotation, gunRotationSpeed * Time.deltaTime);
+        }
+        
+        private Vector3 GetCrosshairWorldPosition()
+        {
+            Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
+            Ray ray = mainCamera.ScreenPointToRay(screenCenter);
+            
+            if (Physics.Raycast(ray, out RaycastHit hit, maxAimDistance, targetLayerMask))
+            {
+                return hit.point;
+            }
+            
+            return ray.origin + ray.direction * maxAimDistance;
         }
         
         public void ExecuteShoot()
         {
-            if (!Gun || !PlayerCamera) return;
+            if (!Gun || !mainCamera) return;
             
-            Vector3 rayOrigin = PlayerCamera.transform.position; 
-            Vector3 rayDirection = PlayerCamera.transform.forward; 
+            Vector3 targetPoint = GetCrosshairWorldPosition();
+            Vector3 shootDirection = (targetPoint - Gun.ShootPoint.position).normalized;
             
-            Gun.Shoot(rayOrigin, rayDirection);
+            Gun.Shoot(Gun.ShootPoint.position, shootDirection);
         }
         
         public void RefreshState()
@@ -70,33 +126,22 @@ namespace Player
         public void ResetAim()
         {
             Cursor.lockState = CursorLockMode.None;
+            
             xRotation = 0f;
-            if (Gun) Gun.transform.rotation = initialGunRotation;
-            if (PlayerCamera) PlayerCamera.transform.rotation = initialCameraRotation;
-        }
-        
-        public void PlayAnimation(string state)
-        {
-            CombatantAnimator.Play(state, 0, 0f);
-            CombatantAnimator.speed = 1f;
-        }
+            yRotation = 0f;
+            
+            StopAiming();
+            
+            if (Gun) Gun.transform.localRotation = initialGunRotation;
+            if (PlayerCamera) PlayerCamera.transform.localRotation = initialCameraRotation;
+            if (transform) transform.localRotation = initialPlayerRotation;
 
-        public void RotateBy(float degrees)
-        {
-            StartCoroutine(Rotate(degrees));
+            if (combatantAnimator) combatantAnimator.Play(GameStrings.IDLE);
         }
 
-        private IEnumerator Rotate(float degrees)
+        public void SetMainCamera()
         {
-            Quaternion targetRotation = Quaternion.Euler(0, degrees, 0);
-
-            while (Quaternion.Angle(transform.rotation, targetRotation) > 1f)
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-                yield return null;
-            }
-
-            transform.rotation = targetRotation;
+            mainCamera = Camera.main;
         }
     }
 }

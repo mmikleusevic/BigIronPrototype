@@ -2,6 +2,7 @@
 using System.Threading;
 using CombatRoom;
 using Cysharp.Threading.Tasks;
+using Enemies;
 using Managers;
 using Player;
 using UnityEngine;
@@ -18,9 +19,9 @@ namespace StateMachine.CombatStateMachine
         private readonly CombatInputs combatInputs;
         private readonly CameraController cameraController;
         private readonly PlayerCombatant playerCombatant;
+        private readonly EnemyCombatant currentEnemy;
         
         private const int InitialCountdownTime = 5;
-        private const int AttackDurationSeconds = 15;
         
         private Gun gun;
         private bool countdownFinished;
@@ -32,17 +33,20 @@ namespace StateMachine.CombatStateMachine
             combatInputs = combatRoomController.CombatInputs;
             cameraController = combatRoomController.CameraController;
             if (GameManager.Instance) playerCombatant = GameManager.Instance.PlayerCombatant;
+            currentEnemy = combatRoomController.SelectedEnemy;
         }
         
         public async UniTask OnEnter(CancellationToken externalToken)
         {
             SetupAttackPhase();
                 
+            playerCombatant.Aim();
+            
             await StartCountdown(InitialCountdownTime, externalToken);
                 
             EnablePlayerControls();
                 
-            await UniTask.Delay(AttackDurationSeconds * 1000, cancellationToken: externalToken);
+            await UniTask.Delay(currentEnemy.AttackDuration * 1000, cancellationToken: externalToken);
             await combatRoomController.BaseStateMachine.ChangeState(new CombatRoomTurnEndState(combatRoomController));
         }
 
@@ -66,8 +70,6 @@ namespace StateMachine.CombatStateMachine
         {
             CleanupAttackPhase();
             
-            playerCombatant.RotateBy(90);
-            
             return UniTask.CompletedTask;
         }
         
@@ -75,8 +77,6 @@ namespace StateMachine.CombatStateMachine
         {
             combatRoomEvents?.OnPlayerAttackStarted?.Invoke();
             combatRoomController?.ToggleEnemyVisibility(false);
-            
-            playerCombatant.RotateBy(0);
             
             countdownFinished = false;
             gun = playerCombatant.Gun;
@@ -97,8 +97,8 @@ namespace StateMachine.CombatStateMachine
             combatInputs.OnShoot -= Shoot;
             combatInputs.OnReload -= Reload;
             combatInputs.DisablePlayerInput();
-            
-            playerCombatant.ResetAim();
+
+            if (playerCombatant) playerCombatant.ResetAim();
         }
         
         private async UniTask StartCountdown(int seconds, CancellationToken token)

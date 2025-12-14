@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3145915733468151540, guid: 9b337f4442fe9a247a36448f3c53f299, type: 3}
+      propertyPath: rotationSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4011821006584519177, guid: 9b337f4442fe9a247a36448f3c53f299, type: 3}
       propertyPath: m_Interpolate
       value: 1

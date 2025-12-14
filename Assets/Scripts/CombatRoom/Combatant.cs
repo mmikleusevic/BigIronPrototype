@@ -6,7 +6,7 @@ namespace CombatRoom
     public abstract class Combatant : MonoBehaviour
     {
         [field: SerializeField] public CombatantDataSO Data { get; protected set; }
-        [field: SerializeField] public Animator CombatantAnimator { get; protected set; }
+        [SerializeField] protected Animator combatantAnimator;
         
         [SerializeField] private Renderer combatantRenderer;
         

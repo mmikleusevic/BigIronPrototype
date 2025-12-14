@@ -35,8 +35,6 @@ namespace StateMachine.CombatStateMachine
             
             enemies = combatRoomController.GetAliveEnemies();
             enemyIndex = 0;
-            
-            playerCombatant.PlayAnimation(GameStrings.AIM);
 
             HighlightEnemy(enemies[enemyIndex]);
             
@@ -86,7 +84,6 @@ namespace StateMachine.CombatStateMachine
 
         private void Cancel()
         {
-            playerCombatant.PlayAnimation(GameStrings.IDLE);
             combatRoomController.BaseStateMachine.ChangeState(new CombatRoomPlayerTurnState(combatRoomController)).Forget();
         }
         

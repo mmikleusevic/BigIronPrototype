@@ -10,21 +10,25 @@ namespace Weapons
         public event Action<int, int> OnAmmoChanged;
         
         [SerializeField] protected Transform shootPoint;
+        [SerializeField] protected Animator gunAnimator;
         [SerializeField] protected float reloadTime = 1f;
         [SerializeField] protected float fireRate = 0.5f;
         [SerializeField] protected int maxAmmo;
         [SerializeField] private float raycastDistance = 30f;
         [SerializeField] private LayerMask hitMask;
+
         
         public int CurrentAmmo  => currentAmmo;
         public int MaxAmmo => maxAmmo;
         
+        public Transform ShootPoint => shootPoint;
         protected virtual bool CanShoot => !isReloading && Time.time >= nextShootTime && currentAmmo > 0;
         protected virtual bool CanReload => !isReloading && currentAmmo < maxAmmo;
         
         protected int currentAmmo;
         private float nextShootTime;
         protected bool isReloading;
+        private bool alternateShot; 
 
         protected override void Awake()
         {
@@ -42,7 +46,6 @@ namespace Weapons
             if (!CanShoot) return;
 
             nextShootTime = Time.time + fireRate;
-
             currentAmmo--;
 
             HitScan(rayOrigin, rayDirection);

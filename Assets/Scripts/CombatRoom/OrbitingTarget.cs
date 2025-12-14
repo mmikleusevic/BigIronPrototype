@@ -7,45 +7,30 @@ namespace CombatRoom
 {
     public class OrbitingTarget : BaseTarget
     {
-        private Vector3 enemyPos;
-        private float orbitAngle;
-        private float initialAngle;
+        private float currentAngle;
+        private Vector3 initialOffset;
 
         protected override void OnInitialize(TargetSpawnContext ctx)
         {
-            enemyPos = ctx.origin;
-
             float minAngle = Mathf.PI * 0.25f;
             float maxAngle = Mathf.PI * 1.75f;
-
-            initialAngle = Random.Range(minAngle, maxAngle);
-            
-            float x = Mathf.Cos(initialAngle) * profile.orbitRadius;
-            float z = Mathf.Sin(initialAngle) * profile.orbitRadius;
-            float y = Mathf.Sin(initialAngle * profile.speed) * 0.5f;
-
-            Vector3 startPos = enemyPos + new Vector3(x, y, z);
-            
-            rb.position = startPos;
-
-            orbitAngle = initialAngle;
+            currentAngle = Random.Range(minAngle, maxAngle);
         }
 
         protected override void TickBehavior()
         {
-            if (Time.deltaTime <= 0) return;
+            currentAngle += profile.speed * Time.fixedDeltaTime;
             
-            orbitAngle += profile.speed * Time.deltaTime;
-
-            float x = Mathf.Cos(orbitAngle) * profile.orbitRadius;
-            float z = Mathf.Sin(orbitAngle) * profile.orbitRadius;
-            float y = Mathf.Sin(orbitAngle * profile.speed) * 0.5f;
-
-            Vector3 targetPosition = enemyPos + new Vector3(x, y, z);
-
-            Vector3 velocity = (targetPosition - rb.position) / Time.deltaTime;
-
-            rb.linearVelocity = velocity;
+            float x = Mathf.Cos(currentAngle) * profile.orbitRadius;
+            float z = Mathf.Sin(currentAngle) * profile.orbitRadius;
+            
+            float yOffset = Mathf.Sin(currentAngle * profile.speed) * 0.5f;
+            
+            Vector3 center = context.centerTransform ? context.centerTransform.position : context.origin;
+            Vector3 targetPos = center + new Vector3(x, 1f + yOffset, z);
+            
+            rb.MovePosition(targetPos);
+            rb.MoveRotation(Quaternion.LookRotation(center - transform.position));
         }
     }
 }

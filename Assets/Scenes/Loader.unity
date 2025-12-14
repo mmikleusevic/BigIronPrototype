@@ -209,7 +209,7 @@ PrefabInstance:
     - target: {fileID: 5845616809050213330, guid: 9a732fef8565d77498d77a00e55c6aa6, type: 3}
       propertyPath: playerPrefab
       value: 
-      objectReference: {fileID: 6444078624270421827, guid: 556d302b3f9ae9e4a807dccc82a8a440, type: 3}
+      objectReference: {fileID: 8250447463076072047, guid: 556d302b3f9ae9e4a807dccc82a8a440, type: 3}
     - target: {fileID: 6439290125650103391, guid: 9a732fef8565d77498d77a00e55c6aa6, type: 3}
       propertyPath: m_Name
       value: Managers

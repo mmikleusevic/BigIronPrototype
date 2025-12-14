@@ -16,44 +16,44 @@ namespace CombatRoom
 
         protected TargetProfileSO profile;
         protected float lifetimeTimer;
+        protected TargetSpawnContext context; 
+        
         private bool isHit;
         
-        public void Initialize(TargetSpawnContext ctx)
+        public void Initialize(TargetSpawnContext targetSpawnContext)
         {
-            profile = ctx.profile;
-
+            context = targetSpawnContext;
+            profile = targetSpawnContext.profile;
             transform.localScale = Vector3.one * profile.scale;
+            
+            rb.isKinematic = true; 
+            rb.useGravity = false;
 
-            OnInitialize(ctx);
-
-            StartCoroutine(LifetimeCountdown());
+            OnInitialize(targetSpawnContext);
         }
         
         protected abstract void OnInitialize(TargetSpawnContext ctx);
 
-        private IEnumerator LifetimeCountdown()
-        {
-            yield return new WaitForSeconds(profile.lifetime);
-
-            if (!isHit) OnTargetExpired?.Invoke(this);
-
-            Destroy(gameObject);
-        }
-
         protected virtual void Update()
         {
             lifetimeTimer += Time.deltaTime;
+            
+            float t = Mathf.Clamp01(lifetimeTimer / profile.lifetime);
+            transform.localScale = Vector3.Lerp(Vector3.one * profile.scale, Vector3.zero, t);
+            
+            if (lifetimeTimer >= profile.lifetime && !isHit)
+            {
+                OnTargetExpired?.Invoke(this);
+                Destroy(gameObject);
+            }
+        }
+
+        protected virtual void FixedUpdate()
+        {
             TickBehavior();
-            ScaleDownOverTime();
         }
 
         protected abstract void TickBehavior();
-
-        private void ScaleDownOverTime()
-        {
-            float t = Mathf.Clamp01(lifetimeTimer / profile.lifetime);
-            transform.localScale = Vector3.Lerp(Vector3.one * profile.scale, Vector3.zero, t);
-        }
 
         public virtual void Hit()
         {

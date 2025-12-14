@@ -83,6 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.MovingTarget
   rb: {fileID: 8970192019502475529}
+  travelDistance: 5
 --- !u!54 &8970192019502475529 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 4011821006584519177, guid: 9b337f4442fe9a247a36448f3c53f299, type: 3}

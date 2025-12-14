@@ -10,7 +10,6 @@ namespace Weapons
             if (!CanShoot) return;
 
             base.Shoot(rayOrigin, rayDirection);
-            // spawn bullet, animations, etc.
         }
 
         public override void Reload()
@@ -23,12 +22,12 @@ namespace Weapons
         private IEnumerator ReloadCoroutine()
         {
             isReloading = true;
-
-            yield return new WaitForSeconds(reloadTime);
-
+            
+            yield return new WaitForSeconds(reloadTime * 0.5f);
+            
             currentAmmo = maxAmmo;
             isReloading = false;
-
+            
             InvokeAmmoChanged();
         }
     }

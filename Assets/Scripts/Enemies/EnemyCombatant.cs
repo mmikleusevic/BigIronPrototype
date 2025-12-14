@@ -2,6 +2,7 @@
 using CombatRoom;
 using Managers;
 using Player;
+using UI;
 using UnityEngine;
 
 namespace Enemies
@@ -14,6 +15,7 @@ namespace Enemies
         [field: SerializeField] public TargetSpawner TargetSpawner { get; private set; }
         [field: SerializeField] public TargetProfileSO TargetProfileSO { get; private set; }
         [field: SerializeField] public EnemyUI EnemyUI { get; private set; }
+        [field: SerializeField] public int AttackDuration { get; private set; }
         
         public override Health Health => enemyHealth;
         public override Gold Gold => gold;
@@ -30,7 +32,7 @@ namespace Enemies
         
         public void StopSpawningTargets()
         {
-            TargetSpawner?.StopSpawningTargets();
+            if (TargetSpawner) TargetSpawner.StopSpawningTargets();
         }
 
         public void InitializeTargetSpawner(PlayerComboSystem playerComboSystem)

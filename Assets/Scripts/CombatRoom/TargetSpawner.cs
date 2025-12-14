@@ -11,6 +11,9 @@ namespace CombatRoom
     {
         [SerializeField] private BaseTarget[] targetPrefabs;
         [SerializeField] private float spawnDelay = 1f;
+        [SerializeField] private LayerMask groundLayer;
+        [SerializeField] private float raycastHeight = 20f;
+        [SerializeField] private float groundOffset = 0.5f;
         
         private Coroutine spawnTargetsCoroutine;
         private PlayerComboSystem comboSystem;
@@ -49,26 +52,26 @@ namespace CombatRoom
                 
                 if (!enemy) yield break;
 
-                float xOffset = Random.Range(1f, 6f) * (Random.value > 0.5f ? 1f : -1f);
+                float xOffset = Random.Range(1f, 5f) * (Random.value > 0.5f ? 1f : -1f);
                 float zOffset = Random.Range(1f, 3f) * (Random.value > 0.5f ? 1f : -1f);
-
-                Vector3 spawnOffset = new Vector3(xOffset, 0, zOffset);
-                Vector3 spawnOrigin = enemy.transform.position + spawnOffset;
+                float yOffset = Random.Range(2f, 6f);
                 
-                MovementAxis axis = (MovementAxis)Random.Range(0, Enum.GetNames(typeof(MovementAxis)).Length);
+                Vector3 spawnOffset = new Vector3(xOffset, yOffset, zOffset);
+                Vector3 spawn = enemy.transform.position + spawnOffset;
 
-                TargetSpawnContext ctx = new TargetSpawnContext
+                MovementAxis axis = (MovementAxis)Random.Range(0, Enum.GetNames(typeof(MovementAxis)).Length);
+                TargetSpawnContext targetSpawnContext = new TargetSpawnContext
                 {
                     profile = enemy.TargetProfileSO,
-                    origin = spawnOrigin,
+                    origin = spawn,
                     movementAxis = axis,
+                    centerTransform = enemy.transform 
                 };
 
                 BaseTarget prefab = targetPrefabs[Random.Range(0, targetPrefabs.Length)];
-
-                BaseTarget target = Instantiate(prefab, ctx.origin, Quaternion.identity);
-                target.Initialize(ctx);
-
+                BaseTarget target = Instantiate(prefab, spawn, Quaternion.identity);
+                target.Initialize(targetSpawnContext);
+                
                 comboSystem.RegisterTarget(target);
             }
         }

@@ -109,6 +109,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 840c770388fb2cf4294d86a7be0418a7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2282322975402238060}
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 840c770388fb2cf4294d86a7be0418a7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7280637855173111088}
   m_SourcePrefab: {fileID: 100100000, guid: 840c770388fb2cf4294d86a7be0418a7, type: 3}
 --- !u!4 &5485257666914320223 stripped
 Transform:
@@ -134,10 +137,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Weapons.Revolver
   weaponName: Revolver
   shootPoint: {fileID: 7585247161639510379}
-  reloadTime: 1
+  gunAnimator: {fileID: 7280637855173111088}
+  reloadTime: 2
   fireRate: 0.5
   maxAmmo: 6
-  raycastDistance: 30
+  raycastDistance: 100
   hitMask:
     serializedVersion: 2
     m_Bits: 512
+--- !u!95 &7280637855173111088
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5485257666914542463}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a96fa7101991b3f4f9598eebbfb06e3c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
