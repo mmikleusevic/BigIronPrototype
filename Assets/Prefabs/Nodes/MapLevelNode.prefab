@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7166288442372511174}
   - component: {fileID: 5155069623582385464}
   - component: {fileID: 8623434590069998788}
+  - component: {fileID: 8049580519576475572}
   m_Layer: 5
   m_Name: MapLevelNode
   m_TagString: Untagged
@@ -120,6 +121,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8049580519576475572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16515113845129414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4a74d10bd8d4471aea7ad504cd588e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.ButtonSound
+  clickSound: {fileID: 8300000, guid: 97341bac554371e468e30260356e7fed, type: 3}
 --- !u!1 &795528872702044741
 GameObject:
   m_ObjectHideFlags: 0

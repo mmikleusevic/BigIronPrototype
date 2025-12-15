@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using CombatRoom;
+using Managers;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -10,6 +11,8 @@ namespace Weapons
     {
         public event Action<int, int> OnAmmoChanged;
         
+        [SerializeField] private AudioClip clickingSound;
+        [SerializeField] private AudioClip shotSound;
         [SerializeField] protected Transform shootPoint;
         [SerializeField] protected ParticleSystem shootVFXPrefab;
         [SerializeField] private LayerMask hitMask;
@@ -43,18 +46,21 @@ namespace Weapons
 
         public virtual void Shoot(Vector3 rayOrigin, Vector3 rayDirection)
         {
+            if (currentAmmo == 0) SoundManager.Instance.PlayVFX(clickingSound);
             if (!CanShoot) return;
 
             nextShootTime = Time.time + fireRate;
             currentAmmo--;
-
-            SpawnShootVFX(rayDirection);
+            
+            SoundManager.Instance.PlayVFX(shotSound);
+            
+            SpawnShotVFX(rayDirection);
             HitScan(rayOrigin, rayDirection);
             
             OnAmmoChanged?.Invoke(currentAmmo, maxAmmo);
         }
         
-        private void SpawnShootVFX(Vector3 direction)
+        private void SpawnShotVFX(Vector3 direction)
         {
             if (shootVFXPrefab && shootPoint)
             {

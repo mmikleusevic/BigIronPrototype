@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
+using Random = UnityEngine.Random;
 
 namespace Managers
 {
     public class SoundManager : MonoBehaviour
     {
         public static SoundManager Instance { get; private set; }
-        
+
+        [SerializeField] private AudioSource vfxSource;
         [SerializeField] private AudioSource musicSource;
         [SerializeField] private float transitionTime;
         
@@ -80,6 +83,14 @@ namespace Managers
             }
             
             musicSource.volume = endingVolume;
+        }
+
+        public void PlayVFX(AudioClip clip)
+        {
+            float pitch = Random.Range(0.8f, 1.2f);
+            
+            vfxSource.pitch = pitch;
+            vfxSource.PlayOneShot(clip);
         }
     }
 }

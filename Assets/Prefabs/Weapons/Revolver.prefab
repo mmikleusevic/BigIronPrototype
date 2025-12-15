@@ -136,6 +136,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapons.Revolver
   weaponName: Revolver
+  clickingSound: {fileID: 8300000, guid: a29e36a171898fc4fa8b99281bb17732, type: 3}
+  shotSound: {fileID: 8300000, guid: 97341bac554371e468e30260356e7fed, type: 3}
   shootPoint: {fileID: 7585247161639510379}
   shootVFXPrefab: {fileID: 198939385255438472, guid: 294dcb7f17d463547ac578472b10c38b, type: 3}
   hitMask:
@@ -145,6 +147,7 @@ MonoBehaviour:
   fireRate: 0.5
   maxAmmo: 6
   raycastDistance: 100
+  revolverCockSound: {fileID: 8300000, guid: fa8f093df1fc593419686c93e2f38bb1, type: 3}
 --- !u!95 &7280637855173111088
 Animator:
   serializedVersion: 7
