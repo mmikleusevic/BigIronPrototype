@@ -170,6 +170,8 @@ namespace PokerDiceRoom
 
             die.DieVisual.transform.rotation = targetRotation;
             rolls.Add(result);
+            
+            die.DieVisual.PlayRolledParticleEffect();
     
             yield return new WaitForSeconds(0.2f);
             die.DieVisual.SetCamera(false);
