@@ -2,6 +2,7 @@
 using System.Collections;
 using CombatRoom;
 using UnityEngine;
+using UnityEngine.VFX;
 
 namespace Weapons
 {
@@ -10,13 +11,12 @@ namespace Weapons
         public event Action<int, int> OnAmmoChanged;
         
         [SerializeField] protected Transform shootPoint;
-        [SerializeField] protected Animator gunAnimator;
+        [SerializeField] protected ParticleSystem shootVFXPrefab;
+        [SerializeField] private LayerMask hitMask;
         [SerializeField] protected float reloadTime = 1f;
         [SerializeField] protected float fireRate = 0.5f;
         [SerializeField] protected int maxAmmo;
         [SerializeField] private float raycastDistance = 30f;
-        [SerializeField] private LayerMask hitMask;
-
         
         public int CurrentAmmo  => currentAmmo;
         public int MaxAmmo => maxAmmo;
@@ -48,9 +48,20 @@ namespace Weapons
             nextShootTime = Time.time + fireRate;
             currentAmmo--;
 
+            SpawnShootVFX(rayDirection);
             HitScan(rayOrigin, rayDirection);
             
             OnAmmoChanged?.Invoke(currentAmmo, maxAmmo);
+        }
+        
+        private void SpawnShootVFX(Vector3 direction)
+        {
+            if (shootVFXPrefab && shootPoint)
+            {
+                ParticleSystem vfx = Instantiate(shootVFXPrefab, shootPoint.position, Quaternion.identity);
+                vfx.transform.forward = direction;
+                vfx.Play();
+            }
         }
 
         private void HitScan(Vector3 rayOrigin, Vector3 rayDirection)

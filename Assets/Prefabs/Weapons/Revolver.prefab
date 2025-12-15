@@ -137,14 +137,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Weapons.Revolver
   weaponName: Revolver
   shootPoint: {fileID: 7585247161639510379}
-  gunAnimator: {fileID: 7280637855173111088}
+  shootVFXPrefab: {fileID: 198939385255438472, guid: 294dcb7f17d463547ac578472b10c38b, type: 3}
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 512
   reloadTime: 2
   fireRate: 0.5
   maxAmmo: 6
   raycastDistance: 100
-  hitMask:
-    serializedVersion: 2
-    m_Bits: 512
 --- !u!95 &7280637855173111088
 Animator:
   serializedVersion: 7
