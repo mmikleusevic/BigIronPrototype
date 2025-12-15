@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4812758836148781610, guid: 9b337f4442fe9a247a36448f3c53f299, type: 3}
       propertyPath: m_Name
-      value: MovingTarget
+      value: StaticTarget
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3145915733468151540, guid: 9b337f4442fe9a247a36448f3c53f299, type: 3}
@@ -63,14 +63,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4812758836148781610, guid: 9b337f4442fe9a247a36448f3c53f299, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2231729006324708229}
+      addedObject: {fileID: 4053354740114456399}
   m_SourcePrefab: {fileID: 100100000, guid: 9b337f4442fe9a247a36448f3c53f299, type: 3}
 --- !u!1 &655842498854514986 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4812758836148781610, guid: 9b337f4442fe9a247a36448f3c53f299, type: 3}
   m_PrefabInstance: {fileID: 5462971826870596352}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2231729006324708229
+--- !u!114 &4053354740114456399
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -79,9 +79,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 655842498854514986}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9993e97dbd549f68b1a10efed15c0b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 780b5386df4543dca1824909144441c2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.MovingTarget
+  m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.StaticTargets
   rb: {fileID: 8970192019502475529}
 --- !u!54 &8970192019502475529 stripped
 Rigidbody:

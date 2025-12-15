@@ -7,30 +7,50 @@ namespace CombatRoom
 {
     public class OrbitingTarget : BaseTarget
     {
-        private float currentAngle;
-        private Vector3 initialOffset;
+        private Transform pivotTransform;
+        private float verticalSpeed;
+        private float initialLocalY;
+        private Camera mainCamera;
 
-        protected override void OnInitialize(TargetSpawnContext ctx)
+        private void Awake()
         {
-            float minAngle = Mathf.PI * 0.25f;
-            float maxAngle = Mathf.PI * 1.75f;
-            currentAngle = Random.Range(minAngle, maxAngle);
+            mainCamera = Camera.main;
+        }
+
+        protected override void OnInitialize(TargetSpawnContext targetSpawnContext)
+        {
+            GameObject pivot = new GameObject("OrbitPivot");
+            pivotTransform = pivot.transform;
+            
+            Vector3 center = targetSpawnContext.centerTransform
+                ? targetSpawnContext.centerTransform.position
+                : targetSpawnContext.origin;
+            
+            pivotTransform.position = center;
+            
+            transform.SetParent(pivotTransform);
+            
+            initialLocalY = pivotTransform.localPosition.y;
+            
+            verticalSpeed = Random.Range(-0.5f, 0.5f);
         }
 
         protected override void TickBehavior()
         {
-            currentAngle += profile.speed * Time.fixedDeltaTime;
+            transform.forward = -mainCamera.transform.forward;
+            pivotTransform.Rotate(Vector3.up, profile.speed * Time.fixedDeltaTime * Mathf.Rad2Deg);
             
-            float x = Mathf.Cos(currentAngle) * profile.orbitRadius;
-            float z = Mathf.Sin(currentAngle) * profile.orbitRadius;
+            Vector3 localPivotPosition = pivotTransform.localPosition;
+            localPivotPosition.y += verticalSpeed * Time.fixedDeltaTime;
             
-            float yOffset = Mathf.Sin(currentAngle * profile.speed) * 0.5f;
+            localPivotPosition.y = Mathf.Clamp(localPivotPosition.y, initialLocalY - 2f, initialLocalY + 2f);
             
-            Vector3 center = context.centerTransform ? context.centerTransform.position : context.origin;
-            Vector3 targetPos = center + new Vector3(x, 1f + yOffset, z);
+            if (localPivotPosition.y <= initialLocalY - 2f || localPivotPosition.y >= initialLocalY + 2f)
+            {
+                verticalSpeed = -verticalSpeed;
+            }
             
-            rb.MovePosition(targetPos);
-            rb.MoveRotation(Quaternion.LookRotation(center - transform.position));
+            pivotTransform.localPosition = localPivotPosition;
         }
     }
 }

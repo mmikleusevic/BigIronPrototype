@@ -17,7 +17,6 @@ namespace Player
         [SerializeField] private PlayerHealth playerHealth;
         [SerializeField] private Gold gold;
         [SerializeField] LayerMask targetLayerMask;
-        [SerializeField] private float rotationSpeed = 5f;
         [SerializeField] private float gunRotationSpeed = 10f;
         [SerializeField] private float maxAimDistance = 1000f;
         [SerializeField] private float maxHorizontalAngle = 45f;

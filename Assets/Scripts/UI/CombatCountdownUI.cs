@@ -61,14 +61,26 @@ namespace UI
         private void PlayPopAnimation()
         {
             scaleTween?.Kill();
-            
+
             if (!countdownText || !countdownText.transform) return;
-            
-            countdownText.transform.localScale = Vector3.one;
-            
-            scaleTween = countdownText.transform
-                .DOScale(0, 1f)
-                .SetEase(Ease.OutQuad)
+
+            Transform tweenTransform = countdownText.transform;
+
+            tweenTransform.localScale = Vector3.one;
+            tweenTransform.localRotation = Quaternion.identity;
+
+            scaleTween = DOTween.Sequence()
+                .Append(
+                    tweenTransform.DOScale(0f, 1f)
+                        .SetEase(Ease.OutQuad)
+                )
+                .Join(
+                    tweenTransform.DOLocalRotate(
+                        new Vector3(0f, 0f, -360f),
+                        1f,
+                        RotateMode.FastBeyond360
+                    ).SetEase(Ease.OutQuad)
+                )
                 .SetLink(gameObject);
         }
         

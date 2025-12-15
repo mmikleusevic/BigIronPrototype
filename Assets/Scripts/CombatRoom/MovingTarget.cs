@@ -10,12 +10,12 @@ namespace CombatRoom
         private float effectiveTravelDistance;
         private float speed;
 
-        protected override void OnInitialize(TargetSpawnContext ctx)
+        protected override void OnInitialize(TargetSpawnContext targetSpawnContext)
         {
-            startPosition = ctx.origin;
+            startPosition = targetSpawnContext.origin;
             effectiveTravelDistance = profile.travelDistance;
             
-            switch (ctx.movementAxis)
+            switch (targetSpawnContext.movementAxis)
             {
                 case MovementAxis.X:
                     moveDirection = Vector3.right * Mathf.Sign(-startPosition.x);

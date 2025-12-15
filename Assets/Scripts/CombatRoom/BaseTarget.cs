@@ -19,7 +19,12 @@ namespace CombatRoom
         protected TargetSpawnContext context; 
         
         private bool isHit;
-        
+
+        private void Awake()
+        {
+            gameObject.SetActive(false);
+        }
+
         public void Initialize(TargetSpawnContext targetSpawnContext)
         {
             context = targetSpawnContext;
@@ -30,9 +35,11 @@ namespace CombatRoom
             rb.useGravity = false;
 
             OnInitialize(targetSpawnContext);
+            
+            gameObject.SetActive(true);
         }
         
-        protected abstract void OnInitialize(TargetSpawnContext ctx);
+        protected abstract void OnInitialize(TargetSpawnContext targetSpawnContext);
 
         protected virtual void Update()
         {

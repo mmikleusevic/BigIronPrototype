@@ -11,9 +11,6 @@ namespace CombatRoom
     {
         [SerializeField] private BaseTarget[] targetPrefabs;
         [SerializeField] private float spawnDelay = 1f;
-        [SerializeField] private LayerMask groundLayer;
-        [SerializeField] private float raycastHeight = 20f;
-        [SerializeField] private float groundOffset = 0.5f;
         
         private Coroutine spawnTargetsCoroutine;
         private PlayerComboSystem comboSystem;
@@ -54,7 +51,7 @@ namespace CombatRoom
 
                 float xOffset = Random.Range(1f, 5f) * (Random.value > 0.5f ? 1f : -1f);
                 float zOffset = Random.Range(1f, 3f) * (Random.value > 0.5f ? 1f : -1f);
-                float yOffset = Random.Range(2f, 6f);
+                float yOffset = Random.Range(1.5f, 5f);
                 
                 Vector3 spawnOffset = new Vector3(xOffset, yOffset, zOffset);
                 Vector3 spawn = enemy.transform.position + spawnOffset;
@@ -69,7 +66,7 @@ namespace CombatRoom
                 };
 
                 BaseTarget prefab = targetPrefabs[Random.Range(0, targetPrefabs.Length)];
-                BaseTarget target = Instantiate(prefab, spawn, Quaternion.identity);
+                BaseTarget target = Instantiate(prefab, spawn, prefab.transform.rotation);
                 target.Initialize(targetSpawnContext);
                 
                 comboSystem.RegisterTarget(target);

@@ -63,7 +63,7 @@ PrefabInstance:
     - target: {fileID: 5045604229406316249, guid: 738d505570e9374489b3f1612b007e75, type: 3}
       propertyPath: 'targetPrefabs.Array.data[0]'
       value: 
-      objectReference: {fileID: 2231729006324708229, guid: 8bbea62443f550b49bcdf2dd6fdbd25a, type: 3}
+      objectReference: {fileID: 4053354740114456399, guid: 1f3caf23690cc40479cc87e678fdb078, type: 3}
     - target: {fileID: 8591081073053268119, guid: 738d505570e9374489b3f1612b007e75, type: 3}
       propertyPath: goldAmount
       value: 10
