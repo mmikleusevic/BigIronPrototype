@@ -17,11 +17,11 @@ namespace PokerDiceRoom
         
         [Header("Game Settings")]
         [SerializeField] private Die diePrefab;
-
         [SerializeField] private float rollDuration;
         [field: SerializeField] public int MaxRolls { get; private set; }
         
         [SerializeField] private int numberOfDice;
+        [SerializeField] private AudioClip rollSound;
         [SerializeField] private RectTransform uiDiceContainerPrefab;
         
         public int CurrentRollNumber { get; set; }
@@ -127,6 +127,8 @@ namespace PokerDiceRoom
                 Coroutine coroutine = StartCoroutine(RollCoroutine(die, rolls));
                 runningCoroutines.Add(coroutine);
             }
+
+            if (runningCoroutines.Count > 0) SoundManager.Instance.PlayVFX(rollSound);
 
             foreach (Coroutine coroutine in runningCoroutines)
             {
