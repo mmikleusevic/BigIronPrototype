@@ -572,16 +572,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7090165331244152224, guid: 32e66ee402f7f4308a3e72264aaf732c, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7090165331244152224, guid: 32e66ee402f7f4308a3e72264aaf732c, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7090165331244152224, guid: 32e66ee402f7f4308a3e72264aaf732c, type: 3}
       propertyPath: InitialModule.startColor.maxColor.g
-      value: 0.97702324
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7090165331244152224, guid: 32e66ee402f7f4308a3e72264aaf732c, type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
-      value: 1
+      value: 0.015197277
       objectReference: {fileID: 0}
     - target: {fileID: 7090165331244152224, guid: 32e66ee402f7f4308a3e72264aaf732c, type: 3}
       propertyPath: EmissionModule.m_Bursts.Array.data[0].cycleCount

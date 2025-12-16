@@ -606,7 +606,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.ButtonSound
   clickSound: {fileID: 8300000, guid: 55052b4ef926cf240aefd0857ae8bc24, type: 3}
-  moveSound: {fileID: 8300000, guid: 1cdf199b384a39040aa9f9f226b330fb, type: 3}
 --- !u!1001 &218324313
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -941,7 +940,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.ButtonSound
   clickSound: {fileID: 8300000, guid: 55052b4ef926cf240aefd0857ae8bc24, type: 3}
-  moveSound: {fileID: 8300000, guid: 1cdf199b384a39040aa9f9f226b330fb, type: 3}
 --- !u!1 &219994677
 GameObject:
   m_ObjectHideFlags: 0
@@ -1481,7 +1479,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.ButtonSound
   clickSound: {fileID: 8300000, guid: 55052b4ef926cf240aefd0857ae8bc24, type: 3}
-  moveSound: {fileID: 8300000, guid: 1cdf199b384a39040aa9f9f226b330fb, type: 3}
 --- !u!1 &550383665
 GameObject:
   m_ObjectHideFlags: 0
@@ -1638,8 +1635,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2038897948}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.6, y: 0.8}
-  m_AnchorMax: {x: 0.95, y: 0.9}
+  m_AnchorMin: {x: 0.6, y: 0.85}
+  m_AnchorMax: {x: 0.95, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2704,8 +2701,8 @@ RectTransform:
   - {fileID: 233849015}
   m_Father: {fileID: 2038897948}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.6, y: 0.25}
-  m_AnchorMax: {x: 0.95, y: 0.75}
+  m_AnchorMin: {x: 0.6, y: 0.35}
+  m_AnchorMax: {x: 0.95, y: 0.85}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3223,7 +3220,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.ButtonSound
   clickSound: {fileID: 8300000, guid: 55052b4ef926cf240aefd0857ae8bc24, type: 3}
-  moveSound: {fileID: 8300000, guid: 1cdf199b384a39040aa9f9f226b330fb, type: 3}
 --- !u!1 &1286409585
 GameObject:
   m_ObjectHideFlags: 0
@@ -3578,7 +3574,7 @@ RectTransform:
   m_Father: {fileID: 2038897948}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.6, y: 0.05}
-  m_AnchorMax: {x: 0.95, y: 0.2}
+  m_AnchorMax: {x: 0.95, y: 0.3}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3608,6 +3604,51 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1414719257
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1414719259}
+  - component: {fileID: 1414719258}
+  m_Layer: 0
+  m_Name: MusicPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1414719258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414719257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f51234791b3044e3ae6a891b9f243567, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.MusicPlayer
+  musicClip: {fileID: 8300000, guid: fb580f67ad555c743936cd5d29e0100c, type: 3}
+--- !u!4 &1414719259
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414719257}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1449675084
 GameObject:
   m_ObjectHideFlags: 0
@@ -5074,3 +5115,4 @@ SceneRoots:
   - {fileID: 1136664958}
   - {fileID: 1332183174}
   - {fileID: 478585191}
+  - {fileID: 1414719259}

@@ -25,7 +25,6 @@ namespace StateMachine.CombatStateMachine
         {
             await UniTask.Delay(1000, cancellationToken: externalToken);
             
-            //TODO maybe try to await the attack back
             currentEnemy.Attack(playerCombatant);
             
             await UniTask.Delay(1000, cancellationToken: externalToken);

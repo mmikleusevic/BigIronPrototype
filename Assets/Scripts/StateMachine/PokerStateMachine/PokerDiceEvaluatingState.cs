@@ -27,7 +27,6 @@ namespace StateMachine.PokerStateMachine
         public async UniTask OnEnter(CancellationToken externalToken)
         {
             pokerGameEvents?.OnDiceEvaluationStarted?.Invoke();
-            Debug.Log("=== Evaluating Hands ===");
 
             Dictionary<PokerPlayer, PokerDiceHandResult> results = new();
 
@@ -37,9 +36,6 @@ namespace StateMachine.PokerStateMachine
                 pokerGame.SetPlayerHand(playerName, result);
                 results[playerName] = result;
             }
-
-            List<PokerDiceHandResult> winners = DetermineWinners(results);
-            DisplayEvaluationReport(results, winners);
 
             await UniTask.Delay(TimeSpan.FromSeconds(displayDuration), cancellationToken: externalToken);
             
@@ -58,34 +54,9 @@ namespace StateMachine.PokerStateMachine
         {
             return UniTask.CompletedTask;
         }
-
-        // TODO remove methods later
-        private void DisplayEvaluationReport(Dictionary<PokerPlayer, PokerDiceHandResult> results, List<PokerDiceHandResult> winners)
-        {
-            Debug.Log("=== Hand Evaluation Results ===");
-
-            foreach ((PokerPlayer player, PokerDiceHandResult result) in results)
-            {
-                Debug.Log($"{player}: {result.Description} (Score: {result.Score})");
-            }
-
-            if (winners.Count == 1)
-            {
-                // One winner
-                PokerDiceHandResult winner = winners[0];
-                Debug.Log($"🏆 Winner: {winner.PlayerName} with {winner.Description}!");
-            }
-            else
-            {
-                // Tie
-                string tiedPlayers = string.Join(", ", winners.Select(w => w.PlayerName));
-                Debug.Log($"🤝 It's a tie between {tiedPlayers} with {winners[0].Description}!");
-            }
-        }
         
         private List<PokerDiceHandResult> DetermineWinners(Dictionary<PokerPlayer, PokerDiceHandResult> results)
         {
-            // Sort by rank and score
             List<PokerDiceHandResult> ordered = results.Values
                 .OrderByDescending(r => r.Rank)
                 .ThenByDescending(r => r.Score)

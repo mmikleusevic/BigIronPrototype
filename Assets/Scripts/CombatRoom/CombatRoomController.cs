@@ -66,7 +66,6 @@ namespace CombatRoom
             if (CurrentCombatant is not PlayerCombatant player || !player.Gun) return;
 
             int totalDamage = (int)(player.Data.damage * damageMultiplier);
-            Debug.Log($"Dealt {totalDamage} damage (Mult: {damageMultiplier})");
 
             if (SelectedEnemy) SelectedEnemy.TakeDamage(player, SelectedEnemy, totalDamage);
         }
@@ -143,8 +142,6 @@ namespace CombatRoom
             {
                 TurnQueue.Enqueue(combatant);
             }
-    
-            Debug.Log("Turn Order: " + string.Join(" -> ", TurnQueue.Select(c => c.Data.name)));
         }
 
         public void GetNextAliveCombatant()

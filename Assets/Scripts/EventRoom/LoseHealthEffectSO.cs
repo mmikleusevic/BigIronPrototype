@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace EventRoom
 {
-    [CreateAssetMenu(menuName = "Event Effects/LoseHPSO")]
+    [CreateAssetMenu(menuName = "Event Effects/LoseHealthSO")]
     public class LoseHealthEffectSO : EventEffectSO
     {
         public int Amount;

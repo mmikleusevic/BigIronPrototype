@@ -12,6 +12,7 @@ namespace UI
 {
     public class PokerUI : MonoBehaviour
     {
+        [SerializeField] private GameObject resultPanel;
         [SerializeField] private GameObject playerPanel;
         [SerializeField] private GameObject rollsPanel;
         [SerializeField] private TextMeshProUGUI playerNameText;
@@ -25,6 +26,7 @@ namespace UI
         [SerializeField] private Sprite noWagerSprite;
         [SerializeField] private Sprite midWagerSprite;
         [SerializeField] private Sprite highWagerSprite;
+        [SerializeField] private TextMeshProUGUI winnerText;
         
         private PokerInputs PokerInputs => pokerDiceGameController.PokerInputs;
         private PokerInputRules InputRules => pokerDiceGameController.PokerInputRules;
@@ -39,6 +41,7 @@ namespace UI
             rollButton.gameObject.SetActive(false);
             holdButton.gameObject.SetActive(false);
             endButton.gameObject.SetActive(false);
+            winnerText.gameObject.SetActive(false);
         }
 
         private void OnEnable()
@@ -119,9 +122,13 @@ namespace UI
             numberOfRolls.gameObject.SetActive(false);
         }
         
-        private void OnGameOver()
+        private void OnGameOver(string gameResult)
         {
             endButton.gameObject.SetActive(true);
+            winnerText.gameObject.SetActive(true);
+            resultPanel.gameObject.SetActive(false);
+            
+            winnerText.text = gameResult;
         }
         
         private void OnTurnEnded()

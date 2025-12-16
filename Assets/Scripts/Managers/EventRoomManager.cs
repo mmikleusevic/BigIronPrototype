@@ -85,7 +85,6 @@ namespace Managers
     
         private void EndEventSequence()
         {
-            Debug.Log("Event chain finished!");
             OnEventEnded?.Invoke();
             if (GameManager.Instance) GameManager.Instance.RoomPassed();
         }

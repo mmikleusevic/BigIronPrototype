@@ -30,30 +30,31 @@ namespace StateMachine.PokerStateMachine
             
             pokerInputs.EnablePlayerTurnInput();
             pokerInputs.OnEnd += EndWrapper;
-                
-            Debug.Log("=== GAME OVER ===");
-            
+
+            string gameResult = "Game ";
             List<PokerDiceHandResult> winners = DetermineWinners();
             if (winners.Count == 1)
             {
-                Debug.Log($"🏆 Winner: {winners[0].PlayerName}");
-                
-                if (winners[0].PlayerName != GameStrings.PLAYER) return UniTask.CompletedTask;
-
-                if (GameManager.Instance) GameManager.Instance.PlayerCombatant.GainGoldAmount(pokerGame.Wager);
+                if (winners[0].PlayerName != GameStrings.PLAYER)
+                {
+                    gameResult += "Lost!";
+                }
+                else
+                {
+                    gameResult += "Won!";
+                    if (GameManager.Instance) GameManager.Instance.PlayerCombatant.GainGoldAmount(pokerGame.Wager);
+                }
             }
             else
             {
-                string tiedNames = string.Join(", ", winners.Select(w => w.PlayerName));
-                Debug.Log($"🤝 It's a tie between {tiedNames}!");
-
                 if (!winners.Select(a => a.PlayerName).Contains(GameStrings.PLAYER)) return UniTask.CompletedTask;
 
+                gameResult += GameStrings.TIED;
                 int numberOfTiedPlayers = winners.Count;
                 if (GameManager.Instance) GameManager.Instance.PlayerCombatant.GainGoldAmount(pokerGame.Wager / numberOfTiedPlayers);
             }
             
-            pokerGameEvents?.OnGameOver?.Invoke();
+            pokerGameEvents?.OnGameOver?.Invoke(gameResult);
 
             return UniTask.CompletedTask;
         }

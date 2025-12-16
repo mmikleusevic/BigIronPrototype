@@ -60,8 +60,6 @@ namespace PokerDiceRoom
         public void EnablePlayerTurnInput()
         {
             pokerDiceMap.Enable();
-            
-            Debug.Log(pokerDiceMap.enabled);
         }
         
         public void DisablePlayerTurnInput()

@@ -22,4 +22,5 @@ public static class GameStrings
     public const string RELOAD = "Reload";
     public const string UI = "UI";
     public const string IDLE = "Idle";
+    public const string TIED = "Tied";
 }

@@ -133,11 +133,7 @@ namespace StateMachine.PokerStateMachine
             CurrentDie?.ToggleDie();
         }
         
-        private void RollComplete()
-        {
-            Debug.Log($"Dice: {string.Join(", ", diceRoller.PlayerDice.Where(a => a.Key == pokerGame.CurrentPlayer).SelectMany(d => d.Value.Select(c => c.Value)))}");
-            ChangeState();
-        }
+        private void RollComplete() => ChangeState();
         
         private void ChangeState()
         {

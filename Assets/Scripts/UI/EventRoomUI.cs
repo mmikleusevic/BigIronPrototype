@@ -117,7 +117,7 @@ namespace UI
             {
                 descriptionText.text = string.IsNullOrEmpty(choice.SuccessDescription)
                     ? choice.GeneratedResultDescription
-                    : choice.SuccessDescription;
+                    : choice.SuccessDescription + "\n" + choice.GeneratedResultDescription;
             }
             else
             {

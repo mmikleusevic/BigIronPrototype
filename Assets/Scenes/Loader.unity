@@ -250,6 +250,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8366776224783152447, guid: 9a732fef8565d77498d77a00e55c6aa6, type: 3}
+      propertyPath: mapsToDisableAtStart.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366776224783152447, guid: 9a732fef8565d77498d77a00e55c6aa6, type: 3}
+      propertyPath: 'mapsToDisableAtStart.Array.data[3]'
+      value: Shop
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

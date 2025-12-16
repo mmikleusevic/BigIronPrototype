@@ -19,6 +19,8 @@ namespace MapRoom
         public IReadOnlyList<IReadOnlyList<LevelNode>> LevelNodeGraph => levelNodeGraph;
 
         private readonly List<List<LevelNode>> levelNodeGraph = new List<List<LevelNode>>();
+        
+        private LevelNodeType[] validTypes;
 
         private void Start()
         {
@@ -27,10 +29,19 @@ namespace MapRoom
 
         private void GenerateLevelNodesAndConnections()
         {
+            GenerateValidLevelNodeTypes();
             GenerateLevelNodes();
             GenerateConnectionsBetweenLevelNodes();
         
             OnLevelNodesGenerated?.Invoke();
+        }
+
+        private void GenerateValidLevelNodeTypes()
+        {
+            LevelNodeType[] levelNodeTypes = (LevelNodeType[])Enum.GetValues(typeof(LevelNodeType));
+
+            validTypes = levelNodeTypes.Where(t => t != LevelNodeType.Start && t != LevelNodeType.Boss)
+                .ToArray();
         }
 
         private void GenerateLevelNodes()
@@ -57,7 +68,8 @@ namespace MapRoom
         {
             if (floor == 0) return LevelNodeType.Start;
             if (floor == floors - 1) return LevelNodeType.Boss;
-            return (LevelNodeType)Random.Range(1, Enum.GetValues(typeof(LevelNodeType)).Length - 1);
+
+            return validTypes[Random.Range(0, validTypes.Length)];
         }
 
         private void GenerateConnectionsBetweenLevelNodes()
@@ -108,40 +120,5 @@ namespace MapRoom
                 }
             }
         }
-    
-        // private void OnDrawGizmos()
-        // {
-        //     if (nodeGraph == null || nodeGraph.Count == 0)
-        //         return;
-        //
-        //     foreach (var floorNodes in nodeGraph)
-        //     {
-        //         foreach (var node in floorNodes)
-        //         {
-        //             switch (node.LevelNodeType)
-        //             {
-        //                 case LevelNodeType.Start:
-        //                     Gizmos.color = Color.green;
-        //                     break;
-        //                 case LevelNodeType.Boss:
-        //                     Gizmos.color = Color.red;
-        //                     break;
-        //                 default:
-        //                     Gizmos.color = Color.yellow;
-        //                     break;
-        //             }
-        //             
-        //             Gizmos.DrawSphere(transform.position + (Vector3)node.Position, 0.3f);
-        //
-        //             Gizmos.color = Color.white;
-        //             if (node.Connections == null) continue;
-        //             foreach (var connection in node.Connections)
-        //             {
-        //                 Gizmos.DrawLine(transform.position + (Vector3)node.Position,
-        //                     transform.position + (Vector3)connection.Position);
-        //             }
-        //         }
-        //     }
-        //}
     }
 }

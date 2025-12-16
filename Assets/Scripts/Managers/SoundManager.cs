@@ -51,8 +51,15 @@ namespace Managers
             return sfxVolume;
         }
 
-        public IEnumerator SmoothChangeTrack(AudioClip clip)
+        public void SmoothChangeTrack(AudioClip clip)
         {
+            StartCoroutine(SmoothChangeTrackCoroutine(clip));
+        }
+
+        private IEnumerator SmoothChangeTrackCoroutine(AudioClip clip)
+        {
+            if (musicSource.clip == clip) yield break;
+            
             float startingVolume = musicSource.volume;
             float endingVolume = 0;
             

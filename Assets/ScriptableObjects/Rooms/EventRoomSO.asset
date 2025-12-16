@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0d586d7bd6a4804b8a1c615cf9f8ea9, type: 3}
   m_Name: EventRoomSO
   m_EditorClassIdentifier: Assembly-CSharp::Loading.EventRoomLoader
-  levelNodeType: 4
+  levelNodeType: 5
   possibleEvents:
-  - {fileID: 11400000, guid: 7103baf44e07fe140934205800d51b82, type: 2}
+  - {fileID: 11400000, guid: b2b7d3e375c7c1b4bad343f05aa64eca, type: 2}

@@ -12,10 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35f9db3e19da436997fdf253ba5378a3, type: 3}
   m_Name: PokerDiceRoomSO
   m_EditorClassIdentifier: Assembly-CSharp::Loading.PokerDiceRoomLoaderSO
-  levelNodeType: 3
-  sceneReference:
-    m_AssetGUID: 26e92f9ec9992d641810f54c198222fb
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_SubObjectGUID: 
-    m_EditorAssetChanged: 0
+  levelNodeType: 4

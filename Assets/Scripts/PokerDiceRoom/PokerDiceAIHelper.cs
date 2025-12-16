@@ -6,9 +6,7 @@ namespace PokerDiceRoom
 {
     public static class PokerDiceAIHelper
     {
-        public static HashSet<int> SelectDiceToKeep(
-            List<(int Index, int Value)> dice,
-            PokerDiceHandResult myHand,
+        public static HashSet<int> SelectDiceToKeep(List<(int Index, int Value)> dice, PokerDiceHandResult myHand,
             PokerDiceHandResult opponentHand)
         {
             HashSet<int> keep = new HashSet<int>();
@@ -58,7 +56,7 @@ namespace PokerDiceRoom
 
             if (opponentHand.Rank > myHand.Rank)
             {
-                keep = KeepOnlyStrongestGroup(keep, counts, dice);
+                keep = KeepOnlyStrongestGroup(counts, dice);
             }
 
             return keep;
@@ -79,10 +77,7 @@ namespace PokerDiceRoom
             return result;
         }
 
-        private static HashSet<int> KeepOnlyStrongestGroup(
-            HashSet<int> currentKeep,
-            Dictionary<int, int> counts,
-            List<(int Index, int Value)> dice)
+        private static HashSet<int> KeepOnlyStrongestGroup(Dictionary<int, int> counts, List<(int Index, int Value)> dice)
         {
             int best = counts.Max(kvp => kvp.Value);
             List<int> bestValues = counts.Where(c => c.Value == best)

@@ -35,6 +35,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: effd6645848c9354ab39b46090256f09
+    m_Address: Assets/Scenes/Rooms/ShopRoom.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f2c57bf8d3206554db19ebd0ab76652c
     m_Address: Assets/Scenes/CombatRoom.unity
     m_ReadOnly: 0

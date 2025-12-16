@@ -52,3 +52,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0f7d3ef98f25c404f82744d6ba5ad4c2, type: 2}
   - {fileID: 11400000, guid: 337de81a32d20f94c91abee3fb023da4, type: 2}
   - {fileID: 11400000, guid: 4f7cdf3ce625a5e4f87ef7f809d07c14, type: 2}
+  - {fileID: 11400000, guid: d208f68d09c387b4bb8c7b722094293f, type: 2}
+  mainMenuSceneReference:
+    m_AssetGUID: 0a64b82745e5ce549b159e5493e0d415
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a0c0bc32aa32c4099444070b537708, type: 3}
+  m_Name: TheSaloonBackroom
+  m_EditorClassIdentifier: Assembly-CSharp::EventRoom.EventSO
+  Title: The Saloon Back Room
+  Choices:
+  - ChoiceText: Drink and listen
+    Conditions: []
+    Effects:
+    - {fileID: 11400000, guid: 0055b82519a571a429b57474f2e37320, type: 2}
+    NextEvent: {fileID: 0}
+    SuccessDescription: You drank a bit too much.
+  - ChoiceText: Join the game
+    Conditions: []
+    Effects:
+    - {fileID: 11400000, guid: 444fb9f7371e2a548a91cd269d10ba12, type: 2}
+    NextEvent: {fileID: 0}
+    SuccessDescription: The cards fall your way. For once.
+  - ChoiceText: Call them out
+    Conditions: []
+    Effects:
+    - {fileID: 11400000, guid: 444fb9f7371e2a548a91cd269d10ba12, type: 2}
+    NextEvent: {fileID: 0}
+    SuccessDescription: Hands go to holsters. They back down.
+  Description: "Behind the saloon\u2019s swinging doors, smoke hangs thick.\nA crooked
+    card game is underway \u2014 the dealer smiles too easily."

@@ -33,11 +33,7 @@ namespace StateMachine.PokerStateMachine
         
         private async UniTask StartAIRollRoutine(CancellationToken externalToken)
         {
-            Debug.Log($"{pokerGame.CurrentPlayer} (AI) is thinking...");
-
             await UniTask.Delay(1000, cancellationToken: externalToken);
-            
-            Debug.Log(diceRoller.CurrentRollNumber);
             
             if (diceRoller.CurrentRollNumber > 0) await SelectSmartDiceToRoll(externalToken);
             
@@ -105,11 +101,7 @@ namespace StateMachine.PokerStateMachine
             });
         }
         
-        private void OnRollComplete()
-        {
-            Debug.Log($"Dice: {string.Join(", ", diceRoller.PlayerDice.Where(a => a.Key == pokerGame.CurrentPlayer).SelectMany(d => d.Value.Select(c => c.Value)))}");
-            ChangeState();
-        }
+        private void OnRollComplete() => ChangeState();
         
         private void ChangeState()
         {

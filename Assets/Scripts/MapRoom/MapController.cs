@@ -86,8 +86,6 @@ namespace MapRoom
             lastSelectedNode = null;
             
             DisableOtherButtons();
-            
-            Debug.Log($"Loading level: {clickedNode.LevelNode.LevelNodeType}");
         }
 
         private void DisableOtherButtons()

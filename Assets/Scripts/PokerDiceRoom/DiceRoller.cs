@@ -189,8 +189,6 @@ namespace PokerDiceRoom
             int numberOfPlayerRolls = GetNumberOfPlayerRolls(player);
             
             OnNumberOfRollsChanged?.Invoke(numberOfPlayerRolls, MaxRolls);
-            
-            Debug.Log($"Player {player} has rolled, number of rolls is: {PlayerNumberOfRolls[player]}");
         }
         
         public bool HaveAllPlayersRolled() => PlayerNumberOfRolls.Values.Min() == PlayerNumberOfRolls.Values.Max();

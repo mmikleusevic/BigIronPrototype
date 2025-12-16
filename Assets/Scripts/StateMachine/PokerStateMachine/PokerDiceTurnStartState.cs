@@ -25,8 +25,6 @@ namespace StateMachine.PokerStateMachine
     
         public async UniTask OnEnter(CancellationToken externalToken)
         {
-            Debug.Log($"=== {pokerGame.CurrentPlayer}'s Turn ===");
-            
             diceRoller.ResetDiceHolds(pokerGame.CurrentPlayer);
             pokerGameEvents?.OnTurnStart?.Invoke(pokerGame.CurrentPlayer);
             

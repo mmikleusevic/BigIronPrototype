@@ -29,8 +29,6 @@ namespace StateMachine.PokerStateMachine
             
             diceRoller.ResetDiceHolds(pokerGame.CurrentPlayer);
             
-            Debug.Log($"=== End of {pokerGame.CurrentPlayer}'s Turn ===");
-            
             if (diceRoller.HaveAllPlayersRolled() && diceRoller.CurrentRollNumber >= diceRoller.MaxRolls)
             {
                 await pokerDiceGameController.BaseStateMachine.ChangeState(new PokerDiceEvaluatingState(pokerDiceGameController));

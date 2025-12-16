@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07dab8f491874236af49e22964702840, type: 3}
   m_Name: BossRoomSO
   m_EditorClassIdentifier: Assembly-CSharp::Loading.CombatRoomLoaderSO
-  levelNodeType: 5
+  levelNodeType: 1
   encounterTableSO: {fileID: 11400000, guid: f117d3b1c447067428096b3cd17e0a5e, type: 2}
   sceneReference:
     m_AssetGUID: f2c57bf8d3206554db19ebd0ab76652c
