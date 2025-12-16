@@ -70,6 +70,7 @@ namespace PokerDiceRoom
 
         public void PlayRolledParticleEffect()
         {
+            rolledParticleEffect.Stop();
             rolledParticleEffect.Play();
         }
     }

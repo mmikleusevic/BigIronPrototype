@@ -14,8 +14,6 @@ namespace PokerDiceRoom
     {
         [field: SerializeField] public DieVisual DieVisual { get; private set; }
         
-        [SerializeField] private AudioClip rollSound;
-        
         public int Value { get; private set; }
         public bool IsHeld { get; private set; }
         
@@ -42,7 +40,6 @@ namespace PokerDiceRoom
 
         public int Roll()
         {
-            SoundManager.Instance.PlayVFX(rollSound);
             Value = Random.Range(1, 7);
             return Value;
         }
