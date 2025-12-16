@@ -11,6 +11,7 @@ namespace Weapons
     {
         public event Action<int, int> OnAmmoChanged;
         
+        [SerializeField] private BulletTracer tracerPrefab;
         [SerializeField] private AudioClip clickingSound;
         [SerializeField] private AudioClip shotSound;
         [SerializeField] protected Transform shootPoint;
@@ -46,7 +47,12 @@ namespace Weapons
 
         public virtual void Shoot(Vector3 rayOrigin, Vector3 rayDirection)
         {
-            if (currentAmmo == 0) SoundManager.Instance.PlayVFX(clickingSound);
+            if (currentAmmo == 0 && Time.time >= nextShootTime)
+            {
+                SoundManager.Instance.PlayVFX(clickingSound);
+                nextShootTime = Time.time + fireRate;
+            }
+            
             if (!CanShoot) return;
 
             nextShootTime = Time.time + fireRate;
@@ -72,15 +78,25 @@ namespace Weapons
 
         private void HitScan(Vector3 rayOrigin, Vector3 rayDirection)
         {
-            RaycastHit hit;
+            Vector3 endPoint = rayOrigin + rayDirection * raycastDistance;
             
-            if (Physics.Raycast(rayOrigin, rayDirection, out hit, raycastDistance, hitMask))
+            if (Physics.Raycast(rayOrigin, rayDirection, out RaycastHit hit, raycastDistance, hitMask))
             {
                 if (hit.collider.TryGetComponent(out BaseTarget baseTarget))
                 {
                     baseTarget.Hit();
                 }
             }
+            
+            SpawnTracer(rayOrigin, endPoint);
+        }
+        
+        private void SpawnTracer(Vector3 start, Vector3 end)
+        {
+            if (!tracerPrefab || !shootPoint) return;
+
+            BulletTracer tracer = Instantiate(tracerPrefab);
+            tracer.Initialize(start, end);
         }
         
         protected void InvokeAmmoChanged() => OnAmmoChanged?.Invoke(currentAmmo, maxAmmo);
