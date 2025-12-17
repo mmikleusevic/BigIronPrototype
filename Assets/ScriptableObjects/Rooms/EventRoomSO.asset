@@ -15,3 +15,5 @@ MonoBehaviour:
   levelNodeType: 5
   possibleEvents:
   - {fileID: 11400000, guid: b2b7d3e375c7c1b4bad343f05aa64eca, type: 2}
+  - {fileID: 11400000, guid: 76a761ec18013fc4b90ac383e9e4268c, type: 2}
+  - {fileID: 11400000, guid: d4638de6c36f41d40a3a2722e7b5e3d5, type: 2}

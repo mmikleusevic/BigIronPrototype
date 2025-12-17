@@ -10,11 +10,9 @@ namespace Managers
     {
         public static SoundManager Instance { get; private set; }
 
-        [SerializeField] private AudioSource vfxSource;
+        [SerializeField] private AudioSource sfxSource;
         [SerializeField] private AudioSource musicSource;
         [SerializeField] private float transitionTime;
-        
-        private float sfxVolume;
         
         private void Awake()
         {
@@ -26,7 +24,8 @@ namespace Managers
             float volume = PlayerPrefs.GetFloat(GameStrings.VOLUME);
             SetVolume(volume);
             
-            sfxVolume = PlayerPrefs.GetFloat(GameStrings.SFX_VOLUME);
+            float sfxVolume = sfxVolume = PlayerPrefs.GetFloat(GameStrings.SFX_VOLUME);
+            SetSfxVolume(sfxVolume);
         }
 
         public void SetVolume(float volume)
@@ -42,13 +41,13 @@ namespace Managers
         
         public void SetSfxVolume(float sfxVolume)
         {
-            this.sfxVolume = sfxVolume;   
-            PlayerPrefs.SetFloat(GameStrings.SFX_VOLUME, this.sfxVolume);
+            sfxSource.volume = sfxVolume;   
+            PlayerPrefs.SetFloat(GameStrings.SFX_VOLUME, sfxSource.volume);
         }
 
         public float GetSfxVolume()
         {
-            return sfxVolume;
+            return sfxSource.volume;
         }
 
         public void SmoothChangeTrack(AudioClip clip)
@@ -96,8 +95,8 @@ namespace Managers
         {
             float pitch = Random.Range(0.8f, 1.2f);
             
-            vfxSource.pitch = pitch;
-            vfxSource.PlayOneShot(clip);
+            sfxSource.pitch = pitch;
+            sfxSource.PlayOneShot(clip);
         }
     }
 }

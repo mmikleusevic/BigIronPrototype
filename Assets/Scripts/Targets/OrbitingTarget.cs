@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace CombatRoom
+namespace Targets
 {
     public class OrbitingTarget : BaseTarget
     {
@@ -38,7 +36,7 @@ namespace CombatRoom
         protected override void TickBehavior()
         {
             transform.forward = -mainCamera.transform.forward;
-            pivotTransform.Rotate(Vector3.up, profile.speed * Time.fixedDeltaTime * Mathf.Rad2Deg);
+            pivotTransform.Rotate(Vector3.up, stats.speed * Time.fixedDeltaTime * Mathf.Rad2Deg);
             
             Vector3 localPivotPosition = pivotTransform.localPosition;
             localPivotPosition.y += verticalSpeed * Time.fixedDeltaTime;

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CombatRoom
+namespace Targets
 {
     [CreateAssetMenu(menuName = "Target/TargetProfile")]
     public class TargetProfileSO : ScriptableObject
@@ -9,6 +9,5 @@ namespace CombatRoom
         public float speed = 1f;
         public float scale = 1f;
         public float lifetime = 1.5f;
-        public float orbitRadius = 1;
     }
 }

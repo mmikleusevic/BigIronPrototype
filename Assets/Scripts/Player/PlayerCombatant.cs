@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using CombatRoom;
 using Enemies;
 using Managers;
@@ -24,6 +25,8 @@ namespace Player
         
         public override Health Health => playerHealth;
         public override Gold Gold => gold;
+
+        public HashSet<string> OwnedItemIds { get; } = new HashSet<string>();
 
         private Camera mainCamera;
         

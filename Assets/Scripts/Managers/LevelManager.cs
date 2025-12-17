@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 using MapRoom;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.EventSystems;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
@@ -20,6 +21,7 @@ namespace Managers
         [SerializeField] private List<SceneReferenceSO> persistentScenes;
         [SerializeField] private List<MapNodeLoaderSO> nodeLoaders;
         [SerializeField] private AssetReference mainMenuSceneReference;
+        [SerializeField] private AssetReference gameAssetReference;
         
         private readonly Dictionary<string, AsyncOperationHandle<SceneInstance>> loadedScenes = new Dictionary<string, AsyncOperationHandle<SceneInstance>>();
 
@@ -101,7 +103,19 @@ namespace Managers
             await LoadSceneAsync(mainMenuSceneReference);
 
             if (GameManager.Instance) GameManager.Instance.TogglePause();
+            if (TargetModifierManager.Instance) TargetModifierManager.Instance.RemoveAllModifiers();
             if (GameManager.Instance) Destroy(GameManager.Instance.PlayerCombatant.gameObject);
+        }
+
+        public async UniTask UnloadSceneActivateGame(AssetReference sceneReference)
+        {
+            if (EventSystem.current) EventSystem.current.SetSelectedGameObject(null);
+
+            UnloadSceneAsync(sceneReference.AssetGUID).Forget();
+            await LoadSceneAsync(gameAssetReference);
+
+            if (InputManager.Instance) InputManager.Instance.EnableOnlyUIMap();
+            if (GameManager.Instance) GameManager.Instance.RoomPassed();
         }
     }
 }

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
+using CombatRoom;
 using Enemies;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace CombatRoom
+namespace Targets
 {
     public class TargetSpawner : MonoBehaviour
     {
@@ -56,12 +56,12 @@ namespace CombatRoom
                 Vector3 spawnOffset = new Vector3(xOffset, yOffset, zOffset);
                 Vector3 spawn = enemy.transform.position + spawnOffset;
 
-                MovementAxis axis = (MovementAxis)Random.Range(0, Enum.GetNames(typeof(MovementAxis)).Length);
+                TargetMovementAxis axis = (TargetMovementAxis)Random.Range(0, Enum.GetNames(typeof(TargetMovementAxis)).Length);
                 TargetSpawnContext targetSpawnContext = new TargetSpawnContext
                 {
                     profile = enemy.TargetProfileSO,
                     origin = spawn,
-                    movementAxis = axis,
+                    targetMovementAxis = axis,
                     centerTransform = enemy.transform 
                 };
 

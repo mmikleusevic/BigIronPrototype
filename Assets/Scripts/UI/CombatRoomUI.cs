@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using Extensions;
 using Managers;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UI
@@ -71,14 +72,9 @@ namespace UI
 
         private async UniTask End()
         {
-            if (LevelManager.Instance)
-            {
-                LevelManager.Instance.UnloadSceneAsync(combatRoomController.CombatRoomAssetReference.AssetGUID).Forget();
-                await LevelManager.Instance.LoadSceneAsync(combatRoomController.GameAssetReference);
-            }
-
-            if (InputManager.Instance) InputManager.Instance.EnableOnlyUIMap();
-            if (GameManager.Instance) GameManager.Instance.RoomPassed();
+            if (!LevelManager.Instance) return; 
+            
+            await LevelManager.Instance.UnloadSceneActivateGame(combatRoomController.CombatRoomAssetReference);
         }
         
         private void HideShootButton()

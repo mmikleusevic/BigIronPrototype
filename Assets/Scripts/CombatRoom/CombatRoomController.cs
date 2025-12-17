@@ -25,7 +25,6 @@ namespace CombatRoom
         [field: SerializeField] public PlayerComboSystem PlayerComboSystem { get; private set; }
         [field: SerializeField] public CameraController CameraController { get; private set; }
         [field: SerializeField] public AssetReference CombatRoomAssetReference { get; private set; }
-        [field: SerializeField] public AssetReference GameAssetReference { get; private set; }
         
         [SerializeField] private Transform[] enemyTransforms;
         [SerializeField] private Transform playerTransform;

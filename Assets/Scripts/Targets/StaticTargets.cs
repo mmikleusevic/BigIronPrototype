@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace CombatRoom
+﻿namespace Targets
 {
     public class StaticTargets : BaseTarget
     {

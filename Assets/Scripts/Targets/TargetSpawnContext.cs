@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+﻿using CombatRoom;
+using UnityEngine;
 
-namespace CombatRoom
+namespace Targets
 {
     public struct TargetSpawnContext
     {
         public TargetProfileSO profile;
         public Vector3 origin;
         public Transform centerTransform;
-        public MovementAxis movementAxis;
+        public TargetMovementAxis targetMovementAxis;
     }
 }

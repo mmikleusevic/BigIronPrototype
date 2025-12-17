@@ -42,6 +42,7 @@ namespace PokerDiceRoom
             highlightParticleEffect.Stop();
             rolledParticleEffect.Stop();
             dieCamera.Render();
+            dieCamera.gameObject.SetActive(false);
         }
 
         public void SetVisual(bool isHeld)

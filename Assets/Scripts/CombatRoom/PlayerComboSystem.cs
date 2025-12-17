@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Player;
+using Targets;
 using UnityEngine;
 
 namespace CombatRoom

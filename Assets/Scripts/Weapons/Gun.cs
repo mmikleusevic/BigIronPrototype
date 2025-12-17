@@ -2,6 +2,7 @@
 using System.Collections;
 using CombatRoom;
 using Managers;
+using Targets;
 using UnityEngine;
 using UnityEngine.VFX;
 

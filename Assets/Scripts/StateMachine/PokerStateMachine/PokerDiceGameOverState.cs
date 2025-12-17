@@ -85,11 +85,9 @@ namespace StateMachine.PokerStateMachine
             pokerInputs.DisablePlayerTurnInput();
             pokerInputs.OnEnd -= EndWrapper;
 
-            if (LevelManager.Instance)
-            {
-                LevelManager.Instance.UnloadSceneAsync(pokerDiceGameController.PokerAssetReference.AssetGUID).Forget();
-                await LevelManager.Instance.LoadSceneAsync(pokerDiceGameController.GameAssetReference);
-            }
+            if (!LevelManager.Instance) return;
+
+            await LevelManager.Instance.UnloadSceneActivateGame(pokerDiceGameController.PokerAssetReference);
         }
     
         private List<PokerDiceHandResult> DetermineWinners()

@@ -369,7 +369,6 @@ MonoBehaviour:
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  rotationSpeed: 5
   gunRotationSpeed: 10
   maxAimDistance: 1000
   maxHorizontalAngle: 45
@@ -399,7 +398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4f8c6be317410c9c34b9802a217d0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.Gold
-  goldAmount: 0
+  goldAmount: 50
 --- !u!54 &2405560384609159212
 Rigidbody:
   m_ObjectHideFlags: 0

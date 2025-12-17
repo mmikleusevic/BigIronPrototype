@@ -206,6 +206,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5649399846011288869, guid: 9a732fef8565d77498d77a00e55c6aa6, type: 3}
+      propertyPath: sfxSource
+      value: 
+      objectReference: {fileID: 5543934918820418514}
     - target: {fileID: 6439290125650103391, guid: 9a732fef8565d77498d77a00e55c6aa6, type: 3}
       propertyPath: m_Name
       value: Managers
@@ -250,19 +254,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8366776224783152447, guid: 9a732fef8565d77498d77a00e55c6aa6, type: 3}
-      propertyPath: mapsToDisableAtStart.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8366776224783152447, guid: 9a732fef8565d77498d77a00e55c6aa6, type: 3}
-      propertyPath: 'mapsToDisableAtStart.Array.data[3]'
-      value: Shop
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a732fef8565d77498d77a00e55c6aa6, type: 3}
+--- !u!82 &5543934918820418514 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5673136056640115644, guid: 9a732fef8565d77498d77a00e55c6aa6, type: 3}
+  m_PrefabInstance: {fileID: 5543934918820418513}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

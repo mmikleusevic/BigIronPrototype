@@ -43,11 +43,9 @@ namespace StateMachine.CombatStateMachine
             combatInputs.OnEnd -= EndWrapper;
             combatInputs.DisablePlayerInput();
 
-            if (LevelManager.Instance)
-            {
-                LevelManager.Instance.UnloadSceneAsync(combatRoomController.CombatRoomAssetReference.AssetGUID).Forget();
-                await LevelManager.Instance.LoadSceneAsync(combatRoomController.GameAssetReference);
-            }
+            if (!LevelManager.Instance) return;
+            
+            await LevelManager.Instance.UnloadSceneActivateGame(combatRoomController.CombatRoomAssetReference);
         }
 
         public UniTask OnExit()

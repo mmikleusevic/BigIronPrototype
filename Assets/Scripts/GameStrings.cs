@@ -23,4 +23,6 @@ public static class GameStrings
     public const string UI = "UI";
     public const string IDLE = "Idle";
     public const string TIED = "Tied";
+    public const string SHOP = "Shop";
+    public const string LEAVE = "Leave";
 }

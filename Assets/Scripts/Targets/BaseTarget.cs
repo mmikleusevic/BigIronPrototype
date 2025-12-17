@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections;
+using CombatRoom;
+using Managers;
 using UnityEngine;
 
-namespace CombatRoom
+namespace Targets
 {
     public abstract class BaseTarget : MonoBehaviour
     {
@@ -14,7 +15,7 @@ namespace CombatRoom
         public event Action<BaseTarget> OnTargetHit;
         public event Action<BaseTarget> OnTargetExpired;
 
-        protected TargetProfileSO profile;
+        protected TargetStats stats;
         protected float lifetimeTimer;
         protected TargetSpawnContext context; 
         
@@ -27,9 +28,12 @@ namespace CombatRoom
 
         public void Initialize(TargetSpawnContext targetSpawnContext)
         {
+            stats = TargetStats.FromProfile(targetSpawnContext.profile); 
+            
+            TargetModifierManager.Instance.ApplyModifiers(ref stats);
+            
             context = targetSpawnContext;
-            profile = targetSpawnContext.profile;
-            transform.localScale = Vector3.one * profile.scale;
+            transform.localScale = Vector3.one * stats.scale;
             
             rb.isKinematic = true; 
             rb.useGravity = false;
@@ -45,10 +49,10 @@ namespace CombatRoom
         {
             lifetimeTimer += Time.deltaTime;
             
-            float t = Mathf.Clamp01(lifetimeTimer / profile.lifetime);
-            transform.localScale = Vector3.Lerp(Vector3.one * profile.scale, Vector3.zero, t);
+            float t = Mathf.Clamp01(lifetimeTimer / stats.lifetime);
+            transform.localScale = Vector3.Lerp(Vector3.one * stats.scale, Vector3.zero, t);
             
-            if (lifetimeTimer >= profile.lifetime && !isHit)
+            if (lifetimeTimer >= stats.lifetime && !isHit)
             {
                 OnTargetExpired?.Invoke(this);
                 Destroy(gameObject);

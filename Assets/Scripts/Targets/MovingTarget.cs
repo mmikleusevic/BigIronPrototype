@@ -1,7 +1,7 @@
-﻿using System;
+﻿using CombatRoom;
 using UnityEngine;
 
-namespace CombatRoom
+namespace Targets
 {
     public class MovingTarget : BaseTarget
     {
@@ -13,24 +13,24 @@ namespace CombatRoom
         protected override void OnInitialize(TargetSpawnContext targetSpawnContext)
         {
             startPosition = targetSpawnContext.origin;
-            effectiveTravelDistance = profile.travelDistance;
+            effectiveTravelDistance = stats.travelDistance;
             
-            switch (targetSpawnContext.movementAxis)
+            switch (targetSpawnContext.targetMovementAxis)
             {
-                case MovementAxis.X:
+                case TargetMovementAxis.X:
                     moveDirection = Vector3.right * Mathf.Sign(-startPosition.x);
                     break;
-                case MovementAxis.Y:
+                case TargetMovementAxis.Y:
                     moveDirection = startPosition.y < (MAX_Y_HEIGHT + MIN_Y_HEIGHT) * 0.5f ? Vector3.up : Vector3.down;
                     if (moveDirection == Vector3.up)
                     {
                         float maxUpDistance = MAX_Y_HEIGHT - startPosition.y;
-                        effectiveTravelDistance = Mathf.Min(profile.travelDistance, maxUpDistance);
+                        effectiveTravelDistance = Mathf.Min(stats.travelDistance, maxUpDistance);
                     }
                     else
                     {
                         float maxDownDistance = startPosition.y - MIN_Y_HEIGHT;
-                        effectiveTravelDistance = Mathf.Min(profile.travelDistance, maxDownDistance);
+                        effectiveTravelDistance = Mathf.Min(stats.travelDistance, maxDownDistance);
                         
                         moveDirection = Vector3.up;
                     }
@@ -38,7 +38,7 @@ namespace CombatRoom
             }
             transform.position = startPosition; 
             
-            float halfLife = profile.lifetime * 0.5f;
+            float halfLife = stats.lifetime * 0.5f;
             speed = effectiveTravelDistance / halfLife;
         }
 
