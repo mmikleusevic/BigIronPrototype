@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53644500b432459dbfa76cdc46ff2402, type: 3}
   m_Name: DeathTargetProfileSO
   m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.TargetProfileSO
-  scale: 1.5
-  lifetime: 1.5
-  speed: 2
-  orbitRadius: 3
+  travelDistance: 3
+  speed: 1
+  scale: 2
+  lifetime: 3

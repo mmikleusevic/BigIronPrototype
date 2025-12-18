@@ -24,9 +24,16 @@ namespace Weapons
 
         private IEnumerator ReloadCoroutine()
         {
+            playerAnimator.SetLayerWeight(1, 1f);
+            playerAnimator.Play(GameStrings.RELOAD);
+            
             isReloading = true;
             
-            yield return new WaitForSeconds(reloadTime * 0.5f);
+            RaiseReloadStarted();
+            
+            yield return new WaitForSeconds(reloadTime);
+                
+            RaiseReloadFinished();
             
             currentAmmo = maxAmmo;
             isReloading = false;

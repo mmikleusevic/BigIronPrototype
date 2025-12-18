@@ -40,13 +40,13 @@ namespace StateMachine.CombatStateMachine
         {
             SetupAttackPhase();
                 
-            playerCombatant.Aim();
+            playerCombatant.StartAiming();
             
             await StartCountdown(InitialCountdownTime, externalToken);
                 
             EnablePlayerControls();
                 
-            await UniTask.Delay(currentEnemy.AttackDuration * 1000, cancellationToken: externalToken);
+            await StartAttackCountdown(currentEnemy.AttackDuration, externalToken);
             await combatRoomController.BaseStateMachine.ChangeState(new CombatRoomTurnEndState(combatRoomController));
         }
 
@@ -111,6 +111,20 @@ namespace StateMachine.CombatStateMachine
 
             combatRoomEvents?.OnCountdownTick?.Invoke(0);
             countdownFinished = true;
+        }
+        
+        private async UniTask StartAttackCountdown(float attackDuration, CancellationToken token)
+        {
+            int secondsRemaining = Mathf.CeilToInt(attackDuration);
+
+            while (secondsRemaining > 0 && !token.IsCancellationRequested)
+            {
+                combatRoomEvents?.OnAttackCountdownTick(secondsRemaining);
+                await UniTask.Delay(1000, cancellationToken: token);
+                secondsRemaining--;
+            }
+
+            combatRoomEvents?.OnAttackCountdownTick(0);
         }
 
         private void EnablePlayerControls()

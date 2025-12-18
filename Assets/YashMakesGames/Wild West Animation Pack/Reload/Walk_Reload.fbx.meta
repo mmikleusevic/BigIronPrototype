@@ -1,7 +1,14 @@
 fileFormatVersion: 2
 guid: b5a701eeaa7d75044b4bad2cefca42b1
+AssetOrigin:
+  serializedVersion: 1
+  productId: 267436
+  packageName: Wild West Revolver Gunslinger Cowboy Animations
+  packageVersion: 1.0
+  assetPath: Assets/YashMakesGames/Wild West Animation Pack/Reload/Walk_Reload.fbx
+  uploadId: 631440
 ModelImporter:
-  serializedVersion: 21300
+  serializedVersion: 24200
   internalIDToNameTable:
   - first:
       74: -4158235263104464671
@@ -25,8 +32,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 1
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -45,8 +50,8 @@ ModelImporter:
       name: Walk_Reload
       takeName: PreviewRig|Action
       internalID: 0
-      firstFrame: 0
-      lastFrame: 90
+      firstFrame: 21
+      lastFrame: 51
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -78,6 +83,7 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -95,6 +101,9 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -105,6 +114,7 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -716,22 +726,15 @@ ModelImporter:
     hasTranslationDoF: 1
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 5604ccf87c74fbe4eaab11d388ef1012,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 5604ccf87c74fbe4eaab11d388ef1012, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
   avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 0
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 267436
-  packageName: Wild West Revolver Gunslinger Cowboy Animations
-  packageVersion: 1.0
-  assetPath: Assets/YashMakesGames/Wild West Animation Pack/Reload/Walk_Reload.fbx
-  uploadId: 631440

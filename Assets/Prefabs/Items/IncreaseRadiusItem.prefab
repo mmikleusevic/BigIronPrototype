@@ -20,10 +20,22 @@ PrefabInstance:
       propertyPath: shopItemData
       value: 
       objectReference: {fileID: 11400000, guid: 8b0fa3437fe7ab4469e59de124d1f406, type: 2}
+    - target: {fileID: 1687029981692783436, guid: 4bc1d748192d95248946214286d45a32, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: a267f4a16473bf341b39e9d735f19135, type: 3}
     - target: {fileID: 2601762812759221815, guid: 4bc1d748192d95248946214286d45a32, type: 3}
       propertyPath: m_Name
       value: IncreaseRadiusItem
       objectReference: {fileID: 0}
+    - target: {fileID: 2735198876948236689, guid: 4bc1d748192d95248946214286d45a32, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    - target: {fileID: 4441599065473341260, guid: 4bc1d748192d95248946214286d45a32, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: a267f4a16473bf341b39e9d735f19135, type: 3}
     - target: {fileID: 6541335237757866855, guid: 4bc1d748192d95248946214286d45a32, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -63,6 +75,10 @@ PrefabInstance:
     - target: {fileID: 6541335237757866855, guid: 4bc1d748192d95248946214286d45a32, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8521647485505223873, guid: 4bc1d748192d95248946214286d45a32, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

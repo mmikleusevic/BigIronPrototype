@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 3862248153186428148, guid: 738d505570e9374489b3f1612b007e75, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300018, guid: 9eb1cb64650814445b93f4b540858545, type: 3}
     - target: {fileID: 3862248153197770214, guid: 738d505570e9374489b3f1612b007e75, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

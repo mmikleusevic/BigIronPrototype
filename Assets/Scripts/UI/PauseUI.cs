@@ -25,8 +25,6 @@ namespace UI
         [SerializeField] private OptionsUI optionsUI;
 
         [Space(20)] 
-        [SerializeField] private string uiActionMapName;
-        [SerializeField] private InputActionAsset inputActionAsset;
         [SerializeField] private Button backToMainMenuButton;
         
         public Selector selector;

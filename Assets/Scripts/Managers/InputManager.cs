@@ -22,6 +22,13 @@ namespace Managers
         private void Start()
         {
             StartingMapsSetup();
+            
+            GameManager.Instance.OnGameOver += OnGameOver;
+        }
+
+        private void OnDisable()
+        {
+            GameManager.Instance.OnGameOver -= OnGameOver;
         }
 
         public void StartingMapsSetup()
@@ -58,6 +65,11 @@ namespace Managers
             }
 
             enabledMapsBeforePause.Clear();
+        }
+
+        private void OnGameOver(bool hasWon, bool isGameOver)
+        {
+            EnableOnlyUIMap();
         }
     }
 }

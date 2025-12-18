@@ -10,7 +10,7 @@ namespace PokerDiceRoom
         [SerializeField] private RectTransform dieUI;
         [SerializeField] private RawImage dieImage;
         [SerializeField] private Outline dieOutline;
-        [SerializeField] private ParticleSystem highlightParticleEffect;
+        [SerializeField] private GameObject highlight;
         [SerializeField] private ParticleSystem rolledParticleEffect;
         [SerializeField] private int textureSize;
         
@@ -39,7 +39,7 @@ namespace PokerDiceRoom
         private void ResetVisual()
         {
             dieOutline.enabled = true;
-            highlightParticleEffect.Stop();
+            highlight.gameObject.SetActive(false);
             rolledParticleEffect.Stop();
             dieCamera.Render();
             dieCamera.gameObject.SetActive(false);
@@ -54,14 +54,9 @@ namespace PokerDiceRoom
         {
             isHighlighted = !isHighlighted;
 
-            if (isHighlighted)
-            {
-                highlightParticleEffect.Play();
-            }
-            else
-            {
-                highlightParticleEffect.Stop();
-            }
+            highlight.gameObject.SetActive(isHighlighted);
+            
+            dieCamera.Render();
         }
 
         public void SetCamera(bool value)

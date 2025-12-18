@@ -12,7 +12,7 @@ namespace Managers
     {
         public event Action OnPlayerInitialized;
         public event Action OnRoomPassed;
-        public event Action<bool> OnGameOver;
+        public event Action<bool, bool> OnGameOver;
         
         public static GameManager Instance { get; private set; }
 
@@ -22,6 +22,7 @@ namespace Managers
         [SerializeField] private SceneReferenceSO gameSceneReferenceSO;
         
         private bool isPaused;
+        private bool isGameOver;
         
         private void Awake()
         {
@@ -31,6 +32,7 @@ namespace Managers
         public void InitializeGame()
         {
             PlayerCombatant = Instantiate(playerPrefab, playerPrefab.transform.position, playerPrefab.transform.rotation);
+            isGameOver = false;
             
             OnPlayerInitialized?.Invoke();
         }
@@ -50,7 +52,8 @@ namespace Managers
 
         public void GameOver(bool hasWon)
         {
-            OnGameOver?.Invoke(hasWon);
+            isGameOver = true;
+            OnGameOver?.Invoke(hasWon, isGameOver);
         }
     }
 }

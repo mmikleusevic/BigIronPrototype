@@ -10,8 +10,11 @@ namespace Weapons
 {
     public abstract class Gun : Weapon
     {
+        public event Action OnReloadStarted;
+        public event Action OnReloadFinished;
         public event Action<int, int> OnAmmoChanged;
-        
+
+        [SerializeField] protected Animator playerAnimator;
         [SerializeField] private BulletTracer tracerPrefab;
         [SerializeField] private AudioClip clickingSound;
         [SerializeField] private AudioClip shotSound;
@@ -42,6 +45,16 @@ namespace Weapons
             currentAmmo = maxAmmo;
             
             OnAmmoChanged?.Invoke(currentAmmo, maxAmmo);
+        }
+
+        protected void RaiseReloadStarted()
+        {
+            OnReloadStarted?.Invoke();
+        }
+
+        protected void RaiseReloadFinished()
+        {
+            OnReloadFinished?.Invoke();
         }
         
         public override void Use(Vector3 rayOrigin, Vector3 rayDirection) => Shoot(rayOrigin, rayDirection);

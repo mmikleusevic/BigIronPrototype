@@ -21,7 +21,7 @@ namespace Player
         [SerializeField] private float gunRotationSpeed = 10f;
         [SerializeField] private float maxAimDistance = 1000f;
         [SerializeField] private float maxHorizontalAngle = 45f;
-        [SerializeField] private float maxVerticalAngle = 45f;
+        [SerializeField] private float maxVerticalAngle = 30f;
         
         public override Health Health => playerHealth;
         public override Gold Gold => gold;
@@ -44,6 +44,18 @@ namespace Player
             initialCameraRotation = PlayerCamera.transform.localRotation;
             initialPlayerRotation = transform.localRotation;
         }
+        
+        private void OnEnable()
+        {
+            Gun.OnReloadStarted += StopAim;
+            Gun.OnReloadFinished += StartAiming;
+        }
+
+        private void OnDisable()
+        {
+            Gun.OnReloadStarted -= StopAim;
+            Gun.OnReloadFinished -= StartAiming;
+        }
 
         private void LateUpdate()
         {
@@ -52,7 +64,7 @@ namespace Player
             AimGunAtCrosshair();
         }
 
-        public void Aim()
+        public void StartAiming()
         {
             if (!combatantAnimator) return;
             
@@ -62,7 +74,12 @@ namespace Player
             combatantAnimator.SetLayerWeight(1, 1f);
         }
 
-        private void StopAiming()
+        private void StopAim()
+        {
+            isAiming = false;
+        }
+
+        private void StopAimingGoIdle()
         {
             if (!combatantAnimator) return;
             
@@ -74,6 +91,8 @@ namespace Player
         
         public void HandleLook(Vector2 input)
         {
+            if (!isAiming) return;
+            
             xRotation -= input.y;
             xRotation = Mathf.Clamp(xRotation, -maxVerticalAngle, maxVerticalAngle);
             
@@ -132,13 +151,11 @@ namespace Player
             xRotation = 0f;
             yRotation = 0f;
             
-            StopAiming();
+            StopAimingGoIdle();
             
             if (Gun) Gun.transform.localRotation = initialGunRotation;
             if (PlayerCamera) PlayerCamera.transform.localRotation = initialCameraRotation;
             if (transform) transform.localRotation = initialPlayerRotation;
-
-            if (combatantAnimator) combatantAnimator.Play(GameStrings.IDLE);
         }
 
         public void SetMainCamera()

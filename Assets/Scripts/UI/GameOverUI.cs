@@ -12,8 +12,11 @@ namespace UI
     public class GameOverUI : MonoBehaviour
     {
         [SerializeField] private GameObject gameOverPanel;
-        [SerializeField] private TextMeshProUGUI gameOverText;
         [SerializeField] private Button mainMenuButton;
+        [SerializeField] private Image backgroundImage;
+        [SerializeField] private Image gameOverImage;
+        [SerializeField] private Sprite loseSprite;
+        [SerializeField] private Sprite winSprite;
 
         private void Awake()
         {
@@ -32,15 +35,16 @@ namespace UI
             mainMenuButton.onClick.RemoveAllListeners();
         }
         
-        private void GameOver(bool hasWon)
+        private void GameOver(bool hasWon, bool isGameOver)
         {
             if (GameManager.Instance) GameManager.Instance.TogglePause();
             if (InputManager.Instance) InputManager.Instance.StartingMapsSetup();
             
             mainMenuButton.Select();
-            gameOverPanel.SetActive(true);
 
-            gameOverText.text = hasWon ? "You won!" : "You lost!";
+            gameOverImage.sprite = hasWon ? winSprite : loseSprite;
+            
+            gameOverPanel.SetActive(true);
         }
         
         private async UniTask BackToMainMenu()

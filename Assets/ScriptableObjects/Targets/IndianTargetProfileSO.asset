@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: IndianTargetProfileSO
   m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.TargetProfileSO
   travelDistance: 3
-  speed: 1.5
+  speed: 1
   scale: 2.5
-  lifetime: 2
-  orbitRadius: 3
+  lifetime: 3

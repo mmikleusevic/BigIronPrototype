@@ -307,8 +307,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38
-  m_fontSizeBase: 38
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -375,7 +375,7 @@ PrefabInstance:
     - target: {fileID: 2152625273919598996, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
       propertyPath: clickSound
       value: 
-      objectReference: {fileID: 8300000, guid: cbf6b9d71e886244bab22116a9c10ea0, type: 3}
+      objectReference: {fileID: 8300000, guid: 55052b4ef926cf240aefd0857ae8bc24, type: 3}
     - target: {fileID: 3657595189652688428, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 0
@@ -697,8 +697,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 52
-  m_fontSizeBase: 52
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -997,6 +997,7 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
+  buySound: {fileID: 8300000, guid: cbf6b9d71e886244bab22116a9c10ea0, type: 3}
   shopInputs: {fileID: 1104680979}
   shopItemPrefabs:
   - {fileID: 8289642564632482175, guid: a8b4abd981a60964685c92f6865c7469, type: 3}
@@ -1317,7 +1318,7 @@ Transform:
   m_GameObject: {fileID: 1647741252}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.25, y: 1.65, z: 1}
+  m_LocalPosition: {x: 0.25, y: 1.484, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1569,7 +1570,8 @@ PrefabInstance:
       propertyPath: m_text
       value: Buy
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2152625273919598996, guid: 835eecca3f4770d45bb1e5c87702523e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1615,7 +1617,7 @@ Transform:
   m_GameObject: {fileID: 2138068670}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.25, y: 1.65, z: 1}
+  m_LocalPosition: {x: -0.25, y: 1.484, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1912,7 +1914,7 @@ Animator:
   m_GameObject: {fileID: 8104922210078753495}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 9eb1cb64650814445b93f4b540858545, type: 3}
-  m_Controller: {fileID: 9100000, guid: 22f139f2d6a9d264eb6dbf82df4bcb08, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6567afeb5d85e5a4f8d35abdcd0fbbc6, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2864,7 +2866,7 @@ Transform:
   m_GameObject: {fileID: 8104922210078753495}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.4456221, z: -0, w: 0.89522123}
-  m_LocalPosition: {x: 1.46, y: 0, z: 1.04}
+  m_LocalPosition: {x: 1.46, y: -0.03, z: 1.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

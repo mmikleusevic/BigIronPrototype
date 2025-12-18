@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41bb817256cf41deba731dcb712c2017, type: 3}
   m_Name: IncreaseRadiusTargetDataSO
   m_EditorClassIdentifier: Assembly-CSharp::ShopRoom.IncreaseRadiusTargetDataSO
-  itemName: Stretcher
+  itemName: Lantern
   price: 10
   itemModifier: 1.2

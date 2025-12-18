@@ -25,4 +25,5 @@ public static class GameStrings
     public const string TIED = "Tied";
     public const string SHOP = "Shop";
     public const string LEAVE = "Leave";
+    public const string DEATH = "Death";
 }

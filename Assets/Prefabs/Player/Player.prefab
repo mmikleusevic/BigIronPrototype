@@ -115,6 +115,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2251519115649296313}
     m_Modifications:
+    - target: {fileID: 2282322975402238060, guid: e4296532f19a27e4eac7cc94968ac134, type: 3}
+      propertyPath: reloadTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282322975402238060, guid: e4296532f19a27e4eac7cc94968ac134, type: 3}
+      propertyPath: playerAnimator
+      value: 
+      objectReference: {fileID: 3658799899925052416}
     - target: {fileID: 5485257666912550335, guid: e4296532f19a27e4eac7cc94968ac134, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -361,6 +369,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerCombatant
   <Data>k__BackingField: {fileID: 11400000, guid: cbb1ed24ac631d54a85db60a99e14281, type: 2}
   combatantAnimator: {fileID: 3658799899925052416}
+  healClip: {fileID: 8300000, guid: 26a3e9f9933eef946b31c95531ea229d, type: 3}
+  hurtClip: {fileID: 8300000, guid: 0f2216fe5e7637f439e2a830471c8644, type: 3}
   combatantRenderer: {fileID: 3658799899920925376}
   <Gun>k__BackingField: {fileID: 640909409510094491}
   <PlayerCamera>k__BackingField: {fileID: 8068612337723766186}
@@ -385,7 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f01c464917884d46bf3f22cdf2c5fb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerHealth
-  maxHealth: 50
+  maxHealth: 5
 --- !u!114 &1582211033024998190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,7 +408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4f8c6be317410c9c34b9802a217d0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.Gold
-  goldAmount: 50
+  goldAmount: 0
 --- !u!54 &2405560384609159212
 Rigidbody:
   m_ObjectHideFlags: 0

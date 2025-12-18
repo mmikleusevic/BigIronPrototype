@@ -5,6 +5,7 @@ using Managers;
 using Player;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
@@ -17,6 +18,7 @@ namespace ShopRoom
         
         [field: SerializeField] public AssetReference ShopAssetReference { get; private set; }
 
+        [SerializeField] private AudioClip buySound;
         [SerializeField] private ShopInputs shopInputs;
         [SerializeField] private ShopItem[] shopItemPrefabs;
         [SerializeField] private Transform[] itemTransforms;
@@ -45,8 +47,6 @@ namespace ShopRoom
 
         private void SpawnItems()
         {
-            int count = Mathf.Min(shopItemPrefabs.Length, itemTransforms.Length);
-            
             PlayerCombatant player = GameManager.Instance.PlayerCombatant;
             if (!player) return;
             
@@ -60,6 +60,8 @@ namespace ShopRoom
             }
 
             if (shopItemPool.Count == 0) return;
+
+            int count = Mathf.Min(shopItemPool.Count, itemTransforms.Length);
             
             for (int i = 0; i < count; i++)
             {
@@ -70,7 +72,8 @@ namespace ShopRoom
                 shopItemPool.RemoveAt(index);
                 
                 Transform spawnPoint = itemTransforms[i];
-                ShopItem shopItem = Instantiate(randomItemPrefab, spawnPoint.position, spawnPoint.rotation);
+                ShopItem shopItem = Instantiate(randomItemPrefab, spawnPoint.position, spawnPoint.rotation, spawnPoint);
+                
                 shopItems.Add(shopItem);
             }
 
@@ -119,6 +122,7 @@ namespace ShopRoom
 
             if (!hasBought) return;
             
+            SoundManager.Instance.PlayVFX(buySound);
             shopItem.Deselect();
             shopItems.Remove(shopItem);
             Destroy(shopItem.gameObject);

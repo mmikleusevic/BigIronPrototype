@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5249d50534356ba49a574023d7e864b1, type: 3}
   m_Name: HpGreaterThanSO
   m_EditorClassIdentifier: Assembly-CSharp::EventRoom.HealthGreaterThanConditionSO
-  Threshold: 50
+  Threshold: 25

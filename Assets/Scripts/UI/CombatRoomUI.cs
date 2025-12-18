@@ -1,8 +1,10 @@
 ﻿using System;
 using CombatRoom;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Extensions;
 using Managers;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,6 +13,7 @@ namespace UI
 {
     public class CombatRoomUI : MonoBehaviour
     {
+        [SerializeField] private TextMeshProUGUI attackCountdownText;
         [SerializeField] private GameObject combatRoomPanel;
         [SerializeField] private Button shootButton;
         [SerializeField] private Button cancelButton;
@@ -25,6 +28,7 @@ namespace UI
         {
             endButton.gameObject.SetActive(false);
             combatRoomPanel.SetActive(false);
+            attackCountdownText.gameObject.SetActive(false);
         }
 
         private void OnEnable()
@@ -39,6 +43,7 @@ namespace UI
             CombatRoomEvents.OnPlayerAttackStarted += Hide;
             CombatRoomEvents.OnVictoryStarted += ShowContinueButton;
             CombatRoomEvents.OnDefeatStarted += Hide;
+            CombatRoomEvents.OnAttackCountdownTick += UpdateAttackCountdownText;
         }
 
         private void OnDisable()
@@ -53,6 +58,7 @@ namespace UI
             CombatRoomEvents.OnPlayerAttackStarted -= Hide;
             CombatRoomEvents.OnVictoryStarted -= ShowContinueButton;
             CombatRoomEvents.OnDefeatStarted -= Hide;
+            CombatRoomEvents.OnAttackCountdownTick -= UpdateAttackCountdownText;
         }
 
         private void Shoot()
@@ -103,6 +109,27 @@ namespace UI
             shootButton.gameObject.SetActive(true);
             confirmButton.gameObject.SetActive(false);
             cancelButton.gameObject.SetActive(false);
+        }
+        
+        private void UpdateAttackCountdownText(int seconds)
+        {
+            attackCountdownText.gameObject.SetActive(true);
+            
+            if (seconds <= 0)
+            {
+                attackCountdownText.gameObject.SetActive(false);
+            }
+            if (seconds <= 3f)
+            {
+                attackCountdownText.transform.DOPunchScale(Vector3.one * 0.2f, 0.3f);
+                attackCountdownText.DOColor(Color.red, 0.15f).SetLoops(2, LoopType.Yoyo);
+            }
+            else
+            {
+                attackCountdownText.gameObject.SetActive(true);
+            }
+            
+            attackCountdownText.text = seconds.ToString();
         }
 
         private void Hide()

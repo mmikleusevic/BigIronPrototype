@@ -567,6 +567,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemyCombatant
   <Data>k__BackingField: {fileID: 11400000, guid: 251a8e9d30e52b244b31a4e462ff7b24, type: 2}
   combatantAnimator: {fileID: 3862248153190505012}
+  healClip: {fileID: 8300000, guid: 26a3e9f9933eef946b31c95531ea229d, type: 3}
+  hurtClip: {fileID: 8300000, guid: 0f2216fe5e7637f439e2a830471c8644, type: 3}
   combatantRenderer: {fileID: 3862248153186428148}
   enemyHealth: {fileID: 3561122328880991480}
   gold: {fileID: 8591081073053268119}

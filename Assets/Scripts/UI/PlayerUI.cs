@@ -1,5 +1,7 @@
-﻿using Managers;
+﻿using DG.Tweening;
+using Managers;
 using Player;
+using TMPro;
 using UnityEngine;
 
 namespace UI

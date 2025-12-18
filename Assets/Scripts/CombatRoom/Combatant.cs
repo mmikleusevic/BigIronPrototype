@@ -1,4 +1,5 @@
-﻿using Player;
+﻿using Managers;
+using Player;
 using UnityEngine;
 
 namespace CombatRoom
@@ -7,11 +8,14 @@ namespace CombatRoom
     {
         [field: SerializeField] public CombatantDataSO Data { get; protected set; }
         [SerializeField] protected Animator combatantAnimator;
-        
+
+        [SerializeField] private AudioClip healClip;
+        [SerializeField] private AudioClip hurtClip;
         [SerializeField] private Renderer combatantRenderer;
         
         public abstract Health Health { get; }
         public abstract Gold Gold { get; }
+        public Animator CombatantAnimator => combatantAnimator;
         public bool IsDead => Health && Health.CurrentHealth <= 0;
         
         public void GainGoldAmount(int amount)
@@ -26,11 +30,14 @@ namespace CombatRoom
 
         public int TakeDamage(Combatant damager, Combatant receiver, int damage)
         {
+            SoundManager.Instance.PlayVFX(hurtClip);
+            
             return Health.TakeDamage(damager, receiver, damage);
         }
 
         public int Heal(int healAmount)
         {
+            SoundManager.Instance.PlayVFX(healClip);
             return Health.Heal(healAmount);
         }
         
