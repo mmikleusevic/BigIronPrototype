@@ -17,6 +17,7 @@ namespace Weapons
         [SerializeField] protected Animator playerAnimator;
         [SerializeField] private BulletTracer tracerPrefab;
         [SerializeField] private AudioClip clickingSound;
+        [SerializeField] protected AudioClip reloadSound;
         [SerializeField] private AudioClip shotSound;
         [SerializeField] protected Transform shootPoint;
         [SerializeField] protected ParticleSystem shootVFXPrefab;

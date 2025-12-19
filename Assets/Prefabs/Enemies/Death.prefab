@@ -76,6 +76,14 @@ PrefabInstance:
       propertyPath: 'targetPrefabs.Array.data[1]'
       value: 
       objectReference: {fileID: 7678620887190787069, guid: 3d8770ddef3d60a448c86ac993887d37, type: 3}
+    - target: {fileID: 6295339434770126451, guid: 738d505570e9374489b3f1612b007e75, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295339434770126451, guid: 738d505570e9374489b3f1612b007e75, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8591081073053268119, guid: 738d505570e9374489b3f1612b007e75, type: 3}
       propertyPath: goldAmount
       value: 50

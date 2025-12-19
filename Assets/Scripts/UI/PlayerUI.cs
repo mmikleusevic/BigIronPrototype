@@ -10,17 +10,17 @@ namespace UI
     {
         protected virtual void OnEnable()
         {
-            if (GameManager.Instance) GameManager.Instance.OnPlayerInitialized += OnPlayerInitialized;
+            if (GameManager.Instance) GameManager.Instance.OnGameStarted += OnGameStarted;
         }
 
         protected virtual void OnDisable()
         {
-            if (GameManager.Instance) GameManager.Instance.OnPlayerInitialized -= OnPlayerInitialized;
+            if (GameManager.Instance) GameManager.Instance.OnGameStarted -= OnGameStarted;
             
             Unsubscribe(GameManager.Instance?.PlayerCombatant);
         }
 
-        private void OnPlayerInitialized()
+        private void OnGameStarted()
         {
             Subscribe(GameManager.Instance?.PlayerCombatant);
 

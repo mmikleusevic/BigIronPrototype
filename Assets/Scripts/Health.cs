@@ -1,11 +1,14 @@
 ﻿using System;
 using CombatRoom;
+using Managers;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
     public Action<int, int> OnHealthChanged;
     
+    [SerializeField] private AudioClip healClip;
+    [SerializeField] private AudioClip hurtClip;
     [SerializeField] protected int maxHealth = 100;
 
     private int currentHealth;
@@ -21,6 +24,8 @@ public class Health : MonoBehaviour
     {
         int actualLoss = Mathf.Min(CurrentHealth, healthToLose);
 
+        if (actualLoss > 0) SoundManager.Instance.PlayVFX(hurtClip);
+        
         currentHealth -= actualLoss;
 
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
@@ -35,6 +40,8 @@ public class Health : MonoBehaviour
         int missingHealth = maxHealth - currentHealth;
         int actualHeal = Mathf.Clamp(healAmount, 0, missingHealth);
 
+        if (actualHeal > 0) SoundManager.Instance.PlayVFX(hurtClip);
+        
         currentHealth += actualHeal;
 
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
@@ -44,9 +51,7 @@ public class Health : MonoBehaviour
 
     protected virtual void Die(Combatant damager, Combatant receiver)
     {
-        if (!damager && !receiver) return;
         
-        damager.GainGoldAmount(receiver.Gold.GoldAmount);
     }
     
     public void RefreshState()

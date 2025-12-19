@@ -14,9 +14,15 @@ namespace UI
         private int lastGold;
         private Tween goldTween;
 
-        protected override void Subscribe(PlayerCombatant playerCombatant) => playerCombatant.Gold.OnGoldChanged += UpdateUI;
+        protected override void Subscribe(PlayerCombatant playerCombatant)
+        {
+            if (playerCombatant && playerCombatant.Gold) playerCombatant.Gold.OnGoldChanged += UpdateUI;
+        }
 
-        protected override void Unsubscribe(PlayerCombatant playerCombatant) => playerCombatant.Gold.OnGoldChanged -= UpdateUI;
+        protected override void Unsubscribe(PlayerCombatant playerCombatant)
+        {
+            if (playerCombatant && playerCombatant.Gold) playerCombatant.Gold.OnGoldChanged -= UpdateUI;
+        }
 
         private void UpdateUI(int goldAmount)
         {

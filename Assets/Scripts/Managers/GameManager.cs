@@ -10,7 +10,7 @@ namespace Managers
 {
     public class GameManager : MonoBehaviour
     {
-        public event Action OnPlayerInitialized;
+        public event Action OnGameStarted;
         public event Action OnRoomPassed;
         public event Action<bool, bool> OnGameOver;
         
@@ -34,7 +34,7 @@ namespace Managers
             PlayerCombatant = Instantiate(playerPrefab, playerPrefab.transform.position, playerPrefab.transform.rotation);
             isGameOver = false;
             
-            OnPlayerInitialized?.Invoke();
+            OnGameStarted?.Invoke();
         }
 
         public bool TogglePause()

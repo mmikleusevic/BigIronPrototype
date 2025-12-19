@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Managers;
+using Player;
 using UnityEngine;
 
 namespace Weapons
@@ -24,12 +25,14 @@ namespace Weapons
 
         private IEnumerator ReloadCoroutine()
         {
+            RaiseReloadStarted();
+            
             playerAnimator.SetLayerWeight(1, 1f);
             playerAnimator.Play(GameStrings.RELOAD);
             
             isReloading = true;
             
-            RaiseReloadStarted();
+            SoundManager.Instance.PlayVFX(reloadSound);
             
             yield return new WaitForSeconds(reloadTime);
                 

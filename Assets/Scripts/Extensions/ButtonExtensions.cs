@@ -12,7 +12,7 @@ namespace Extensions
         {
             button.onClick.AddListener(() =>
             {
-                SafeClickAsync(button, asyncAction).Forget();
+                button.SafeClickAsync(asyncAction).Forget();
             });
         }
         

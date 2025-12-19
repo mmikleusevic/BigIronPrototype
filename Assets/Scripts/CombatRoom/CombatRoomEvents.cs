@@ -1,4 +1,5 @@
 ﻿using System;
+using Enemies;
 
 namespace CombatRoom
 {
@@ -14,5 +15,7 @@ namespace CombatRoom
         public Action<int> OnAttackCountdownTick;
         public Action OnVictoryStarted;
         public Action OnDefeatStarted;
+        public Action OnPlayerDamageResultStarted;
+        public Action OnPlayerDamageResultEnded;
     }
 }

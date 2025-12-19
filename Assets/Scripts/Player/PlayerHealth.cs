@@ -1,5 +1,6 @@
 using System.Collections;
 using CombatRoom;
+using Managers;
 using UnityEngine;
 
 namespace Player
@@ -8,18 +9,18 @@ namespace Player
     {
         protected override void Die(Combatant damager, Combatant receiver)
         {
-            StartCoroutine(EnemyDeath(damager, receiver));
+            StartCoroutine(PlayerDeath(receiver));
         }
 
-        private IEnumerator EnemyDeath(Combatant damager, Combatant receiver)
+        private IEnumerator PlayerDeath(Combatant receiver)
         {
-            receiver.CombatantAnimator.SetTrigger(GameStrings.DEATH);
+            if (EventRoomManager.Instance) EventRoomManager.Instance.LockInteractions();
+            
+            receiver.CombatantAnimator.Play(GameStrings.DEATH);
 
             yield return new WaitForSeconds(2);
             
-            Destroy(gameObject);
-            
-            base.Die(damager, receiver);
+            GameManager.Instance.GameOver(false);
         }
     }
 }

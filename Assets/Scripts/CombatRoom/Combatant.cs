@@ -7,11 +7,10 @@ namespace CombatRoom
     public abstract class Combatant : MonoBehaviour
     {
         [field: SerializeField] public CombatantDataSO Data { get; protected set; }
+        
         [SerializeField] protected Animator combatantAnimator;
-
-        [SerializeField] private AudioClip healClip;
-        [SerializeField] private AudioClip hurtClip;
         [SerializeField] private Renderer combatantRenderer;
+        [SerializeField] private Renderer gunRenderer;
         
         public abstract Health Health { get; }
         public abstract Gold Gold { get; }
@@ -30,20 +29,18 @@ namespace CombatRoom
 
         public int TakeDamage(Combatant damager, Combatant receiver, int damage)
         {
-            SoundManager.Instance.PlayVFX(hurtClip);
-            
             return Health.TakeDamage(damager, receiver, damage);
         }
 
         public int Heal(int healAmount)
         {
-            SoundManager.Instance.PlayVFX(healClip);
             return Health.Heal(healAmount);
         }
         
         public void ToggleVisibility(bool visible)
         {
             if (combatantRenderer) combatantRenderer.enabled = visible;
+            if (gunRenderer) gunRenderer.enabled = visible;
         }
     }
 }

@@ -26,7 +26,5 @@ public class Boot : MonoBehaviour
             await LevelManager.Instance.LoadSceneAsync(loaderScene, false);
             await LevelManager.Instance.LoadSceneAsync(mainMenuScene);
         }
-
-        await SceneManager.UnloadSceneAsync(0);
     }
 }

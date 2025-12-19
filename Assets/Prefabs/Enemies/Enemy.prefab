@@ -112,7 +112,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0.7}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6365121479921432463
@@ -567,9 +567,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemyCombatant
   <Data>k__BackingField: {fileID: 11400000, guid: 251a8e9d30e52b244b31a4e462ff7b24, type: 2}
   combatantAnimator: {fileID: 3862248153190505012}
-  healClip: {fileID: 8300000, guid: 26a3e9f9933eef946b31c95531ea229d, type: 3}
-  hurtClip: {fileID: 8300000, guid: 0f2216fe5e7637f439e2a830471c8644, type: 3}
   combatantRenderer: {fileID: 3862248153186428148}
+  gunRenderer: {fileID: 8234013470866767748}
   enemyHealth: {fileID: 3561122328880991480}
   gold: {fileID: 8591081073053268119}
   <TargetSpawner>k__BackingField: {fileID: 5045604229406316249}
@@ -602,6 +601,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0b1eab2001240ee84573baa1290972e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemyHealth
+  healClip: {fileID: 8300000, guid: 26a3e9f9933eef946b31c95531ea229d, type: 3}
+  hurtClip: {fileID: 8300000, guid: 0f2216fe5e7637f439e2a830471c8644, type: 3}
   maxHealth: 100
 --- !u!114 &8591081073053268119
 MonoBehaviour:
@@ -662,7 +663,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.6
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
@@ -751,6 +752,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4296532f19a27e4eac7cc94968ac134, type: 3}
+--- !u!23 &8234013470866767748 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5485257666912550335, guid: e4296532f19a27e4eac7cc94968ac134, type: 3}
+  m_PrefabInstance: {fileID: 4493074455526113851}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8234013470869060964 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5485257666914320223, guid: e4296532f19a27e4eac7cc94968ac134, type: 3}

@@ -44,7 +44,12 @@ namespace Player
             initialCameraRotation = PlayerCamera.transform.localRotation;
             initialPlayerRotation = transform.localRotation;
         }
-        
+
+        private void Start()
+        {
+            if (EventRoomManager.Instance) EventRoomManager.Instance.UnlockInteractions();
+        }
+
         private void OnEnable()
         {
             Gun.OnReloadStarted += StopAim;
@@ -77,6 +82,9 @@ namespace Player
         private void StopAim()
         {
             isAiming = false;
+            
+            if (Gun) Gun.transform.localRotation = initialGunRotation;
+            if (PlayerCamera) PlayerCamera.transform.localRotation = initialCameraRotation;
         }
 
         private void StopAimingGoIdle()
@@ -105,7 +113,7 @@ namespace Player
         
         private void AimGunAtCrosshair()
         {
-            if (!Gun || !mainCamera) return; 
+            if (!Gun || !mainCamera || !isAiming) return;
             
             Vector3 targetPoint = GetCrosshairWorldPosition(); 
             Vector3 directionToTarget = (targetPoint - Gun.transform.position).normalized; 

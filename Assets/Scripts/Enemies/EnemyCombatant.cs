@@ -5,6 +5,7 @@ using Player;
 using Targets;
 using UI;
 using UnityEngine;
+using Weapons;
 
 namespace Enemies
 {
@@ -36,9 +37,9 @@ namespace Enemies
             if (TargetSpawner) TargetSpawner.StopSpawningTargets();
         }
 
-        public void InitializeTargetSpawner(PlayerComboSystem playerComboSystem)
+        public void InitializeTargetSpawner(PlayerComboSystem playerComboSystem, Transform middleEnemyTransform)
         {
-            TargetSpawner?.Initialize(playerComboSystem);
+            TargetSpawner?.Initialize(playerComboSystem, middleEnemyTransform);
         }
     }
 }

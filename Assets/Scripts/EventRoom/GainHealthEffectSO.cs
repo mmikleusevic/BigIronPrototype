@@ -12,7 +12,7 @@ namespace EventRoom
         {
             int gainedHealth = playerContext.Heal(Amount);
             
-            return $"You gained {gainedHealth} Health.";
+            return $"You gained {gainedHealth} health.";
         }
     }
 }

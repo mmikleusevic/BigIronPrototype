@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 8362174810297453007}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000029802322, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.036, z: 0.047}
+  m_LocalPosition: {x: -0, y: 0.03599997, z: 0.1053}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -90,7 +90,7 @@ MonoBehaviour:
   Lens:
     FieldOfView: 60.000004
     OrthographicSize: 10
-    NearClipPlane: 0.2
+    NearClipPlane: 0.05
     FarClipPlane: 5000
     Dutch: 0
     ModeOverride: 0
@@ -119,6 +119,10 @@ PrefabInstance:
       propertyPath: reloadTime
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2282322975402238060, guid: e4296532f19a27e4eac7cc94968ac134, type: 3}
+      propertyPath: reloadSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 9ebba74440758bd4988f87a23fe8f85f, type: 3}
     - target: {fileID: 2282322975402238060, guid: e4296532f19a27e4eac7cc94968ac134, type: 3}
       propertyPath: playerAnimator
       value: 
@@ -211,6 +215,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37efeac6a7ea4a3cb71632803aa0da1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapons.Revolver
+--- !u!23 &6581742402855414600 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5485257666912550335, guid: e4296532f19a27e4eac7cc94968ac134, type: 3}
+  m_PrefabInstance: {fileID: 1677739369162462967}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6581742402857839016 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5485257666914320223, guid: e4296532f19a27e4eac7cc94968ac134, type: 3}
@@ -369,9 +378,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerCombatant
   <Data>k__BackingField: {fileID: 11400000, guid: cbb1ed24ac631d54a85db60a99e14281, type: 2}
   combatantAnimator: {fileID: 3658799899925052416}
-  healClip: {fileID: 8300000, guid: 26a3e9f9933eef946b31c95531ea229d, type: 3}
-  hurtClip: {fileID: 8300000, guid: 0f2216fe5e7637f439e2a830471c8644, type: 3}
   combatantRenderer: {fileID: 3658799899920925376}
+  gunRenderer: {fileID: 6581742402855414600}
   <Gun>k__BackingField: {fileID: 640909409510094491}
   <PlayerCamera>k__BackingField: {fileID: 8068612337723766186}
   playerHealth: {fileID: 3995859529099245620}
@@ -395,7 +403,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f01c464917884d46bf3f22cdf2c5fb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerHealth
-  maxHealth: 5
+  healClip: {fileID: 8300000, guid: 26a3e9f9933eef946b31c95531ea229d, type: 3}
+  hurtClip: {fileID: 8300000, guid: 0f2216fe5e7637f439e2a830471c8644, type: 3}
+  maxHealth: 50
 --- !u!114 &1582211033024998190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,7 +465,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.6
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}

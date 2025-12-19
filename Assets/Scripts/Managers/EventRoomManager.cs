@@ -15,6 +15,7 @@ namespace Managers
         public event Action OnEventEnded;
     
         private EventSO currentEventSo; 
+        private bool isLocked; 
         
         private void Awake()
         {
@@ -23,6 +24,8 @@ namespace Managers
 
         public void OnChoiceSelected(EventChoice choice)
         {
+            if (isLocked) return;
+            
             PlayerCombatant player = null;
             
             if (GameManager.Instance) player = GameManager.Instance.PlayerCombatant;
@@ -36,6 +39,8 @@ namespace Managers
         
         public void ContinueAfterResult(EventChoice choice)
         {
+            if (isLocked) return;
+            
             if (choice.NextEvent)
             {
                 DisplayCurrentEvent(choice.NextEvent);
@@ -44,6 +49,16 @@ namespace Managers
             {
                 EndEventSequence();
             }
+        }
+        
+        public void LockInteractions()
+        {
+            isLocked = true;
+        }
+
+        public void UnlockInteractions()
+        {
+            isLocked = false;
         }
 
         private bool CheckConditions(EventChoice choice, PlayerCombatant player)

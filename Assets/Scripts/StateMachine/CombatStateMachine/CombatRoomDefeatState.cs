@@ -18,8 +18,6 @@ namespace StateMachine.CombatStateMachine
         {
             combatRoomEvents.OnDefeatStarted?.Invoke();
             
-            GameManager.Instance.GameOver(false);
-            
             return UniTask.CompletedTask;
         }
 

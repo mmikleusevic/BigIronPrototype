@@ -27,6 +27,7 @@ namespace UI
         [SerializeField] private Sprite midWagerSprite;
         [SerializeField] private Sprite highWagerSprite;
         [SerializeField] private TextMeshProUGUI winnerText;
+        [SerializeField] private TextMeshProUGUI gameResultText;
         
         private PokerInputs PokerInputs => pokerDiceGameController.PokerInputs;
         private PokerInputRules InputRules => pokerDiceGameController.PokerInputRules;
@@ -42,6 +43,7 @@ namespace UI
             holdButton.gameObject.SetActive(false);
             endButton.gameObject.SetActive(false);
             winnerText.gameObject.SetActive(false);
+            gameResultText.gameObject.SetActive(false);
         }
 
         private void OnEnable()
@@ -122,13 +124,15 @@ namespace UI
             numberOfRolls.gameObject.SetActive(false);
         }
         
-        private void OnGameOver(string gameResult)
+        private void OnGameOver(string winnerResult, string gameResult)
         {
             endButton.gameObject.SetActive(true);
             winnerText.gameObject.SetActive(true);
             resultPanel.gameObject.SetActive(false);
+            gameResultText.gameObject.SetActive(true);
             
-            winnerText.text = gameResult;
+            winnerText.text = winnerResult;
+            gameResultText.text = gameResult;
         }
         
         private void OnTurnEnded()

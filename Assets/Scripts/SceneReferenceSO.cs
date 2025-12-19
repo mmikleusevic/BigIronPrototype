@@ -1,4 +1,6 @@
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -6,19 +8,25 @@ using UnityEngine.AddressableAssets;
 public class SceneReferenceSO : ScriptableObject
 {
     public AssetReference SceneReference; 
-    private string assetGUID;
+    
+    [SerializeField] private string assetGUID;
+    [SerializeField] private string assetName;
     public string AssetGUID => assetGUID;
-    private string assetName;
     public string AssetName => assetName;
     
     private void OnValidate()
     {
-        if (SceneReference == null || string.IsNullOrEmpty(SceneReference?.AssetGUID)) return;
+#if UNITY_EDITOR
+        if (SceneReference == null || string.IsNullOrEmpty(SceneReference?.AssetGUID))
+        {
+            assetGUID = "";
+            assetName = "";
+            return;
+        }
         
         assetGUID = SceneReference.AssetGUID;
-        
-#if UNITY_EDITOR
         assetName = SceneReference.editorAsset ? SceneReference.editorAsset.name : "";
+        
         EditorUtility.SetDirty(this);
 #endif
     }

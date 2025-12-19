@@ -28,7 +28,6 @@ namespace Managers
         private void Awake()
         {
             Instance = this;
-            DontDestroyOnLoad(this);
         }
 
         public async UniTask LoadSceneAsync(AssetReference sceneReferenceSO,  bool setActive = true)
@@ -65,15 +64,17 @@ namespace Managers
             loadedScenes.Remove(sceneGUID);
         }
 
-        public async UniTask UnloadAllButPersistentScenesAsync()
+        private async UniTask UnloadAllButPersistentScenesAsync()
         {
+            List<string> scenesToUnload = loadedScenes.Keys.Where(guid => !IsPersistentScene(guid)).ToList();
+    
             List<UniTask> unloadTasks = new List<UniTask>();
-    
-            foreach (KeyValuePair<string, AsyncOperationHandle<SceneInstance>> loadedScenePair in loadedScenes)
+
+            foreach (string sceneGUID in scenesToUnload)
             {
-                if (!IsPersistentScene(loadedScenePair.Key)) unloadTasks.Add(UnloadSceneAsync(loadedScenePair.Key));
+                unloadTasks.Add(UnloadSceneAsync(sceneGUID));
             }
-    
+
             await UniTask.WhenAll(unloadTasks);
         }
         
@@ -99,7 +100,7 @@ namespace Managers
             if (UIFocusManager.Instance) UIFocusManager.Instance.ClearFocus();
             if (InputManager.Instance) InputManager.Instance.StartingMapsSetup();
             
-            UnloadAllButPersistentScenesAsync().Forget();
+            await UnloadAllButPersistentScenesAsync();
             await LoadSceneAsync(mainMenuSceneReference);
 
             if (GameManager.Instance) GameManager.Instance.TogglePause();
@@ -111,7 +112,7 @@ namespace Managers
         {
             if (EventSystem.current) EventSystem.current.SetSelectedGameObject(null);
 
-            UnloadSceneAsync(sceneReference.AssetGUID).Forget();
+            await UnloadSceneAsync(sceneReference.AssetGUID);
             await LoadSceneAsync(gameAssetReference);
 
             if (InputManager.Instance) InputManager.Instance.EnableOnlyUIMap();

@@ -11,7 +11,7 @@ namespace PokerDiceRoom
         public Action OnHold;
         public Action OnDiceRollingEnded;
         public Action OnGameOverStarted;
-        public Action<string> OnGameOver;
+        public Action<string, string> OnGameOver;
         public Action OnDiceEvaluationStarted;
     }
 }

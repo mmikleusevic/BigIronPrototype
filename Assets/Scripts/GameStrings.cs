@@ -22,7 +22,7 @@ public static class GameStrings
     public const string RELOAD = "Reload";
     public const string UI = "UI";
     public const string IDLE = "Idle";
-    public const string TIED = "Tied";
+    public const string TIED = "tied";
     public const string SHOP = "Shop";
     public const string LEAVE = "Leave";
     public const string DEATH = "Death";

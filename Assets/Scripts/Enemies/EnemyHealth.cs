@@ -13,13 +13,11 @@ namespace Enemies
 
         private IEnumerator EnemyDeath(Combatant damager, Combatant receiver)
         {
-            receiver.CombatantAnimator.SetTrigger(GameStrings.DEATH);
+            receiver.CombatantAnimator.Play(GameStrings.DEATH);
 
             yield return new WaitForSeconds(2);
             
-            Destroy(gameObject);
-            
-            base.Die(damager, receiver);
+            damager.GainGoldAmount(receiver.Gold.GoldAmount);
         }
     }
 }

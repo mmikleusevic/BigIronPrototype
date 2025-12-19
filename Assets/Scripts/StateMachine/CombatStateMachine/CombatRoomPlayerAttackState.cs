@@ -47,7 +47,7 @@ namespace StateMachine.CombatStateMachine
             EnablePlayerControls();
                 
             await StartAttackCountdown(currentEnemy.AttackDuration, externalToken);
-            await combatRoomController.BaseStateMachine.ChangeState(new CombatRoomTurnEndState(combatRoomController));
+            await combatRoomController.BaseStateMachine.ChangeState(new CombatRoomPlayerDamageResultState(combatRoomController));
         }
 
         public void OnUpdate()

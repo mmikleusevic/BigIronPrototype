@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,7 +7,7 @@ namespace UI
     public class Selector : MonoBehaviour
     {
         [SerializeField] private Selectable selectable;
-        
+
         private void OnEnable()
         {
             Select();

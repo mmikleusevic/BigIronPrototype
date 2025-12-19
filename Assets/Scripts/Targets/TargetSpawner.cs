@@ -15,15 +15,17 @@ namespace Targets
         private Coroutine spawnTargetsCoroutine;
         private PlayerComboSystem comboSystem;
         private EnemyCombatant enemy;
+        private Transform middleEnemyTransform;
 
         private void Start()
         {
             enemy = GetComponent<EnemyCombatant>();
         }
 
-        public void Initialize(PlayerComboSystem comboSystem)
+        public void Initialize(PlayerComboSystem comboSystem, Transform middleEnemyTransform)
         {
             this.comboSystem = comboSystem;
+            this.middleEnemyTransform = middleEnemyTransform;
         }
 
         public void SpawnTargets()
@@ -54,7 +56,7 @@ namespace Targets
                 float yOffset = Random.Range(1.5f, 5f);
                 
                 Vector3 spawnOffset = new Vector3(xOffset, yOffset, zOffset);
-                Vector3 spawn = enemy.transform.position + spawnOffset;
+                Vector3 spawn = middleEnemyTransform.position + spawnOffset;
 
                 TargetMovementAxis axis = (TargetMovementAxis)Random.Range(0, Enum.GetNames(typeof(TargetMovementAxis)).Length);
                 TargetSpawnContext targetSpawnContext = new TargetSpawnContext

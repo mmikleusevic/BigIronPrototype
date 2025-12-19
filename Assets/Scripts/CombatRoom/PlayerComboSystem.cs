@@ -12,7 +12,7 @@ namespace CombatRoom
         
         private CombatRoomEvents combatRoomEvents;
         
-        public event Action<float> OnComboFinished;
+        public event Action<float> OnDealDamage;
         
         private float DamageMultiplier => hitStreak * 0.5f;
         
@@ -28,7 +28,8 @@ namespace CombatRoom
             if (combatRoomEvents == null) return;
             
             combatRoomEvents.OnPlayerAttackStarted += ResetStreaks;
-            combatRoomEvents.OnPlayerAttackEnded += FinalizeCombo;
+            combatRoomEvents.OnPlayerAttackEnded += DestroyTargets;
+            combatRoomEvents.OnPlayerDamageResultStarted += DealDamage;
         }
 
         private void OnDisable()
@@ -36,11 +37,12 @@ namespace CombatRoom
             if (combatRoomEvents == null) return;
             
             combatRoomEvents.OnPlayerAttackStarted -= ResetStreaks;
-            combatRoomEvents.OnPlayerAttackEnded -= FinalizeCombo;
+            combatRoomEvents.OnPlayerAttackEnded -= DestroyTargets;
+            combatRoomEvents.OnPlayerDamageResultStarted -= DealDamage;
             
             UnregisterAndDestroyAllTargets();
         }
-        
+
         public void RegisterTarget(BaseTarget baseTarget)
         {
             activeTargets.Add(baseTarget);
@@ -57,6 +59,11 @@ namespace CombatRoom
 
             activeTargets.Remove(baseTarget);
         }
+        
+        private void DealDamage()
+        {
+            OnDealDamage?.Invoke(DamageMultiplier);
+        }
 
         private void OnMiss()
         {
@@ -69,9 +76,8 @@ namespace CombatRoom
             hitStreak = 0;
         }
         
-        private void FinalizeCombo()
+        private void DestroyTargets()
         {
-            OnComboFinished?.Invoke(DamageMultiplier);
             UnregisterAndDestroyAllTargets();
         }
 

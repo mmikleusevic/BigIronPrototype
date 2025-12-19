@@ -10,7 +10,7 @@ namespace EventRoom
         
         public override string Apply(PlayerCombatant playerContext)
         {
-            int lostHealth = playerContext.TakeDamage(null, null, Amount);
+            int lostHealth = playerContext.TakeDamage(null, playerContext, Amount);
             
             return $"You lost {lostHealth} Health.";
         }

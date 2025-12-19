@@ -14,6 +14,9 @@ namespace Managers
         [SerializeField] private AudioSource musicSource;
         [SerializeField] private float transitionTime;
         
+        private Coroutine currentTransition;
+        private float targetVolume;
+        
         private void Awake()
         {
             Instance = this;
@@ -23,14 +26,16 @@ namespace Managers
         {
             float volume = PlayerPrefs.GetFloat(GameStrings.VOLUME);
             SetVolume(volume);
+            targetVolume = volume;
             
-            float sfxVolume = sfxVolume = PlayerPrefs.GetFloat(GameStrings.SFX_VOLUME);
+            float sfxVolume = PlayerPrefs.GetFloat(GameStrings.SFX_VOLUME);
             SetSfxVolume(sfxVolume);
         }
 
         public void SetVolume(float volume)
         {
             musicSource.volume = volume;   
+            targetVolume = volume;
             PlayerPrefs.SetFloat(GameStrings.VOLUME, musicSource.volume);
         }
 
@@ -52,26 +57,43 @@ namespace Managers
 
         public void SmoothChangeTrack(AudioClip clip)
         {
-            StartCoroutine(SmoothChangeTrackCoroutine(clip));
+            if (!clip)
+            {
+                Debug.LogError("SmoothChangeTrack called with NULL AudioClip");
+                return;
+            }
+            
+            if (currentTransition != null) StopCoroutine(currentTransition);
+            
+            currentTransition = StartCoroutine(SmoothChangeTrackCoroutine(clip));
         }
 
         private IEnumerator SmoothChangeTrackCoroutine(AudioClip clip)
         {
-            if (musicSource.clip == clip) yield break;
+            if (musicSource.clip == clip && musicSource.isPlaying && Mathf.Approximately(musicSource.volume, targetVolume))
+            {
+                currentTransition = null;
+                yield break;
+            }
             
+            if (musicSource.clip == clip && musicSource.isPlaying)
+            {
+                yield return StartCoroutine(SmoothChangeVolume(musicSource.volume, targetVolume));
+                currentTransition = null;
+                yield break;
+            }
+    
             float startingVolume = musicSource.volume;
             float endingVolume = 0;
-            
+    
             yield return StartCoroutine(SmoothChangeVolume(startingVolume, endingVolume));
-            
+    
             musicSource.clip = clip;
             musicSource.Play();
-            
-            float tempVolume = startingVolume;
-            startingVolume = musicSource.volume;
-            endingVolume = tempVolume;
-            
-            yield return StartCoroutine(SmoothChangeVolume(startingVolume, endingVolume));
+    
+            yield return StartCoroutine(SmoothChangeVolume(0, targetVolume));
+    
+            currentTransition = null;
         }
 
         private IEnumerator SmoothChangeVolume(float startingVolume, float endingVolume)

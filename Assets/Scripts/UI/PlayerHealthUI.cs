@@ -15,9 +15,15 @@ namespace UI
         private int lastHealth;
         private Tween healthTween;
 
-        protected override void Subscribe(PlayerCombatant playerCombatant) => playerCombatant.Health.OnHealthChanged += UpdateUI;
+        protected override void Subscribe(PlayerCombatant playerCombatant)
+        {
+            if (playerCombatant && playerCombatant.Health) playerCombatant.Health.OnHealthChanged += UpdateUI;
+        }
 
-        protected override void Unsubscribe(PlayerCombatant playerCombatant) => playerCombatant.Health.OnHealthChanged -= UpdateUI;
+        protected override void Unsubscribe(PlayerCombatant playerCombatant)
+        {
+            if (playerCombatant && playerCombatant.Health) playerCombatant.Health.OnHealthChanged -= UpdateUI;
+        }
         
         private void UpdateUI(int currentHealth, int maxHealth)
         {

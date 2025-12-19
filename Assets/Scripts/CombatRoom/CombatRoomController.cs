@@ -29,6 +29,7 @@ namespace CombatRoom
         [SerializeField] private Transform[] enemyTransforms;
         [SerializeField] private Transform playerTransform;
         [SerializeField] private Transform overviewCameraTransform;
+        [SerializeField] private Transform middleEnemyTransform;
         
         private List<Combatant> ActiveCombatants { get; } = new List<Combatant>();
         public Queue<Combatant> TurnQueue { get; } = new Queue<Combatant>();
@@ -47,12 +48,12 @@ namespace CombatRoom
         {
             PlayerComboSystem.Initialize(CombatRoomEvents);
             
-            PlayerComboSystem.OnComboFinished += HandleComboFinished;
+            PlayerComboSystem.OnDealDamage += HandleDealDamage;
         }
         
         private void OnDestroy()
         {
-            if (PlayerComboSystem) PlayerComboSystem.OnComboFinished -= HandleComboFinished;
+            if (PlayerComboSystem) PlayerComboSystem.OnDealDamage -= HandleDealDamage;
         }
 
         private async UniTask InitializeRoom()
@@ -60,7 +61,7 @@ namespace CombatRoom
             await BaseStateMachine.ChangeState(new CombatRoomSetupState(this));
         }
 
-        private void HandleComboFinished(float damageMultiplier)
+        private void HandleDealDamage(float damageMultiplier)
         {
             if (CurrentCombatant is not PlayerCombatant player || !player.Gun) return;
 
@@ -82,7 +83,7 @@ namespace CombatRoom
 
                 EnemyCombatant enemyPrefab = encounterSo.enemies[i];
                 EnemyCombatant enemy = Instantiate(enemyPrefab, enemyTransforms[i].position, enemyTransforms[i].rotation);
-                enemy.InitializeTargetSpawner(PlayerComboSystem);
+                enemy.InitializeTargetSpawner(PlayerComboSystem, middleEnemyTransform);
                 
                 SceneManager.MoveGameObjectToScene(enemy.gameObject, gameObject.scene);
                 

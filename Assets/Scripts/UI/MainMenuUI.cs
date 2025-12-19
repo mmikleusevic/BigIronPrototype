@@ -5,6 +5,7 @@ using Extensions;
 using Managers;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UI
@@ -19,6 +20,7 @@ namespace UI
         [SerializeField] private AssetReference mainMenuAssetReference;
         [SerializeField] private AssetReference gameAssetReference;
         
+
         private void OnEnable()
         {
             playButton.AddClickAsync(PlayGame);
@@ -32,19 +34,29 @@ namespace UI
             optionsButton.onClick.RemoveListener(OpenOptions);
             exitButton.onClick.RemoveListener(ExitGame);
         }
-    
+
+        private void Start()
+        {
+            SelectFirst();
+        }
+
         private async UniTask PlayGame()
         {
             if (LevelManager.Instance)
             {
-                LevelManager.Instance.UnloadSceneAsync(mainMenuAssetReference.AssetGUID).Forget();
+                await LevelManager.Instance.UnloadSceneAsync(mainMenuAssetReference.AssetGUID);
                 await LevelManager.Instance.LoadSceneAsync(gameAssetReference);
             }
         }
 
         private void OpenOptions()
         {
-            optionsUI.gameObject.SetActive(true);
+            optionsUI.Show();
+        }
+
+        public void SelectFirst()
+        {
+            EventSystem.current.SetSelectedGameObject(playButton.gameObject);
         }
 
         private void ExitGame()

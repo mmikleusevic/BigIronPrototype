@@ -1,6 +1,7 @@
 ﻿using Managers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UI
@@ -87,12 +88,18 @@ namespace UI
         private void BackToMainMenu()
         {
             gameObject.SetActive(false);
-            transform.parent.GetComponent<Selector>().Select();
+            transform.parent.GetComponent<MainMenuUI>().SelectFirst();
         }
     
         private string GetSliderText(float value)
         {
             return Mathf.RoundToInt(value * 100).ToString();
+        }
+
+        public void Show()
+        {
+            gameObject.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(volumeSlider.gameObject);
         }
     }
 }
