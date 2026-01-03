@@ -100,12 +100,12 @@ TextureImporter:
       name: UIImage_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 5632
-        height: 2944
+        x: 141
+        y: 58
+        width: 5353
+        height: 2830
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

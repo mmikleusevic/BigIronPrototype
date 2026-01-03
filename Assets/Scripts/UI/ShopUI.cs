@@ -14,11 +14,13 @@ namespace UI
     public class ShopUI : MonoBehaviour
     {
         [SerializeField] private GameObject itemInfoPanel;
+        [SerializeField] private GameObject itemInfoTopPanel;
         [SerializeField] private Button buyButton;
         [SerializeField] private Button leaveButton;
         [SerializeField] private ShopController shopController;
         [SerializeField] private TextMeshProUGUI itemNameText;
         [SerializeField] private TextMeshProUGUI itemInfoText;
+        [SerializeField] private TextMeshProUGUI itemPriceText;
         
         private void Awake()
         {
@@ -47,7 +49,7 @@ namespace UI
         {
             itemInfoPanel.SetActive(true);
             
-            itemNameText.gameObject.SetActive(false);
+            itemInfoTopPanel.gameObject.SetActive(false);
             
             if (hasBought)
             {
@@ -67,13 +69,12 @@ namespace UI
                 buyButton.interactable = false;
                 return;
             }
-            
             itemInfoPanel.SetActive(true);
-            itemNameText.gameObject.SetActive(true);
+            itemInfoTopPanel.SetActive(true);
             buyButton.interactable = true;
             
             itemNameText.text = shopItem.ShopItemData.itemName;
-            itemInfoText.text = shopItem.ShopItemData.itemDescription;
+            itemInfoText.text = shopItem.ShopItemData.ItemDescription;
         }
 
         private void Buy()
