@@ -79,7 +79,7 @@ namespace UI
 
         private void OpenOptions()
         {
-            optionsUI.gameObject.SetActive(true);
+            optionsUI.Show(optionsButton.gameObject);
         }
 
         private async UniTask BackToMainMenu()

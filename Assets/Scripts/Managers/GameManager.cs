@@ -24,6 +24,8 @@ namespace Managers
         private bool isPaused;
         private bool isGameOver;
         
+        public bool IsPaused => isPaused;
+        
         private void Awake()
         {
             Instance = this;
@@ -43,6 +45,18 @@ namespace Managers
             Time.timeScale = isPaused ? 0 : 1;
             
             return isPaused;
+        }
+        
+        public void Pause()
+        {
+            isPaused = true;
+            Time.timeScale = 0;
+        }
+        
+        public void Unpause()
+        {
+            isPaused = false;
+            Time.timeScale = 1;
         }
 
         public void RoomPassed()

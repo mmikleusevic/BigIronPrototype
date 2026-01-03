@@ -22,6 +22,8 @@ namespace UI
     
         [Space(20)]
         [SerializeField] private Button backButton;
+        
+        private GameObject returnSelection;
 
         private void Awake()
         {
@@ -33,7 +35,7 @@ namespace UI
             volumeSlider.onValueChanged.AddListener(VolumeChanged);
             sfxVolumeSlider.onValueChanged.AddListener(SfxVolumeChanged);
             aimSensitivitySlider.onValueChanged.AddListener(AimSensitivityChanged);
-            backButton.onClick.AddListener(BackToMainMenu);
+            backButton.onClick.AddListener(BackToPreviousMenu);
         }
     
         private void OnDisable()
@@ -41,7 +43,7 @@ namespace UI
             volumeSlider.onValueChanged.RemoveListener(VolumeChanged);
             sfxVolumeSlider.onValueChanged.RemoveListener(SfxVolumeChanged);
             aimSensitivitySlider.onValueChanged.RemoveListener(AimSensitivityChanged);
-            backButton.onClick.RemoveListener(BackToMainMenu);
+            backButton.onClick.RemoveListener(BackToPreviousMenu);
         }
 
         private void Start()
@@ -84,11 +86,12 @@ namespace UI
             string text = GetSliderText(value);
             aimSensitivityValueText.text = text;
         }
-
-        private void BackToMainMenu()
+        
+        private void BackToPreviousMenu()
         {
             gameObject.SetActive(false);
-            transform.parent.GetComponent<MainMenuUI>().SelectFirst();
+
+            if (returnSelection) EventSystem.current.SetSelectedGameObject(returnSelection);
         }
     
         private string GetSliderText(float value)
@@ -96,8 +99,9 @@ namespace UI
             return Mathf.RoundToInt(value * 100).ToString();
         }
 
-        public void Show()
+        public void Show(GameObject returnSelection)
         {
+            this.returnSelection = returnSelection;
             gameObject.SetActive(true);
             EventSystem.current.SetSelectedGameObject(volumeSlider.gameObject);
         }

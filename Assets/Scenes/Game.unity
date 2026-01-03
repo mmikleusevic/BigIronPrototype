@@ -1927,7 +1927,7 @@ MonoBehaviour:
   backgroundImage: {fileID: 772576809}
   gameOverImage: {fileID: 1431046114}
   loseSprite: {fileID: 837459951, guid: e20902dd50ce4ba4cbe85f0140cc7384, type: 3}
-  winSprite: {fileID: -2012835458, guid: 92db55d814c87f74fb70efd9494c53d2, type: 3}
+  winSprite: {fileID: 599283966, guid: 92db55d814c87f74fb70efd9494c53d2, type: 3}
 --- !u!1001 &645360768
 PrefabInstance:
   m_ObjectHideFlags: 0

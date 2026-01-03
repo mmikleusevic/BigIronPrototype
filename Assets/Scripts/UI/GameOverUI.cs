@@ -37,7 +37,7 @@ namespace UI
         
         private void GameOver(bool hasWon, bool isGameOver)
         {
-            if (GameManager.Instance) GameManager.Instance.TogglePause();
+            if (GameManager.Instance) GameManager.Instance.Pause();
             if (InputManager.Instance) InputManager.Instance.StartingMapsSetup();
             
             mainMenuButton.Select();

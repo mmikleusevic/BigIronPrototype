@@ -103,7 +103,7 @@ namespace Managers
             await UnloadAllButPersistentScenesAsync();
             await LoadSceneAsync(mainMenuSceneReference);
 
-            if (GameManager.Instance) GameManager.Instance.TogglePause();
+            if (GameManager.Instance) GameManager.Instance.Unpause();
             if (TargetModifierManager.Instance) TargetModifierManager.Instance.RemoveAllModifiers();
             if (GameManager.Instance) Destroy(GameManager.Instance.PlayerCombatant.gameObject);
         }

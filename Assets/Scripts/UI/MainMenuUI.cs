@@ -51,7 +51,7 @@ namespace UI
 
         private void OpenOptions()
         {
-            optionsUI.Show();
+            optionsUI.Show(optionsButton.gameObject);
         }
 
         public void SelectFirst()
