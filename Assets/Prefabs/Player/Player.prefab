@@ -405,7 +405,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerHealth
   healClip: {fileID: 8300000, guid: 26a3e9f9933eef946b31c95531ea229d, type: 3}
   hurtClip: {fileID: 8300000, guid: 0f2216fe5e7637f439e2a830471c8644, type: 3}
-  maxHealth: 5
+  maxHealth: 50
 --- !u!114 &1582211033024998190
 MonoBehaviour:
   m_ObjectHideFlags: 0

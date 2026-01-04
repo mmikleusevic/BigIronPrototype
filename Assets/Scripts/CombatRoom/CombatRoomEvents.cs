@@ -17,5 +17,6 @@ namespace CombatRoom
         public Action OnDefeatStarted;
         public Action OnPlayerDamageResultStarted;
         public Action OnPlayerDamageResultEnded;
+        public Action<string> OnTurnStarted;
     }
 }

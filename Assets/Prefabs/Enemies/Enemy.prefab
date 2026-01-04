@@ -192,6 +192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemyUI
   enemyUIPanel: {fileID: 5782381637571619995}
   healthBar: {fileID: 6295339436273590814}
+  healthFill: {fileID: 6295339434770126450}
   health: {fileID: 3561122328880991480}
 --- !u!1 &5782381637571619995
 GameObject:
@@ -390,11 +391,42 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6777639893142416397, guid: 71e2fee2a57804bcbbd496f4cfa480b6, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777639893142416397, guid: 71e2fee2a57804bcbbd496f4cfa480b6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4f2642ecd072c42848f5da97784f0c40, type: 3}
+    - target: {fileID: 6777639893142416397, guid: 71e2fee2a57804bcbbd496f4cfa480b6, type: 3}
+      propertyPath: m_Color.b
+      value: 0.09565163
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777639893142416397, guid: 71e2fee2a57804bcbbd496f4cfa480b6, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777639893142416397, guid: 71e2fee2a57804bcbbd496f4cfa480b6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71e2fee2a57804bcbbd496f4cfa480b6, type: 3}
+--- !u!114 &6295339434770126450 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6777639893142416397, guid: 71e2fee2a57804bcbbd496f4cfa480b6, type: 3}
+  m_PrefabInstance: {fileID: 671751363582917247}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6295339436273590814 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6777639892704172129, guid: 71e2fee2a57804bcbbd496f4cfa480b6, type: 3}

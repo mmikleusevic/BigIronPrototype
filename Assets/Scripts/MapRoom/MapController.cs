@@ -74,10 +74,11 @@ namespace MapRoom
 
         private void HandleNodeClicked(MapLevelNode clickedNode)
         {
+            if (clickedNode) clickedNode.SetInteractable(false);
             if (!currentLevelNode) return;
         
-            currentLevelNode.Highlight(false);
             currentLevelNode.SetInteractable(false);
+            currentLevelNode.Highlight(false);
             currentLevelNode = clickedNode;
             currentLevelNode.Highlight(true);
             

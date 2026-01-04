@@ -5,16 +5,19 @@ using Enemies;
 using Managers;
 using PokerDiceRoom;
 using StateMachine.PokerStateMachine;
+using UnityEngine;
 
 namespace StateMachine.CombatStateMachine
 {
     public class CombatRoomTurnStartState : IState
     {
         private readonly CombatRoomController combatRoomController;
+        private readonly CombatRoomEvents combatRoomEvents;
         
         public CombatRoomTurnStartState(CombatRoomController controller)
         {
             combatRoomController = controller;
+            combatRoomEvents = combatRoomController.CombatRoomEvents;
         }        
         
         public async UniTask OnEnter(CancellationToken externalToken)
@@ -33,6 +36,7 @@ namespace StateMachine.CombatStateMachine
             }
             
             Combatant current = combatRoomController.CurrentCombatant;
+            combatRoomEvents.OnTurnStarted(current.Data.combatantName);
     
             if (current.Data.combatantType == CombatantType.Player)
             {

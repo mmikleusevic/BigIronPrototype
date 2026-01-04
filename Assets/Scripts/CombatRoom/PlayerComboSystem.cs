@@ -13,6 +13,7 @@ namespace CombatRoom
         private CombatRoomEvents combatRoomEvents;
         
         public event Action<float> OnDealDamage;
+        public event Action<int> OnNewHitStreak;
         
         private float DamageMultiplier => hitStreak * 0.5f;
         
@@ -55,7 +56,11 @@ namespace CombatRoom
             baseTarget.OnTargetHit -= OnTargetHit;
             currentHitStreak++;
 
-            if (currentHitStreak > hitStreak) hitStreak = currentHitStreak;
+            if (currentHitStreak > hitStreak)
+            {
+                hitStreak = currentHitStreak;
+                OnNewHitStreak?.Invoke(hitStreak);
+            }
 
             activeTargets.Remove(baseTarget);
         }
@@ -101,12 +106,14 @@ namespace CombatRoom
 
             currentHitStreak++;
 
-            if (currentHitStreak > 1)
+            Combo combo = Instantiate(comboPrefab, baseTarget.transform.position, Quaternion.identity);
+            combo.Initialize(currentHitStreak);
+
+            if (currentHitStreak > hitStreak)
             {
-                Combo combo = Instantiate(comboPrefab, baseTarget.transform.position, Quaternion.identity);
-                combo.Initialize(currentHitStreak);
+                hitStreak = currentHitStreak;
+                OnNewHitStreak?.Invoke(hitStreak); 
             }
-            if (currentHitStreak > hitStreak) hitStreak = currentHitStreak;
 
             activeTargets.Remove(baseTarget);
         }
