@@ -47,27 +47,11 @@ namespace CombatRoom
         private void InitializeSystems()
         {
             PlayerComboSystem.Initialize(CombatRoomEvents);
-            
-            PlayerComboSystem.OnDealDamage += HandleDealDamage;
-        }
-        
-        private void OnDestroy()
-        {
-            if (PlayerComboSystem) PlayerComboSystem.OnDealDamage -= HandleDealDamage;
         }
 
         private async UniTask InitializeRoom()
         {
             await BaseStateMachine.ChangeState(new CombatRoomSetupState(this));
-        }
-
-        private void HandleDealDamage(float damageMultiplier)
-        {
-            if (CurrentCombatant is not PlayerCombatant player || !player.Gun) return;
-
-            int totalDamage = (int)(player.Data.damage * damageMultiplier);
-
-            if (SelectedEnemy) SelectedEnemy.TakeDamage(player, SelectedEnemy, totalDamage);
         }
 
         public void SpawnEnemies()

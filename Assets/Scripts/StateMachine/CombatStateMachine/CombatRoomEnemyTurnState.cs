@@ -25,7 +25,11 @@ namespace StateMachine.CombatStateMachine
         {
             await UniTask.Delay(1000, cancellationToken: externalToken);
             
-            currentEnemy.Attack(playerCombatant);
+            using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(externalToken,
+                currentEnemy.GetCancellationTokenOnDestroy()
+            );
+            
+            await currentEnemy.RotateTowardsTargetAndFire(playerCombatant, currentEnemy.Data.damage, linkedCts.Token);
             
             await UniTask.Delay(1000, cancellationToken: externalToken);
             

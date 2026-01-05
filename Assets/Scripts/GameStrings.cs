@@ -26,4 +26,5 @@ public static class GameStrings
     public const string SHOP = "Shop";
     public const string LEAVE = "Leave";
     public const string DEATH = "Death";
+    public const string FIRE = "Fire";
 }

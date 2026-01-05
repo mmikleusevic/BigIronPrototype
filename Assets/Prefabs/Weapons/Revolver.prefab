@@ -133,8 +133,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapons.Revolver
   weaponName: Revolver
+  <ProjectilePrefab>k__BackingField: {fileID: 5880089928173502983, guid: e25de8272c2eaa3488b67b757eb4ce07, type: 3}
+  playerAnimator: {fileID: 0}
   tracerPrefab: {fileID: -429130574217639450, guid: 0904aad49a2edf5489dc5c845330e88d, type: 3}
   clickingSound: {fileID: 8300000, guid: a29e36a171898fc4fa8b99281bb17732, type: 3}
+  reloadSound: {fileID: 0}
   shotSound: {fileID: 8300000, guid: 97341bac554371e468e30260356e7fed, type: 3}
   shootPoint: {fileID: 7585247161639510379}
   shootVFXPrefab: {fileID: 198939385255438472, guid: 294dcb7f17d463547ac578472b10c38b, type: 3}

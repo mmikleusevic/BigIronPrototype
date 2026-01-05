@@ -12,7 +12,6 @@ namespace Player
 {
     public class PlayerCombatant : Combatant
     {
-        [field: SerializeField] public Gun Gun { get; private set; }
         [field: SerializeField] public CinemachineCamera PlayerCamera { get; private set; }
         
         [SerializeField] private PlayerHealth playerHealth;

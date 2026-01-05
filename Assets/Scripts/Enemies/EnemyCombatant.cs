@@ -22,11 +22,6 @@ namespace Enemies
         public override Health Health => enemyHealth;
         public override Gold Gold => gold;
 
-        public void Attack(PlayerCombatant playerCombatant)
-        {
-            playerCombatant.TakeDamage(this, playerCombatant, Data.damage);
-        }
-
         public void SpawnTargets()
         {
             TargetSpawner?.SpawnTargets();

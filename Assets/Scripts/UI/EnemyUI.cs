@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using CombatRoom;
+using DG.Tweening;
 using Enemies;
 using UnityEngine;
 using UnityEngine.UI;
@@ -65,12 +66,7 @@ namespace UI
             
             healthFill.color = Color.white;
             
-            healthTween = DOTween.To(
-                    () => healthBar.value,
-                    x => healthBar.value = x,
-                    targetValue,
-                    0.25f
-                )
+            healthTween = DOTween.To(() => healthBar.value, x => healthBar.value = x, targetValue, 0.25f)
                 .SetEase(Ease.OutCubic)
                 .OnComplete(() =>
                 {

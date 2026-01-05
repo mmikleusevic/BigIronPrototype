@@ -14,6 +14,7 @@ namespace Weapons
         public event Action OnReloadFinished;
         public event Action<int, int> OnAmmoChanged;
 
+        [field: SerializeField] public Projectile ProjectilePrefab { get; private set; }
         [SerializeField] protected Animator playerAnimator;
         [SerializeField] private BulletTracer tracerPrefab;
         [SerializeField] private AudioClip clickingSound;
@@ -72,10 +73,8 @@ namespace Weapons
 
             nextShootTime = Time.time + fireRate;
             currentAmmo--;
-            
-            SoundManager.Instance.PlayVFX(shotSound);
-            
-            SpawnShotVFX(rayDirection);
+
+            PlayEffects();
             HitScan(rayOrigin, rayDirection);
             
             OnAmmoChanged?.Invoke(currentAmmo, maxAmmo);
@@ -112,6 +111,18 @@ namespace Weapons
 
             BulletTracer tracer = Instantiate(tracerPrefab);
             tracer.Initialize(start, end);
+        }
+
+        public void OnShootEnemy(Vector3 target)
+        {
+            SpawnTracer(transform.position, target);
+            PlayEffects();
+        }
+
+        private void PlayEffects()
+        {
+            SpawnShotVFX(transform.forward);
+            SoundManager.Instance.PlayVFX(shotSound);
         }
         
         protected void InvokeAmmoChanged() => OnAmmoChanged?.Invoke(currentAmmo, maxAmmo);

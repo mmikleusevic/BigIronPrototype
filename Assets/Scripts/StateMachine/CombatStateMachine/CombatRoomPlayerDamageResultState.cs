@@ -4,23 +4,25 @@ using Cysharp.Threading.Tasks;
 using Enemies;
 using Managers;
 using Player;
+using UnityEngine;
 
 namespace StateMachine.CombatStateMachine
 {
     public class CombatRoomPlayerDamageResultState : IState
     {
         private readonly CombatRoomController combatRoomController;
-        private readonly CombatRoomEvents combatRoomEvents;
+        private readonly PlayerComboSystem playerComboSystem;
+        private readonly PlayerCombatant playerCombatant;
         
         private EnemyCombatant targetEnemy;
-        private float damageMultiplier;
         
         private const float ResultDisplayDuration = 2f;
 
         public CombatRoomPlayerDamageResultState(CombatRoomController controller)
         {
             combatRoomController = controller;
-            combatRoomEvents = combatRoomController.CombatRoomEvents;
+            playerComboSystem = combatRoomController.PlayerComboSystem;
+            if (GameManager.Instance) playerCombatant = GameManager.Instance.PlayerCombatant;
         }
         
         public async UniTask OnEnter(CancellationToken externalToken)
@@ -30,13 +32,16 @@ namespace StateMachine.CombatStateMachine
             
             await UniTask.Delay(1000, cancellationToken: externalToken);
             
-            combatRoomEvents?.OnPlayerDamageResultStarted?.Invoke();
+            using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(externalToken,
+                playerCombatant.GetCancellationTokenOnDestroy()
+            );
             
-            await UniTask.WaitUntil(() => damageMultiplier >= 0f || externalToken.IsCancellationRequested, 
-                cancellationToken: externalToken);
-            
-            
-            await UniTask.Delay((int)(ResultDisplayDuration * 1000), cancellationToken: externalToken);
+            int totalDamage = (int)(playerCombatant.Data.damage * playerComboSystem.DamageMultiplier);
+            if (totalDamage > 0)
+            {
+                await playerCombatant.RotateTowardsTargetAndFire(combatRoomController.SelectedEnemy, totalDamage, linkedCts.Token);
+                await UniTask.Delay((int)(ResultDisplayDuration * 1000), cancellationToken: externalToken);
+            }
             
             targetEnemy?.EnemyUI?.Hide();
             
@@ -50,8 +55,6 @@ namespace StateMachine.CombatStateMachine
 
         public UniTask OnExit()
         {
-            combatRoomEvents?.OnPlayerDamageResultEnded?.Invoke();
-            
             targetEnemy?.EnemyUI?.Hide();
             
             return UniTask.CompletedTask;

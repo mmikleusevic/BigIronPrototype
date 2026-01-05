@@ -12,10 +12,9 @@ namespace CombatRoom
         
         private CombatRoomEvents combatRoomEvents;
         
-        public event Action<float> OnDealDamage;
         public event Action<int> OnNewHitStreak;
         
-        private float DamageMultiplier => hitStreak * 0.5f;
+        public float DamageMultiplier => hitStreak * 0.5f;
         
         private readonly List<BaseTarget> activeTargets = new List<BaseTarget>();
         
@@ -30,7 +29,6 @@ namespace CombatRoom
             
             combatRoomEvents.OnPlayerAttackStarted += ResetStreaks;
             combatRoomEvents.OnPlayerAttackEnded += DestroyTargets;
-            combatRoomEvents.OnPlayerDamageResultStarted += DealDamage;
         }
 
         private void OnDisable()
@@ -39,7 +37,6 @@ namespace CombatRoom
             
             combatRoomEvents.OnPlayerAttackStarted -= ResetStreaks;
             combatRoomEvents.OnPlayerAttackEnded -= DestroyTargets;
-            combatRoomEvents.OnPlayerDamageResultStarted -= DealDamage;
             
             UnregisterAndDestroyAllTargets();
         }
@@ -63,11 +60,6 @@ namespace CombatRoom
             }
 
             activeTargets.Remove(baseTarget);
-        }
-        
-        private void DealDamage()
-        {
-            OnDealDamage?.Invoke(DamageMultiplier);
         }
 
         private void OnMiss()
