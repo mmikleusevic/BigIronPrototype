@@ -640,6 +640,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemyHealth
   healClip: {fileID: 8300000, guid: 26a3e9f9933eef946b31c95531ea229d, type: 3}
   hurtClip: {fileID: 8300000, guid: 0f2216fe5e7637f439e2a830471c8644, type: 3}
+  deathClip: {fileID: 8300000, guid: 2b790da5a06d0fa4498f2be31006d91e, type: 3}
   maxHealth: 100
 --- !u!114 &8591081073053268119
 MonoBehaviour:

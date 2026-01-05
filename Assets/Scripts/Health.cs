@@ -9,6 +9,7 @@ public class Health : MonoBehaviour
     
     [SerializeField] private AudioClip healClip;
     [SerializeField] private AudioClip hurtClip;
+    [SerializeField] private AudioClip deathClip;
     [SerializeField] protected int maxHealth = 100;
 
     private int currentHealth;
@@ -23,13 +24,13 @@ public class Health : MonoBehaviour
     public virtual int TakeDamage(Combatant damager, Combatant receiver, int healthToLose)
     {
         int actualLoss = Mathf.Min(CurrentHealth, healthToLose);
-
-        if (actualLoss > 0) SoundManager.Instance.PlayVFX(hurtClip);
         
         currentHealth -= actualLoss;
 
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
 
+        if (actualLoss > 0 && currentHealth > 0) SoundManager.Instance.PlayVFX(hurtClip);
+        
         if (currentHealth <= 0) Die(damager, receiver);
         
         return actualLoss;
@@ -40,7 +41,7 @@ public class Health : MonoBehaviour
         int missingHealth = maxHealth - currentHealth;
         int actualHeal = Mathf.Clamp(healAmount, 0, missingHealth);
 
-        if (actualHeal > 0) SoundManager.Instance.PlayVFX(hurtClip);
+        if (actualHeal > 0) SoundManager.Instance.PlayVFX(healClip);
         
         currentHealth += actualHeal;
 
@@ -51,7 +52,7 @@ public class Health : MonoBehaviour
 
     protected virtual void Die(Combatant damager, Combatant receiver)
     {
-        
+        SoundManager.Instance.PlayVFX(deathClip);
     }
     
     public void RefreshState()

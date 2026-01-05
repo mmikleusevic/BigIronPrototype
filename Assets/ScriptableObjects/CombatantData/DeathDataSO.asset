@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 851ad27c85494df1b136a6344cebc90f, type: 3}
   m_Name: DeathDataSO
   m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.CombatantDataSO
-  combatantName: Death
+  combatantName: Boss
   speed: 11
   combatantType: 1
   damage: 10
