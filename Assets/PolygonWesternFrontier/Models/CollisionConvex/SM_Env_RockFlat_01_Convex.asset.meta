@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b3e72b931d8303344ae1d7a2e4b16bc4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 130564
+  packageName: POLYGON Western Frontier - Low Poly 3D Art by Synty
+  packageVersion: 1.6.2
+  assetPath: Assets/PolygonWesternFrontier/Models/CollisionConvex/SM_Env_RockFlat_01_Convex.asset
+  uploadId: 736245

@@ -1,0 +1,78 @@
+﻿using System;
+using System.Collections;
+using CombatRoom;
+using Enemies;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
+namespace Targets
+{
+    public class TargetSpawner : MonoBehaviour
+    {
+        [SerializeField] private BaseTarget[] targetPrefabs;
+        [SerializeField] private float spawnDelay = 1f;
+        
+        private Coroutine spawnTargetsCoroutine;
+        private PlayerComboSystem comboSystem;
+        private EnemyCombatant enemy;
+        private Transform middleEnemyTransform;
+
+        private void Start()
+        {
+            enemy = GetComponent<EnemyCombatant>();
+        }
+
+        public void Initialize(PlayerComboSystem comboSystem, Transform middleEnemyTransform)
+        {
+            this.comboSystem = comboSystem;
+            this.middleEnemyTransform = middleEnemyTransform;
+        }
+
+        public void SpawnTargets()
+        {
+            StopSpawningTargets();
+            
+            spawnTargetsCoroutine = StartCoroutine(SpawnTargetsCoroutine());
+        }
+
+        public void StopSpawningTargets()
+        {
+            if (spawnTargetsCoroutine == null) return;
+            
+            StopCoroutine(spawnTargetsCoroutine);
+            spawnTargetsCoroutine = null;
+        }
+
+        private IEnumerator SpawnTargetsCoroutine()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(spawnDelay);
+                
+                if (!enemy) yield break;
+
+                float xOffset = Random.Range(1f, 5f) * (Random.value > 0.5f ? 1f : -1f);
+                float zOffset = Random.Range(1f, 3f) * (Random.value > 0.5f ? 1f : -1f);
+                float yOffset = Random.Range(1.5f, 5f);
+                
+                Vector3 spawnOffset = new Vector3(xOffset, yOffset, zOffset);
+                Vector3 spawn = middleEnemyTransform.position + spawnOffset;
+
+                TargetMovementAxis axis = (TargetMovementAxis)Random.Range(0, Enum.GetNames(typeof(TargetMovementAxis)).Length);
+                TargetSpawnContext targetSpawnContext = new TargetSpawnContext
+                {
+                    profile = enemy.TargetProfileSO,
+                    origin = spawn,
+                    targetMovementAxis = axis,
+                    centerTransform = enemy.transform 
+                };
+
+                BaseTarget prefab = targetPrefabs[Random.Range(0, targetPrefabs.Length)];
+                BaseTarget target = Instantiate(prefab, spawn, prefab.transform.rotation);
+                target.Initialize(targetSpawnContext);
+                
+                comboSystem.RegisterTarget(target);
+            }
+        }
+    }
+}

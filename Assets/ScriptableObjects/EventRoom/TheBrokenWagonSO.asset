@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a0c0bc32aa32c4099444070b537708, type: 3}
+  m_Name: TheBrokenWagonSO
+  m_EditorClassIdentifier: Assembly-CSharp::EventRoom.EventSO
+  Title: The Broken Wagon
+  Choices:
+  - ChoiceText: Help the trader
+    Conditions: []
+    Effects:
+    - {fileID: 11400000, guid: e9277bb8795b76e4abd4374e7ebf54ce, type: 2}
+    NextEvent: {fileID: 0}
+    SuccessDescription: You patch him up. He presses supplies into your hands.
+  - ChoiceText: Rob him
+    Conditions: []
+    Effects:
+    - {fileID: 11400000, guid: 444fb9f7371e2a548a91cd269d10ba12, type: 2}
+    NextEvent: {fileID: 0}
+    SuccessDescription: Survival makes monsters of us all.
+  - ChoiceText: Mercy shot
+    Conditions: []
+    Effects: []
+    NextEvent: {fileID: 0}
+    SuccessDescription: You spare him the suffering.
+  Description: 'A wagon lies overturned in the dust.
+
+    A wounded trader clutches
+    his side, eyes wide with fear.'

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 642e2b9b05987f547ba4b08de00a0c72
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 130564
+  packageName: POLYGON Western Frontier - Low Poly 3D Art by Synty
+  packageVersion: 1.6.2
+  assetPath: Assets/PolygonWesternFrontier/Models/CollisionConvex/SM_Env_Mine_Tunnel_02_Convex.asset
+  uploadId: 736245

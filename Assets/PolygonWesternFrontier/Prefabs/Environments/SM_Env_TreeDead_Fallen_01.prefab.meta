@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 3d58394a6f2c15a4f926d0c7cf0a1164
+timeCreated: 1538539547
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 130564
+  packageName: POLYGON Western Frontier - Low Poly 3D Art by Synty
+  packageVersion: 1.6.2
+  assetPath: Assets/PolygonWesternFrontier/Prefabs/Environments/SM_Env_TreeDead_Fallen_01.prefab
+  uploadId: 736245

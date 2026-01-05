@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f907f5d450444eba2cda254c97bfc7a, type: 3}
+  m_Name: HardEncounterSO
+  m_EditorClassIdentifier: Assembly-CSharp::CombatRoom.EncounterSO
+  enemies:
+  - {fileID: 7364364034348221615, guid: da2376eb2fd74b8499b7e05dcd6b16f5, type: 3}
+  - {fileID: 6129202611858025244, guid: c59ec6945afe3f04ea953e2cd857271d, type: 3}

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 038f75e534d666844bcea112ce062286
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 130564
+  packageName: POLYGON Western Frontier - Low Poly 3D Art by Synty
+  packageVersion: 1.6.2
+  assetPath: Assets/PolygonWesternFrontier/Models/CollisionConvex/SM_Env_Cactus_Large_05_Convex.asset
+  uploadId: 736245

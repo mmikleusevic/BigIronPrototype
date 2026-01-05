@@ -15,23 +15,220 @@ MonoBehaviour:
   m_GroupName: Loader
   m_GUID: 13cac8d10c7b56c4aa40ff30efebdc47
   m_SerializeEntries:
+  - m_GUID: 052faaac586de48259a63d0c4782560b
+    m_Address: Assets/InputSystem_Actions.inputactions
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 057ac634bfd3a614185b9e5fadbfdb8d
+    m_Address: Assets/Prefabs/Nodes/MapLevelNode.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0904aad49a2edf5489dc5c845330e88d
+    m_Address: Assets/Prefabs/Weapons/BulletTrail.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0a64b82745e5ce549b159e5493e0d415
     m_Address: Assets/Prefabs/MainMenu.unity
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - MainMenuScene
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0f2216fe5e7637f439e2a830471c8644
+    m_Address: Assets/Sounds/Hurt.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0f7d3ef98f25c404f82744d6ba5ad4c2
+    m_Address: Assets/ScriptableObjects/Rooms/PokerDiceRoomSO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1f3caf23690cc40479cc87e678fdb078
+    m_Address: Assets/Prefabs/Targets/StaticTarget.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 26a3e9f9933eef946b31c95531ea229d
+    m_Address: Assets/Sounds/Heal.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 26e92f9ec9992d641810f54c198222fb
+    m_Address: Assets/Scenes/PokerDiceRoom.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 337de81a32d20f94c91abee3fb023da4
+    m_Address: Assets/ScriptableObjects/Rooms/BossRoomSO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 36367ff9914317d4385df74daf7d9d34
+    m_Address: Assets/Sounds/CombatMusic.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3d8770ddef3d60a448c86ac993887d37
+    m_Address: Assets/Prefabs/Targets/OrbitingTarget.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4f7cdf3ce625a5e4f87ef7f809d07c14
+    m_Address: Assets/ScriptableObjects/Rooms/EliteRoomSO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 50aca57aa47b1e84f8ac655f0e4627c6
+    m_Address: Assets/Prefabs/PokerDice/DiceDisplay.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 537db134f6d582e4e8b3d75b98e4498b
+    m_Address: Assets/ScriptableObjects/Scenes/LoaderSO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 54a91b34959aaac458bea8ab9313a2b6
+    m_Address: Assets/ScriptableObjects/Rooms/CombatRoomSO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 55052b4ef926cf240aefd0857ae8bc24
+    m_Address: Assets/Sounds/MetalClank.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 556d302b3f9ae9e4a807dccc82a8a440
+    m_Address: Assets/Prefabs/Player/Player.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5cdb9da76473c6340b481c2dc25160e2
+    m_Address: Assets/Prefabs/Nodes/UILine.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6226fd2a97208c940aa31d0d35eefa1c
+    m_Address: Assets/Sounds/SaloonMusic.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 738d505570e9374489b3f1612b007e75
+    m_Address: Assets/Prefabs/Enemies/Enemy.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 81ba534c22e4e2646ad9a4267df4cf61
+    m_Address: Assets/Prefabs/UI/ComboCanvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 835eecca3f4770d45bb1e5c87702523e
+    m_Address: Assets/Prefabs/UI/Button.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 844513f7e169656498a1bd6fee43c97b
+    m_Address: Assets/ScriptableObjects/Scenes/GameSO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8bbea62443f550b49bcdf2dd6fdbd25a
+    m_Address: Assets/Prefabs/Targets/MovingTarget.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 97341bac554371e468e30260356e7fed
+    m_Address: Assets/Sounds/RevolverShot.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9b337f4442fe9a247a36448f3c53f299
+    m_Address: Assets/Prefabs/Targets/Target.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ccb00b6c9e97a74385a0665ec2ae6f2
+    m_Address: Assets/Sounds/DiceRoll.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ebba74440758bd4988f87a23fe8f85f
+    m_Address: Assets/Sounds/Reload.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a29e36a171898fc4fa8b99281bb17732
+    m_Address: Assets/Sounds/RevolverClicking.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aa076f082a2b86b4dab7498c8edc02f5
+    m_Address: Assets/ScriptableObjects/Rooms/EventRoomSO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c59ec6945afe3f04ea953e2cd857271d
+    m_Address: Assets/Prefabs/Enemies/Cowboy.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cbf6b9d71e886244bab22116a9c10ea0
+    m_Address: Assets/Sounds/Buy.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d208f68d09c387b4bb8c7b722094293f
+    m_Address: Assets/ScriptableObjects/Rooms/ShopRoomSO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da2376eb2fd74b8499b7e05dcd6b16f5
+    m_Address: Assets/Prefabs/Enemies/Death.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e1a76236a02a84f4db72ce05f9e31e0d
     m_Address: Assets/Prefabs/Loader.unity
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - LoaderScene
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e2ee597834ede6243a6746e053f5c790
+    m_Address: Assets/Prefabs/Nodes/MapLevelNodeGroup.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e66e4cc29bad8ef44ab75718406c3b8e
+    m_Address: Assets/Prefabs/Enemies/Indian.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: eddf679106729c44fad510c8224dccbc
     m_Address: Assets/Scenes/Game.unity
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - GameScene
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: effd6645848c9354ab39b46090256f09
+    m_Address: Assets/Scenes/Rooms/ShopRoom.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f2c57bf8d3206554db19ebd0ab76652c
+    m_Address: Assets/Scenes/CombatRoom.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fa8f093df1fc593419686c93e2f38bb1
+    m_Address: Assets/Sounds/RevolverCock.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fb580f67ad555c743936cd5d29e0100c
+    m_Address: Assets/Sounds/MainMenu.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 381a784ed649a4d45b62631edf58174a, type: 2}

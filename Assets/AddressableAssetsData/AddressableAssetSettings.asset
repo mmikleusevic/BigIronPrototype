@@ -100,9 +100,6 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
-    - LoaderScene
-    - MainMenuScene
-    - GameScene
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 4498b5bd1159b914ba606a5bd3c79c08, type: 2}

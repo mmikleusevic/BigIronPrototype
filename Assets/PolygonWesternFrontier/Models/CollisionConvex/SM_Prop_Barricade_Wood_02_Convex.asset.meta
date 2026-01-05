@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e4a07eebe2d441543aeb75b354404410
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 130564
+  packageName: POLYGON Western Frontier - Low Poly 3D Art by Synty
+  packageVersion: 1.6.2
+  assetPath: Assets/PolygonWesternFrontier/Models/CollisionConvex/SM_Prop_Barricade_Wood_02_Convex.asset
+  uploadId: 736245

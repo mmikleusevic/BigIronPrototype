@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: fdaaf749ff2c7b84dae18beecf3a4aa7
+timeCreated: 1538514726
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 130564
+  packageName: POLYGON Western Frontier - Low Poly 3D Art by Synty
+  packageVersion: 1.6.2
+  assetPath: Assets/PolygonWesternFrontier/Materials/Alts/PolygonWesternFrontier_Texture_01_B.mat
+  uploadId: 736245

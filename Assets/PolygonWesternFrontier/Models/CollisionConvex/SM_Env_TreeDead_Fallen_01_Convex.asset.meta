@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 67cc5be047cb35e48a20d43c766ee9cf
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 130564
+  packageName: POLYGON Western Frontier - Low Poly 3D Art by Synty
+  packageVersion: 1.6.2
+  assetPath: Assets/PolygonWesternFrontier/Models/CollisionConvex/SM_Env_TreeDead_Fallen_01_Convex.asset
+  uploadId: 736245

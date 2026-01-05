@@ -1,26 +1,30 @@
 using System;
-using UnityEditor.AddressableAssets.Settings;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
+using Managers;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.InputSystem;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
 public class Boot : MonoBehaviour
 {
-    [SerializeField] private string loaderSceneAddress = "LoaderScene";
-    [SerializeField] private string mainMenuSceneAddress = "MainMenuScene";
-
-    public AsyncOperationHandle<SceneInstance> SceneToLoad;
+    [SerializeField] private AssetReference loaderScene;
+    [SerializeField] private AssetReference mainMenuScene;
     
     private void Start()
     {
-        LoadScene();
+        LoadScene().Forget();
     }
 
-    private void LoadScene()
+    private async UniTask LoadScene()
     {
-        SceneToLoad = Addressables.LoadSceneAsync(mainMenuSceneAddress, LoadSceneMode.Additive);
-        Addressables.LoadSceneAsync(loaderSceneAddress, LoadSceneMode.Additive);
+        if (LevelManager.Instance)
+        {
+            await LevelManager.Instance.LoadSceneAsync(loaderScene, false);
+            await LevelManager.Instance.LoadSceneAsync(mainMenuScene);
+        }
     }
 }
