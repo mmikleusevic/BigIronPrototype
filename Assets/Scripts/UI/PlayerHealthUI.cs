@@ -64,7 +64,7 @@ namespace UI
                     healthText.transform.DOPunchScale(Vector3.one * 0.15f, 0.2f);
                     break;
                 case > 0:
-                    healthText.DOColor(Color.yellow, 0.3f).SetLoops(2, LoopType.Yoyo);
+                    healthText.DOColor(Color.green, 0.3f).SetLoops(2, LoopType.Yoyo);
                     healthText.transform.DOPunchScale(Vector3.one * 0.12f, 0.2f);
                     break;
             }
