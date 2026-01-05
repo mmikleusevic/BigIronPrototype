@@ -14,7 +14,6 @@ namespace Weapons
         public event Action OnReloadFinished;
         public event Action<int, int> OnAmmoChanged;
 
-        [field: SerializeField] public Projectile ProjectilePrefab { get; private set; }
         [SerializeField] protected Animator playerAnimator;
         [SerializeField] private BulletTracer tracerPrefab;
         [SerializeField] private AudioClip clickingSound;

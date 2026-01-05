@@ -67,7 +67,7 @@ namespace CombatRoom
                 combatantAnimator.SetLayerWeight(1, 1f);
             }
             
-            await FireProjectileAtTarget(target, damage, cancellationToken);
+            FireProjectileAtTarget(target, damage, cancellationToken);
             
             cancellationToken.ThrowIfCancellationRequested();
             
@@ -93,16 +93,13 @@ namespace CombatRoom
             transform.rotation = targetRotation;
         }
 
-        private async UniTask FireProjectileAtTarget(Combatant target, int damage, CancellationToken cancellationToken)
+        private void FireProjectileAtTarget(Combatant target, int damage, CancellationToken cancellationToken)
         {
             if (!target) return;
             if (!Gun) return;
             
             Gun.OnShootEnemy(target.transform.position + Vector3.up);
-            Projectile projectile = Instantiate(Gun.ProjectilePrefab, Gun.ShootPoint.position, Gun.ShootPoint.rotation);
-            projectile.Initialize(target, this, damage);
-            
-            await projectile.WaitForHitAsync(cancellationToken);
+            target.TakeDamage(this, target, damage);
         }
     }
 }
