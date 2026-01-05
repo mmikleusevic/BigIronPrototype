@@ -78,6 +78,16 @@ namespace UI
             CombatRoomEvents.OnAttackCountdownTick -= UpdateAttackCountdownText;
         }
 
+        private void OnDestroy()
+        {
+            comboTween?.Kill();
+            comboTween = null;
+            
+            combatantTween?.Kill();
+            combatantTween = null;
+            
+        }
+
         private void Shoot()
         {
             CombatTargetInputs.TriggerShootSelected();

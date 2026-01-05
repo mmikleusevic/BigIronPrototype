@@ -15,6 +15,12 @@ namespace UI
         private int lastHealth;
         private Tween healthTween;
 
+        private void OnDestroy()
+        {
+            healthTween?.Kill();
+            healthTween = null;
+        }
+
         protected override void Subscribe(PlayerCombatant playerCombatant)
         {
             if (playerCombatant && playerCombatant.Health) playerCombatant.Health.OnHealthChanged += UpdateUI;

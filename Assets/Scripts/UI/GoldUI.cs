@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using Managers;
 using Player;
 using TMPro;
@@ -13,6 +14,12 @@ namespace UI
 
         private int lastGold;
         private Tween goldTween;
+
+        private void OnDestroy()
+        {
+            goldTween?.Kill();
+            goldTween = null;
+        }
 
         protected override void Subscribe(PlayerCombatant playerCombatant)
         {

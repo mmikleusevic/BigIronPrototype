@@ -1,4 +1,5 @@
-﻿using CombatRoom;
+﻿using System;
+using CombatRoom;
 using DG.Tweening;
 using Enemies;
 using UnityEngine;
@@ -41,6 +42,18 @@ namespace UI
         private void OnDisable()
         {
             health.OnHealthChanged -= UpdateHealthBar;
+        }
+
+        private void OnDestroy()
+        {
+            healthTween?.Kill();
+            healthTween = null;
+            
+            flashTween?.Kill();
+            flashTween = null;
+            
+            punchTween?.Kill();
+            punchTween = null;
         }
 
         public void Show()
