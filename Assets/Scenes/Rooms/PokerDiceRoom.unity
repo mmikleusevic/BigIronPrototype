@@ -785,6 +785,7 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
+  <TurnSound>k__BackingField: {fileID: 8300000, guid: d65571feec0092947924772fffdb8237, type: 3}
 --- !u!4 &587232040
 Transform:
   m_ObjectHideFlags: 0

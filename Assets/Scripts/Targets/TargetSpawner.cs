@@ -64,7 +64,7 @@ namespace Targets
                     profile = enemy.TargetProfileSO,
                     origin = spawn,
                     targetMovementAxis = axis,
-                    centerTransform = enemy.transform 
+                    centerTransform = middleEnemyTransform.transform 
                 };
 
                 BaseTarget prefab = targetPrefabs[Random.Range(0, targetPrefabs.Length)];

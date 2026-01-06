@@ -37,6 +37,8 @@ namespace StateMachine.CombatStateMachine
             
             Combatant current = combatRoomController.CurrentCombatant;
             combatRoomEvents.OnTurnStarted(current.Data.combatantName);
+            
+            SoundManager.Instance.PlayVFX(combatRoomController.TurnSound);
     
             if (current.Data.combatantType == CombatantType.Player)
             {

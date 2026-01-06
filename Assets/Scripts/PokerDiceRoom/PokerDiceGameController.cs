@@ -17,6 +17,7 @@ namespace PokerDiceRoom
         [field: SerializeField] public PokerInputs PokerInputs { get; private set; }
         [field: SerializeField] public PokerGame PokerGame { get; private set; }
         [field: SerializeField] public AssetReference PokerAssetReference { get; private set; }
+        [field: SerializeField] public AudioClip TurnSound { get; private set; }
         
         public PokerGameEvents PokerGameEvents { get; } = new PokerGameEvents();
         

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Managers;
 using PokerDiceRoom;
 using UnityEngine;
 
@@ -29,6 +30,8 @@ namespace StateMachine.PokerStateMachine
             pokerGameEvents?.OnTurnStart?.Invoke(pokerGame.CurrentPlayer);
             
             await UniTask.Delay(TimeSpan.FromSeconds(delayDuration), cancellationToken: externalToken);
+            
+            SoundManager.Instance.PlayVFX(pokerDiceGameController.TurnSound);
         
             if (pokerGame.CurrentPlayer.IsAI)
             {

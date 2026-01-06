@@ -220,6 +220,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3803667112091447762, guid: decdc40a2763a49b484280f00ed38d4e, type: 3}
+      propertyPath: m_WholeNumbers
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3803667112091447762, guid: decdc40a2763a49b484280f00ed38d4e, type: 3}
       propertyPath: m_TargetGraphic
       value: 
       objectReference: {fileID: 106009678}
