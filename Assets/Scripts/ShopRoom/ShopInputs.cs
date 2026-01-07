@@ -6,7 +6,10 @@ namespace ShopRoom
 {
     public class ShopInputs : MonoBehaviour
     {
-        public event Action<Vector2> OnMove;
+        private const float MOVE_TRIGGER_THRESHOLD = 0.3f;
+        private const float MOVE_RESET_THRESHOLD = 0.2f;
+        
+        public event Action<float> OnMove;
         public event Action OnConfirm;
         public event Action OnLeave;
 
@@ -18,6 +21,8 @@ namespace ShopRoom
         private InputAction moveAction;
 		private InputAction confirmAction;
 		private InputAction leaveAction;
+        
+        private bool canMove = true;
 
         private void OnEnable()
         {
@@ -28,6 +33,7 @@ namespace ShopRoom
             leaveAction = shopMap.FindAction(GameStrings.LEAVE);
             
             moveAction.performed += OnMovePerformed;
+            moveAction.canceled += OnMoveCanceled;
             confirmAction.performed += OnConfirmPerformed;
             leaveAction.performed += OnLeavePerformed;
 
@@ -37,6 +43,7 @@ namespace ShopRoom
         private void OnDisable()
         {
             moveAction.performed -= OnMovePerformed;
+            moveAction.canceled -= OnMoveCanceled;
             confirmAction.performed -= OnConfirmPerformed;
             leaveAction.performed -= OnLeavePerformed;
             
@@ -55,8 +62,33 @@ namespace ShopRoom
         
         private void OnMovePerformed(InputAction.CallbackContext ctx)
         {
-            Vector2 value = ctx.ReadValue<Vector2>();
-            OnMove?.Invoke(value);
+            float input = ctx.ReadValue<float>();
+            
+            if (canMove)
+            {
+                if (input > MOVE_TRIGGER_THRESHOLD)
+                {
+                    OnMove?.Invoke(1);
+                    canMove = false;
+                }
+                else if (input < -MOVE_TRIGGER_THRESHOLD)
+                {
+                    OnMove?.Invoke(-1);
+                    canMove = false;
+                }
+            }
+            else
+            {
+                if (Mathf.Abs(input) < MOVE_RESET_THRESHOLD)
+                {
+                    canMove = true;
+                }
+            }
+        }
+        
+        private void OnMoveCanceled(InputAction.CallbackContext ctx)
+        {
+            canMove = true;
         }
 
         private void OnConfirmPerformed(InputAction.CallbackContext ctx)

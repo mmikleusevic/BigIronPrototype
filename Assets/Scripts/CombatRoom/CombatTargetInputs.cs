@@ -7,8 +7,11 @@ namespace CombatRoom
 {
     public class CombatTargetInputs : MonoBehaviour, ICombatTargetInputSource
     {
+        private const float MOVE_TRIGGER_THRESHOLD = 0.3f;
+        private const float MOVE_RESET_THRESHOLD = 0.2f;
+        
         public event Action OnShootSelected;
-        public event Action<Vector2> OnMove;
+        public event Action<float> OnMove;
         public event Action OnConfirm;
         public event Action OnCancel;
         
@@ -21,7 +24,9 @@ namespace CombatRoom
         private InputAction confirmAction;
         private InputAction cancelAction;
         
-        private CombatInputRules CombatInputRules => combatRoomController.CombatInputRules; 
+        private CombatInputRules CombatInputRules => combatRoomController.CombatInputRules;
+        
+        private bool canMove = true;
 
         private void OnEnable()
         {
@@ -34,6 +39,7 @@ namespace CombatRoom
 
             shootSelectedAction.performed += OnShootSelectPerformed;
             moveAction.performed += OnMovePerformed;
+            moveAction.canceled += OnMoveCanceled;
             confirmAction.performed += OnConfirmPerformed;
             cancelAction.performed += OnCancelPerformed;
             
@@ -44,6 +50,7 @@ namespace CombatRoom
         {
             shootSelectedAction.performed -= OnShootSelectPerformed;
             moveAction.performed -= OnMovePerformed;
+            moveAction.canceled -= OnMoveCanceled;
             confirmAction.performed -= OnConfirmPerformed;
             cancelAction.performed -= OnCancelPerformed;
             
@@ -68,9 +75,34 @@ namespace CombatRoom
         private void OnMovePerformed(InputAction.CallbackContext ctx)
         {
             if (!CombatInputRules.CanMoveSelection) return;
+
+            float input = ctx.ReadValue<float>();
             
-            Vector2 value = ctx.ReadValue<Vector2>();
-            OnMove?.Invoke(value);
+            if (canMove)
+            {
+                if (input > MOVE_TRIGGER_THRESHOLD)
+                {
+                    OnMove?.Invoke(1);
+                    canMove = false;
+                }
+                else if (input < -MOVE_TRIGGER_THRESHOLD)
+                {
+                    OnMove?.Invoke(-1);
+                    canMove = false;
+                }
+            }
+            else
+            {
+                if (Mathf.Abs(input) < MOVE_RESET_THRESHOLD)
+                {
+                    canMove = true;
+                }
+            }
+        }
+        
+        private void OnMoveCanceled(InputAction.CallbackContext ctx)
+        {
+            canMove = true;
         }
         
         private void OnConfirmPerformed(InputAction.CallbackContext ctx)

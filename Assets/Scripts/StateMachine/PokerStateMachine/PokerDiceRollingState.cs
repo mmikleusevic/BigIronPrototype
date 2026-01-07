@@ -111,14 +111,14 @@ namespace StateMachine.PokerStateMachine
             ChangeState();
         }
         
-        private void MoveSelection(Vector2 move)
+        private void MoveSelection(float move)
         {
             if (hasDoneAction) return;
             
             ToggleHighlight();
             
-            if (move.x > 0.5f) selectedDieIndex++;
-            else if (move.x < -0.5f) selectedDieIndex--;
+            if (move > 0.5f) selectedDieIndex++;
+            else if (move < -0.5f) selectedDieIndex--;
             
             int diceCount = diceRoller.ReturnNumberOfDice(pokerGame.CurrentPlayer);
             selectedDieIndex = (selectedDieIndex + diceCount) % diceCount;

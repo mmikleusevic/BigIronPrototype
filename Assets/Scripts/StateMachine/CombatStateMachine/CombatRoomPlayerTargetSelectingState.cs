@@ -64,12 +64,12 @@ namespace StateMachine.CombatStateMachine
             return UniTask.CompletedTask;
         }
         
-        private void Move(Vector2 move)
+        private void Move(float move)
         {
             UnhighlightEnemy(enemies[enemyIndex]);
             
-            if (move.x > 0.5f) enemyIndex++;
-            else if (move.x < -0.5f) enemyIndex--;
+            if (move > 0.5f) enemyIndex++;
+            else if (move < -0.5f) enemyIndex--;
 
             enemyIndex = (enemyIndex + enemies.Count) % enemies.Count;
             

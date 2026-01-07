@@ -77,10 +77,10 @@ namespace ShopRoom
                 shopItems.Add(shopItem);
             }
 
-            MoveSelectedItem(Vector2.one);
+            MoveSelectedItem(1);
         }
 
-        private void MoveSelectedItem(Vector2 move)
+        private void MoveSelectedItem(float move)
         {
             ShopItem selectedItem = null;
             
@@ -89,8 +89,8 @@ namespace ShopRoom
                 if (selectedItemIndex > -1 && selectedItemIndex < shopItems.Count) selectedItem = shopItems[selectedItemIndex];
                 if (selectedItem) selectedItem.Deselect();
             
-                if (move.x > 0.5f) selectedItemIndex++;
-                else if (move.x < -0.5f) selectedItemIndex--;
+                if (move > 0.5f) selectedItemIndex++;
+                else if (move < -0.5f) selectedItemIndex--;
                 
                 selectedItemIndex = (selectedItemIndex + shopItems.Count) % shopItems.Count;
                 
@@ -127,7 +127,7 @@ namespace ShopRoom
             shopItems.Remove(shopItem);
             Destroy(shopItem.gameObject);
             
-            MoveSelectedItem(Vector2.one);
+            MoveSelectedItem(1);
         }
         
         

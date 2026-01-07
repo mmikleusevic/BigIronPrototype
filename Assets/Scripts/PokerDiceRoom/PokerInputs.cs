@@ -8,9 +8,12 @@ namespace PokerDiceRoom
 {
     public class PokerInputs : MonoBehaviour, IPokerInputSource
     {
+        private const float MOVE_TRIGGER_THRESHOLD = 0.3f;
+        private const float MOVE_RESET_THRESHOLD = 0.2f;
+        
         public event Action OnRoll;
         public event Action OnHold;
-        public event Action<Vector2> OnMove;
+        public event Action<float> OnMove;
         public event Action OnSelect;
         public event Action OnEnd;
 
@@ -26,7 +29,9 @@ namespace PokerDiceRoom
         private InputAction holdAction;
         private InputAction endAction;
         private bool InputEnabled => !gameController.PokerGame.CurrentPlayer.IsAI || gameController.IsGameOver;
-
+        
+        private bool canMove = true;
+        
         private void OnEnable()
         {
             pokerDiceMap = inputActionAsset.FindActionMap(GameStrings.POKER_GAME);
@@ -38,6 +43,7 @@ namespace PokerDiceRoom
             endAction = pokerDiceMap.FindAction(GameStrings.END);
             
             moveAction.performed += OnMovePerformed;
+            moveAction.canceled += OnMoveCanceled;
             selectAction.performed += DiceSelected;
             rollAction.performed += OnRollPerformed;
             holdAction.performed += OnHoldPerformed;
@@ -49,6 +55,7 @@ namespace PokerDiceRoom
         private void OnDisable()
         {
             moveAction.performed -= OnMovePerformed;
+            moveAction.canceled -= OnMoveCanceled;
             selectAction.performed -= DiceSelected;
             rollAction.performed -= OnRollPerformed;
             holdAction.performed -= OnHoldPerformed;
@@ -71,8 +78,33 @@ namespace PokerDiceRoom
         {
             if (!InputEnabled || !Rules.CanMove) return;
             
-            Vector2 value = ctx.ReadValue<Vector2>();
-            OnMove?.Invoke(value);
+            float input = ctx.ReadValue<float>();
+            
+            if (canMove)
+            {
+                if (input > MOVE_TRIGGER_THRESHOLD)
+                {
+                    OnMove?.Invoke(1);
+                    canMove = false;
+                }
+                else if (input < -MOVE_TRIGGER_THRESHOLD)
+                {
+                    OnMove?.Invoke(-1);
+                    canMove = false;
+                }
+            }
+            else
+            {
+                if (Mathf.Abs(input) < MOVE_RESET_THRESHOLD)
+                {
+                    canMove = true;
+                }
+            }
+        }
+        
+        private void OnMoveCanceled(InputAction.CallbackContext ctx)
+        {
+            canMove = true;
         }
 
         private void DiceSelected(InputAction.CallbackContext ctx)

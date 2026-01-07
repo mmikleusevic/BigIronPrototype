@@ -7,7 +7,7 @@ namespace PokerDiceRoom
     {
         public event Action OnRoll;
         public event Action OnHold;
-        public event Action<Vector2> OnMove;
+        public event Action<float> OnMove;
         public event Action OnSelect;
     }
 }
