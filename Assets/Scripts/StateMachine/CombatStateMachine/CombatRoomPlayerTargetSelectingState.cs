@@ -87,7 +87,7 @@ namespace StateMachine.CombatStateMachine
             combatRoomController.BaseStateMachine.ChangeState(new CombatRoomPlayerTurnState(combatRoomController)).Forget();
         }
         
-        private void HighlightEnemy(EnemyCombatant enemyCombatant) => enemyCombatant?.EnemyUI?.Show();
-        private void UnhighlightEnemy(EnemyCombatant enemyCombatant) => enemyCombatant?.EnemyUI?.Hide();
+        private void HighlightEnemy(EnemyCombatant enemyCombatant) => enemyCombatant?.EnemyUI?.ShowEnemySelection();
+        private void UnhighlightEnemy(EnemyCombatant enemyCombatant) => enemyCombatant?.EnemyUI?.HideEnemySelection();
     }
 }

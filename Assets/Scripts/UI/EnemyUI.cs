@@ -10,6 +10,7 @@ namespace UI
     public class EnemyUI : MonoBehaviour
     {
         [SerializeField] private GameObject enemyUIPanel;
+        [SerializeField] private GameObject enemySelectedGO;
         [SerializeField] private Slider healthBar;
         [SerializeField] private Image healthFill;
         [SerializeField] private EnemyHealth health;
@@ -61,9 +62,21 @@ namespace UI
             if (enemyUIPanel) enemyUIPanel.SetActive(true);
         }
 
+        public void ShowEnemySelection()
+        {
+            if (enemySelectedGO) enemySelectedGO.SetActive(true);
+            Show();
+        }
+
         public void Hide()
         {
             if (enemyUIPanel) enemyUIPanel.SetActive(false);
+        }
+        
+        public void HideEnemySelection()
+        {
+            if (enemySelectedGO) enemySelectedGO.SetActive(false);
+            Hide();
         }
 
         private void UpdateHealthBar(int current, int max)
